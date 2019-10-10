@@ -1,0 +1,21 @@
+{
+  "extends": ["airbnb"],
+  "plugins": ["jest"],
+  "env": {
+    "browser": true,
+    "jest/globals": true,
+    "node": true
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "comma-dangle": "off",
+    "consistent-return": "off",
+    "no-shadow": "off",
+    "no-param-reassign": "off",
+    "linebreak-style": "off",
+    "react/jsx-filename-extension": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "no-underscore-dangle": "off"
+  }
+}
