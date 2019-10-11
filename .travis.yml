@@ -15,4 +15,3 @@ branches:
 script:
   - npm run test
   - npm run build
-  - npm start
