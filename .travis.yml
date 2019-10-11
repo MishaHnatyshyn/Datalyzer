@@ -11,3 +11,8 @@ branches:
     secure: 5037bc7e-e1f2-49f3-9cb0-adc28706cadf
   only:
     - develop
+
+script:
+  - npm run test
+  - npm run build
+  - npm start

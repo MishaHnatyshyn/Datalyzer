@@ -1,7 +1,9 @@
 import React from 'react';
 
 const App = () => (
-  <div>Datalyzer</div>
+  <div>
+    Datalyzer test
+  </div>
 );
 
 export default App;
