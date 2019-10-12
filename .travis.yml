@@ -6,12 +6,8 @@ node_js:
 
 branches:
   provider: heroku
-  app: datalyzer-web
+  app: datalyzer-frontend
   api_key:
-    secure: 884ecba9-5174-4134-bcc1-5ea937711c87
+    secure: 5037bc7e-e1f2-49f3-9cb0-adc28706cadf
   only:
     - develop
-
-script:
-  - npm run test
-  - npm run build
