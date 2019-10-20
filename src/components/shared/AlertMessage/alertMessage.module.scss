@@ -1,0 +1,17 @@
+@import "./../../../assets/variables";
+
+.message {
+  font: $text-error-message-semibold;
+  line-height: 18px;
+  color: $dark-gray;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+
+  & img {
+    width: 30px;
+    margin-right: 15px;
+  }
+}

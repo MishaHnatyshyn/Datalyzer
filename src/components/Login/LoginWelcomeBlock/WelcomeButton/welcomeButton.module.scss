@@ -1,0 +1,11 @@
+@import "./../../../../assets/variables";
+
+.welcomeButton {
+  width: 160px;
+  background-color: transparent;
+  border: 2px solid #ffffff;
+  color: white;
+  line-height: 24px;
+  font: $text-regular;
+  text-align: center;
+}

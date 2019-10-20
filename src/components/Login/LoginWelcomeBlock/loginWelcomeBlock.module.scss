@@ -1,0 +1,81 @@
+@import "./../../../assets/variables";
+
+.welcomeBlock {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+  padding-top: 225px;
+  padding-bottom: 225px;
+  background-color: $blue;
+  overflow: hidden;
+  color: white;
+}
+
+.container {
+  width: 60%;
+  max-width: 500px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.textAbout {
+  margin-top: 45px;
+  margin-bottom: 45px;
+  font-size: 18px;
+  line-height: 24px;
+  color: #ffffff;
+  font: $text-regular;
+  text-align: left;
+}
+
+.outCircle {
+  position: absolute;
+  transform: translateX(-50%);
+  left: 100%;
+  bottom: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10vw;
+  min-width: 80px;
+  height: 10vw;
+  min-height: 80px;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.innerCircle {
+  width: 6vw;
+  min-width: 50px;
+  height: 6vw;
+  min-height: 50px;
+  border-radius: 50%;
+  background-color: $blue;
+}
+
+.line {
+  width: 95px;
+  height: 5px;
+  background-color: #ffffff;
+  margin-top: 25px;
+}
+
+@media all and (max-width: $tablet-width) {
+  .container {
+    width: 80%;
+  }
+}
+
+@media all and (max-width: 850px) {
+  .container {
+    width: 85%;
+  }
+}
+
+@media all and (max-width: $mobile-width) {
+  .welcomeBlock {
+    display: none;
+  }
+}

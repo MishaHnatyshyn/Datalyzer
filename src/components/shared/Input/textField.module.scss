@@ -1,0 +1,52 @@
+@import "./../../../assets/variables";
+
+.input {
+  border: none;
+  outline: none;
+  border-bottom: 2px solid #cbcbcb;
+  padding: 15px 15px 11px 45px;
+  font: $text-regular;
+
+  &:focus {
+    color: black;
+  }
+
+  &:focus + img {
+    opacity: 1;
+  }
+}
+
+.container {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.container img {
+  width: 30px;
+  position: absolute;
+  left: 5px;
+  bottom: 10px;
+  transition: opacity .1s;
+  opacity: 0.5;
+}
+
+::-webkit-input-placeholder { /* Edge */
+  color: $gray;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: $gray;
+}
+
+::placeholder {
+  color: $gray;
+}
+
+@media all and (max-width: $small-mobile-width) {
+  .input {
+    width: 180px;
+  }
+}
+
+
+
