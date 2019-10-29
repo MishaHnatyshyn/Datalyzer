@@ -16,19 +16,50 @@ module.exports = {
     publicPath: '/',
     filename: 'bundle.js'
   },
+  watchOptions: {
+    poll: 1000 // Check for changes every second
+  },
   module: {
     rules: [
       {
-        test: /\.scss$/,
-        use: [
+        test: /\.module\.scss$/,
+        loader: [
           'style-loader',
-          'css-loader',
-          'postcss-loader',
-          'sass-loader'
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'postcss-loader',
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true
+            }
+          }
         ]
       },
       {
-        test: /\.js$/,
+        test: /\.scss$/,
+        exclude: /\.module.(scss)$/,
+        loader: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader'
@@ -46,15 +77,12 @@ module.exports = {
     hot: true,
     historyApiFallback: true,
     publicPath: '/',
-    proxy: {
-      '/': 'http://localhost:8080',
-    }
   },
   plugins: [
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([{
-      from: './public/index.html'
+      from: './public'
     }]),
-    new HtmlWebpackPlugin({ template: './public/index.html' }),
+    new HtmlWebpackPlugin({ template: './public/index.html', favicon: './public/favicon.ico' }),
   ]
 };
