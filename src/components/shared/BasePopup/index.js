@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 import PopupButtons from './components/PopupButtons';
@@ -22,12 +22,9 @@ const BasePopup = ({
   popupClassName,
   footer
 }) => {
-
-  const backgroundHandler = (e) => {
-    if (e.currentTarget === e.target) {
-      onClose();
-    }
-  };
+  const backgroundHandler = useCallback((e) => (
+    e.currentTarget === e.target && onClose()
+  ), [onClose]);
 
   return (
     <CSSTransition
@@ -36,12 +33,12 @@ const BasePopup = ({
       classNames="alert"
       unmountOnExit
     >
-      <div className={styles.popupWrapper} onClick={backgroundHandler}>
-        <div className={styles.blur} />
+      <div className={styles.popupWrapper}>
+        <div className={styles.blur} onClick={backgroundHandler} />
         <div className={`${styles.popup} ${popupClassName}`}>
           <div className={styles.header}>
             <div className={styles.cross} onClick={onClose}>
-              <img src="/images/Popup/cross.png" alt=""/>
+              <img src="/images/Popup/cross.png" alt="" />
             </div>
           </div>
           <div className={styles.body}>
