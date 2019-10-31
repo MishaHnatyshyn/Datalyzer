@@ -2,12 +2,16 @@ import {
   USERNAME_INPUT_VALUE,
   PASSWORD_INPUT_VALUE,
   CLEAR_PASSWORD_VALUE,
-  FORM_SUBMIT
+  FORM_SUBMIT,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE
 } from './types';
 
 const initialState = {
   password: '',
   username: '',
+  token: null,
+  error: null,
 };
 
 export default function loginReducer(state = initialState, action) {
@@ -20,6 +24,20 @@ export default function loginReducer(state = initialState, action) {
       return { ...state, password: '' };
     case FORM_SUBMIT:
       return { ...state };
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        token: action.payload.token,
+        username: '',
+        password: '',
+        error: null
+      };
+    case LOGIN_FAILURE:
+      return {
+        ...state,
+        password: '',
+        error: action.payload.error
+      };
     default:
       return state;
   }
