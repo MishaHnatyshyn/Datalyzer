@@ -1,42 +1,45 @@
 import {
   USERNAME_INPUT_VALUE,
   PASSWORD_INPUT_VALUE,
-  CLEAR_PASSWORD_VALUE,
-  FORM_SUBMIT,
   LOGIN_SUCCESS,
-  LOGIN_FAILURE
+  LOGIN_FAILURE, EMPTY_FIELDS_ERROR
 } from './types';
+import { EMPTY_FIELDS_ERROR_MESSAGE, LOGIN_ERROR_MESSAGE } from './constants';
 
 const initialState = {
   password: '',
   username: '',
-  token: null,
-  error: null,
+  token: '',
+  error: false,
+  errorMessage: ''
 };
 
 export default function loginReducer(state = initialState, action) {
   switch (action.type) {
     case USERNAME_INPUT_VALUE:
-      return { ...state, username: action.payload };
+      return { ...state, username: action.payload, error: false };
     case PASSWORD_INPUT_VALUE:
-      return { ...state, password: action.payload };
-    case CLEAR_PASSWORD_VALUE:
-      return { ...state, password: '' };
-    case FORM_SUBMIT:
-      return { ...state };
+      return { ...state, password: action.payload, error: false };
     case LOGIN_SUCCESS:
       return {
         ...state,
         token: action.payload.token,
         username: '',
         password: '',
-        error: null
+        error: false
       };
     case LOGIN_FAILURE:
       return {
         ...state,
         password: '',
-        error: action.payload.error
+        error: true,
+        errorMessage: LOGIN_ERROR_MESSAGE
+      };
+    case EMPTY_FIELDS_ERROR:
+      return {
+        ...state,
+        error: true,
+        errorMessage: EMPTY_FIELDS_ERROR_MESSAGE
       };
     default:
       return state;

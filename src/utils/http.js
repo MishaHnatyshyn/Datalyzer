@@ -5,6 +5,14 @@ import {
   del as rawDelete,
 } from 'axios';
 import { merge } from 'lodash/fp';
+import { LOGIN_URL } from '../config/routing';
+import { LOGIN_ENDPOINT } from '../config/endpoints';
+
+const handleUnAuthorizedError = (error) => {
+  const { response: { status, config: { url } } } = error;
+  if (status === 401 && url !== LOGIN_ENDPOINT) window.location = LOGIN_URL;
+  throw error;
+};
 
 const createHeaderWithBearerToken = (token) => ({
   headers: {
@@ -14,7 +22,9 @@ const createHeaderWithBearerToken = (token) => ({
 
 export const sendWithUserAuthToken = (httpMethod) => (url, config = {}, token = '') => {
   const authHeader = createHeaderWithBearerToken(token);
-  return httpMethod(url, merge(config, authHeader)).then((res) => res.data);
+  return httpMethod(url, merge(config, authHeader))
+    .then((res) => res.data)
+    .catch(handleUnAuthorizedError);
 };
 
 export const get = sendWithUserAuthToken(rawGet);

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './alertMessage.module.scss';
 
 const AlertMessage = ({ message, children, classes }) => (
-  <div className={[styles.container, classes].join(' ')}>
+  <div className={[styles.container, ...classes].join(' ')}>
     {children}
     <p className={styles.message}>{message}</p>
   </div>
