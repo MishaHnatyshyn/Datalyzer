@@ -1,0 +1,72 @@
+@import "../../../assets/variables";
+@import "../../../assets/fonts";
+
+.popupWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+
+  z-index: $z-index-99;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 7px 10px 7px;
+}
+
+.cross {
+  cursor: pointer;
+}
+
+.blur {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+
+  background: $white;
+  opacity: .4;
+}
+
+.popup {
+  max-width: 410px;
+  min-width: 320px;
+  position: relative;
+
+  padding: 25px;
+
+  background-color: $white;
+  box-shadow: 0px 0px 19px 3px rgba(0,0,0,0.37);
+}
+
+.body {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  padding-bottom: 5px;
+
+  color: $black;
+  font: $text-error-message-title-bold;
+}
+
+.image {
+  padding-bottom: 20px;
+}
+
+.text {
+  color: $black;
+  font: $text-error-message-semibold;
+}
+
+.buttons {
+  padding-top: 30px;
+}
