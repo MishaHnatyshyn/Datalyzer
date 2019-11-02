@@ -23,7 +23,7 @@ export const NotLoggedInRoute = ({
   <ConditionalRoute
     render={({ props, token, userType }) => (
       token && userType
-        ? <Redirect to={createHomeRoute(userType)} />
+        ? <Redirect to={createHomeRoute()} />
         : <Component {...props} />)}
   />
 );

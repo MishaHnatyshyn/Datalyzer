@@ -7,7 +7,8 @@ import {
 import { merge } from 'lodash/fp';
 import { LOGIN_URL } from '../config/routing';
 import { LOGIN_ENDPOINT, API_URL } from '../config/endpoints';
-import { history } from '../store';
+import store, { history } from '../store';
+import { getToken } from '../store/login/selectors';
 
 
 const handleUnAuthorizedError = (error) => {
@@ -22,7 +23,8 @@ const createHeaderWithBearerToken = (token) => ({
   }
 });
 
-export const sendWithUserAuthToken = (httpMethod) => (url, config = {}, token) => {
+export const sendWithUserAuthToken = (httpMethod) => (url, config = {}) => {
+  const token = getToken(store.getState());
   const authHeader = token ? createHeaderWithBearerToken(token) : {};
   return httpMethod(`${API_URL}${url}`, merge(config, authHeader))
     .then((res) => res.data)
