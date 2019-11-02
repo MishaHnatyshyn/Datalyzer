@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PopupButton from '../PopupButton';
 
-const PopupButtons = ({ okButton, cancelButton, onClose, onSubmit, okButtonType }) => (
+const PopupButtons = ({
+  okButton, cancelButton, onClose, onSubmit, okButtonType
+}) => (
   <>
     {
       cancelButton ? <PopupButton onClick={onClose} text="Cancel" type="cancel" /> : null

@@ -25,6 +25,14 @@
   margin-top: 12px;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
+.visible {
+  visibility: visible;
+}
+
 @media all and (max-width: $tablet-width) {
   .loginForm {
     width: 70%;

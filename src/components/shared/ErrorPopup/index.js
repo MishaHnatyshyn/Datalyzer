@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import BasePopup from '../BasePopup';
 
-const ErrorPopup = ({ onClose, text, title, isVisible }) => (
+const ErrorPopup = ({
+  onClose, text, title, isVisible
+}) => (
   <BasePopup
     onClose={onClose}
     onSubmit={onClose}
