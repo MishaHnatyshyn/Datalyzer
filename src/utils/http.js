@@ -6,8 +6,9 @@ import {
 } from 'axios';
 import { merge } from 'lodash/fp';
 import { LOGIN_URL } from '../config/routing';
-import { LOGIN_ENDPOINT } from '../config/endpoints';
+import { LOGIN_ENDPOINT, API_URL } from '../config/endpoints';
 import { history } from '../store';
+
 
 const handleUnAuthorizedError = (error) => {
   const { response: { status, config: { url } } } = error;
@@ -23,7 +24,7 @@ const createHeaderWithBearerToken = (token) => ({
 
 export const sendWithUserAuthToken = (httpMethod) => (url, config = {}, token) => {
   const authHeader = token ? createHeaderWithBearerToken(token) : {};
-  return httpMethod(url, merge(config, authHeader))
+  return httpMethod(`${API_URL}${url}`, merge(config, authHeader))
     .then((res) => res.data)
     .catch(handleUnAuthorizedError);
 };
