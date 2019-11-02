@@ -9,7 +9,10 @@ const initialState = {
 export default function userReducer(state = initialState, action) {
   switch (action.type) {
     case SET_USER_DATA:
-      return { ...state, ...action.payload };
+      return {
+        ...state,
+        ...action.payload
+      };
     case CLEAR_USER_DATA:
       return initialState;
     default:

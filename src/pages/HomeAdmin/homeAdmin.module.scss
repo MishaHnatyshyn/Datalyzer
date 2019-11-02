@@ -1,0 +1,33 @@
+@import "../.././assets/variables";
+
+.container {
+  padding-top: 65px;
+}
+
+.block {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+}
+
+.bottomBlock {
+  margin-top: 68px;
+}
+
+.containerClass {
+  background-color: $mint;
+}
+
+.lineClass {
+  background-color: $light-gray;
+}
+
+@media all and (max-width: $desktop-width) {
+  .block {
+    flex-wrap: wrap;
+  }
+
+  .bottomBlock {
+    margin-top: unset;
+  }
+}

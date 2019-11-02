@@ -5,12 +5,17 @@ import {
   PASSWORD_INPUT_VALUE,
   LOGIN_FAILURE,
   LOGIN_SUCCESS,
-  EMPTY_FIELDS_ERROR
+  EMPTY_FIELDS_ERROR,
+  REMOVE_TOKEN
 } from './types';
 import { post } from '../../utils/http';
 import { LOGIN_ENDPOINT, LOGIN_URL } from '../../config';
-import { set as setIntoLocalStorage, get as getFromLocalStorage } from '../../utils/localStorage';
-import { setUserData } from '../user/actions';
+import {
+  set as setIntoLocalStorage,
+  get as getFromLocalStorage,
+  remove as removeFromLocalStorage
+} from '../../utils/localStorage';
+import { clearUserData, setUserData } from '../user/actions';
 import { LOCAL_STORAGE_USER_KEY } from './constants';
 
 export const changeUsernameValue = createAction(USERNAME_INPUT_VALUE, (value) => value);
@@ -18,6 +23,7 @@ export const changePasswordValue = createAction(PASSWORD_INPUT_VALUE, (value) =>
 export const loginSuccess = createAction(LOGIN_SUCCESS, (data) => data);
 export const loginFailure = createAction(LOGIN_FAILURE);
 export const emptyFieldsError = createAction(EMPTY_FIELDS_ERROR);
+export const removeToken = createAction(REMOVE_TOKEN);
 
 export const login = () => async (dispatch, getState) => {
   const { login: { username: name, password } } = getState();
@@ -47,6 +53,13 @@ export const checkAuthStatus = () => (dispatch) => {
   const {
     access_token, username, id, user_type
   } = data;
-  dispatch(loginSuccess(access_token));
+
   dispatch(setUserData({ username, userId: id, userType: user_type.name }));
+  dispatch(loginSuccess(access_token));
+};
+
+export const logout = () => (dispatch) => {
+  removeFromLocalStorage(LOCAL_STORAGE_USER_KEY);
+  dispatch(removeToken());
+  dispatch(clearUserData());
 };

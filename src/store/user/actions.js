@@ -7,6 +7,10 @@ export const setUserData = createAction(SET_USER_DATA, (data) => data);
 export const clearUserData = createAction(CLEAR_USER_DATA, (data) => data);
 
 export const getUserData = () => async (dispatch) => {
-  const user = await get(USER_DATA_ENDPOINT, {});
-  dispatch(setUserData(user));
+  try {
+    const user = await get(USER_DATA_ENDPOINT, {});
+    dispatch(setUserData(user));
+  } catch (e) {
+    console.error(e);
+  }
 };

@@ -1,0 +1,20 @@
+@import "../../../assets/variables";
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pagesResult {
+  line-height: 30px;
+  color: black;
+  font: $text-bold;
+  font-size: 24px;
+  margin-right: 35px;
+}
+
+.leftBlock {
+  display: flex;
+  align-items: center;
+}

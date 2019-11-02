@@ -6,6 +6,9 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
 import loginReducer from './login/reducer';
 import userReducer from './user/reducer';
+import adminUsersReducer from './adminUsers/reducer';
+import modelReducer from './model/reducer';
+import connectionsReducer from './connection/reducer';
 
 const initialState = {};
 
@@ -23,9 +26,12 @@ const enhancer = composeEnhancers(
 );
 
 const rootReducer = combineReducers({
-  login: loginReducer,
   router: connectRouter(history),
+  login: loginReducer,
   user: userReducer,
+  adminUsers: adminUsersReducer,
+  models: modelReducer,
+  connections: connectionsReducer
 });
 
 const store = createStore(rootReducer, initialState, enhancer);

@@ -1,0 +1,16 @@
+@import "../../assets/variables";
+
+$green: #74db77;
+$red: #c71c1c;
+
+.active {
+  color: $green;
+  font: $text-error-message-semibold;
+  font-size: 18px;
+}
+
+.disabled {
+  font: $text-error-message-semibold;
+  font-size: 18px;
+  color: $red;
+}
