@@ -1,17 +1,16 @@
-/* eslint-disable import/no-unresolved */
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './loginForm.module.scss';
 import LoginCaption from './LoginCaption';
 import LoginButton from './LoginButton';
 import Input from '../../shared/Input';
-import { getPassword, getUsername } from '../../../store/Login/selectors';
-import { changePasswordValue, changeUsernameValue } from '../../../store/Login/actions';
+import {
+  getPassword, getUsername, getErrorMessage, isError
+} from '../../../store/login/selectors';
+import { changePasswordValue, changeUsernameValue, login } from '../../../store/login/actions';
 import AlertMessage from '../../shared/AlertMessage';
 import { preventDefaultHandler } from '../../../utils';
-import { login, redirectToHomeIfIsAuthorized } from '../../../store/login/actions';
-import { getErrorMessage, isError } from '../../../store/login/selectors';
 
 
 const LoginForm = ({
@@ -22,7 +21,6 @@ const LoginForm = ({
   submitForm,
   isError,
   errorMessage,
-  redirectToHomeIfIsAuthorized
 }) => {
   const formHandler = useMemo(
     () => preventDefaultHandler(submitForm),
@@ -32,10 +30,6 @@ const LoginForm = ({
     styles.error,
     isError ? styles.visible : styles.hidden
   ], [isError]);
-
-  useEffect(() => {
-    redirectToHomeIfIsAuthorized();
-  }, []);
 
   return (
     <div className={styles.loginForm}>
@@ -67,7 +61,6 @@ LoginForm.propTypes = {
   submitForm: PropTypes.func.isRequired,
   isError: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string.isRequired,
-  redirectToHomeIfIsAuthorized: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -81,7 +74,6 @@ const mapDispatchToProps = (dispatch) => ({
   changePassword: (value) => { dispatch(changePasswordValue(value)); },
   changeUsername: (value) => { dispatch(changeUsernameValue(value)); },
   submitForm: () => { dispatch(login()); },
-  redirectToHomeIfIsAuthorized: () => { dispatch(redirectToHomeIfIsAuthorized()); }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

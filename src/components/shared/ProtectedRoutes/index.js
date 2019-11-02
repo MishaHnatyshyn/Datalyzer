@@ -1,39 +1,41 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { Redirect, Route } from 'react-router';
-import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { LOGIN_URL } from '../../../config/routing';
-import { getToken } from '../../../store/login/selectors';
-import { getType } from '../../../store/user/selectors';
+import { createHomeRoute } from '../../../utils/routeCreators';
+import ConditionalRoute from './ConditionalRouteBaseComponent';
 
-const BaseProtectedRouteComponent = ({
-  component: Component, token, userType, allowedUserType, ...rest
+export const ProtectedRoute = ({
+  component: Component, allowedUserType
 }) => (
-  <Route
-    {...rest}
-    render={(props) => (
+  <ConditionalRoute
+    render={({ props, token, userType }) => (
       token && allowedUserType === userType
         ? <Component {...props} />
         : <Redirect to={LOGIN_URL} />)}
   />
 );
 
-const mapStateToProps = (state) => ({
-  token: getToken(state),
-  userType: getType(state)
-});
-
-const ProtectedRoute = connect(mapStateToProps)(BaseProtectedRouteComponent);
+export const NotLoggedInRoute = ({
+  component: Component
+}) => (
+  <ConditionalRoute
+    render={({ props, token, userType }) => (
+      token && userType
+        ? <Redirect to={createHomeRoute(userType)} />
+        : <Component {...props} />)}
+  />
+);
 
 export const ProtectedAdminRoute = (props) => <ProtectedRoute {...props} allowedUserType="admin" />;
 export const ProtectedUserRoute = (props) => <ProtectedRoute {...props} allowedUserType="user" />;
 
-BaseProtectedRouteComponent.propTypes = {
+ProtectedRoute.propTypes = {
   component: PropTypes.node.isRequired,
-  token: PropTypes.string.isRequired,
-  userType: PropTypes.string.isRequired,
   allowedUserType: PropTypes.string.isRequired,
 };
 
-export default ProtectedRoute;
+NotLoggedInRoute.propTypes = {
+  component: PropTypes.node.isRequired,
+};

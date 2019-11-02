@@ -7,10 +7,11 @@ import {
 import { merge } from 'lodash/fp';
 import { LOGIN_URL } from '../config/routing';
 import { LOGIN_ENDPOINT } from '../config/endpoints';
+import { history } from '../store';
 
 const handleUnAuthorizedError = (error) => {
   const { response: { status, config: { url } } } = error;
-  if (status === 401 && url !== LOGIN_ENDPOINT) window.location = LOGIN_URL;
+  if (status === 401 && url !== LOGIN_ENDPOINT) return history.push(LOGIN_URL);
   throw error;
 };
 
@@ -20,8 +21,8 @@ const createHeaderWithBearerToken = (token) => ({
   }
 });
 
-export const sendWithUserAuthToken = (httpMethod) => (url, config = {}, token = '') => {
-  const authHeader = createHeaderWithBearerToken(token);
+export const sendWithUserAuthToken = (httpMethod) => (url, config = {}, token) => {
+  const authHeader = token ? createHeaderWithBearerToken(token) : {};
   return httpMethod(url, merge(config, authHeader))
     .then((res) => res.data)
     .catch(handleUnAuthorizedError);

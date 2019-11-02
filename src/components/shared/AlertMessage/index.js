@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import styles from './alertMessage.module.scss';
 
 const AlertMessage = ({ message, children, classes }) => (
-  <div className={[styles.container, ...classes].join(' ')}>
+  <div className={classnames(styles.container, ...classes)}>
     {children}
     <p className={styles.message}>{message}</p>
   </div>

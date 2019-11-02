@@ -23,7 +23,7 @@ export default function loginReducer(state = initialState, action) {
     case LOGIN_SUCCESS:
       return {
         ...state,
-        token: action.payload.token,
+        token: action.payload,
         username: '',
         password: '',
         error: false
