@@ -1,42 +1,58 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import styles from './leftSideMenu.module.scss';
 
-const LeftSideMenu = () => (
+const blocks = [
+  {
+    link: '/admin/home',
+    image: '/images/home.png',
+    alt: 'home page'
+  },
+  {
+    link: '/admin/databases',
+    image: '/images/database.png',
+    alt: 'databases page'
+  },
+  {
+    link: '/admin/models',
+    image: '/images/spreadsheet.png',
+    alt: 'models page'
+  },
+  {
+    link: '/admin/users',
+    image: '/images/group.png',
+    alt: 'users page'
+  }
+];
+
+const LeftSideMenu = ({ menuElements }) => (
   <div className={styles.container}>
-    <div className={styles.block}>
-      <Link to="/admin/home">
-        <div className={styles.item}>
-          <img src="/images/home.png" alt="home page" />
+    {
+      menuElements.map((element) => (
+        <div className={styles.block}>
+          <Link to={element.link}>
+            <div className={styles.item}>
+              <img src={element.image} alt={element.alt} />
+            </div>
+          </Link>
         </div>
-      </Link>
-    </div>
-    <div className={styles.block}>
-      <Link to="/admin/databases">
-        <div className={styles.item}>
-          <img src="/images/database.png" alt="databases page" />
-        </div>
-      </Link>
-
-    </div>
-    <div className={styles.block}>
-      <Link to="/admin/models">
-        <div className={styles.item}>
-          <img src="/images/spreadsheet.png" alt="models page" />
-        </div>
-      </Link>
-
-    </div>
-    <div className={styles.block}>
-      <Link to="/admin/users">
-        <div className={styles.item}>
-          <img src="/images/group.png" alt="users page" />
-        </div>
-      </Link>
-
-    </div>
-
+      ))
+    }
   </div>
 );
 
-export default LeftSideMenu;
+LeftSideMenu.propTypes = {
+  menuElements: PropTypes.arrayOf(PropTypes.shape({
+    link: PropTypes.string,
+    image: PropTypes.string,
+    alt: PropTypes.string
+  })).isRequired
+};
+
+const mapStateToProps = () => ({
+  menuElements: blocks
+});
+
+export default connect(mapStateToProps)(LeftSideMenu);

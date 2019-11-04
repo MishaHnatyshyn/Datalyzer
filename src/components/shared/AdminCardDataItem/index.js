@@ -5,22 +5,20 @@ import styles from './adminCardDataItem.module.scss';
 
 const AdminCardDataItem = ({ name, value, classes }) => (
   <p className={styles.key}>
-    {name}
-:
-    {' '}
+    {`${name}: `}
     <span className={classnames(styles.value, classes)}>{value}</span>
   </p>
 );
 
 
 AdminCardDataItem.defaultProps = {
-  classes: '',
+  classes: [''],
 };
 
 AdminCardDataItem.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  classes: PropTypes.string
+  classes: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default AdminCardDataItem;

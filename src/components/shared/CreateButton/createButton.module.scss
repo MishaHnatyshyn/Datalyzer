@@ -5,15 +5,12 @@
   justify-content: space-between;
   align-items: center;
   padding: 18px;
-  outline: none;
-  border: none;
   color: black;
   background-color: $light-gray;
   width: 205px;
   font: $text-button-bold;
   line-height: 30px;
   border-radius: 45px;
-  cursor: pointer;
 
   &:hover {
     box-shadow: 4px 3px 6.58px 0.42px rgba(101, 101, 101, 0.23);

@@ -14,7 +14,7 @@ const ModelsDataCard = ({
     <AdminCardDataItem name="Created" value={created_at} />
     <AdminCardDataItem name="Rows" value={rows} />
     <AdminCardDataItem name="Uses" value={usages} />
-    <AdminCardDataItem name="Status" value={status} classes={status === 'active' ? styles.active : styles.disabled} />
+    <AdminCardDataItem name="Status" value={status} classes={[styles.text, status === 'active' ? styles.active : styles.disabled]} />
   </DataCard>
 );
 

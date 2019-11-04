@@ -3,14 +3,15 @@
 $green: #74db77;
 $red: #c71c1c;
 
-.active {
-  color: $green;
+.text {
   font: $text-error-message-semibold;
   font-size: 18px;
 }
 
+.active {
+  color: $green;
+}
+
 .disabled {
-  font: $text-error-message-semibold;
-  font-size: 18px;
   color: $red;
 }
