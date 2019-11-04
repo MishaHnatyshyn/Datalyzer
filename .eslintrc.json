@@ -18,6 +18,7 @@
     "jsx-a11y/no-static-element-interactions": "off",
     "no-underscore-dangle": "off",
     "react/button-has-type": "off",
+    "react/jsx-props-no-spreading": "off",
     "camelcase": "off"
   }
 }
