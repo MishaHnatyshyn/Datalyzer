@@ -1,0 +1,23 @@
+@import "../../../assets/variables";
+
+.selected {
+  background-color: $blue;
+  color: white;
+}
+
+.selected img {
+  filter: invert(100%);
+}
+
+
+.search {
+  width: 295px;
+}
+
+.searchContainer {
+  padding-bottom: 20px;
+}
+
+.search:focus {
+  width: 395px;
+}

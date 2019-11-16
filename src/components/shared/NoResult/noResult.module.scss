@@ -1,0 +1,13 @@
+@import "../../../assets/variables";
+
+.container {
+  width: 100%;
+  padding-top: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text {
+  font: $text-error-message-title-bold;
+}

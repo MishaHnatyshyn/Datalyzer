@@ -42,7 +42,7 @@ const HomeAdmin = () => (
 
       <HomeCard
         text="New Model"
-        link="/admin/databases"
+        link="/admin/models/create"
         icon="/images/plussmall.png"
         image="/images/157-512.png"
         lineClass={styles.lineClass}
@@ -56,7 +56,6 @@ const HomeAdmin = () => (
         lineClass={styles.lineClass}
       />
     </div>
-
   </div>
 );
 

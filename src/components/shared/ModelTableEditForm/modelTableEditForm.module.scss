@@ -1,0 +1,64 @@
+@import "../../../assets/variables";
+
+.form {
+  padding: 20px 18px;
+  height: calc(100% - 43px);
+  box-sizing: border-box;
+}
+
+.tableNameLabel {
+  width: 100%;
+  display: flex;
+  font: $text-semibold;
+  color: $middle-gray;
+  padding-left: 11px;
+  align-items: center;
+}
+
+.tableNameInput {
+  font: $text-semibold;
+  border: none;
+  box-shadow: 3.83px 3.214px 10.5px rgba(119, 119, 119, 0.39);
+  padding-left: 10px;
+  border-radius: 6px;
+  height: 31px;
+  margin-left: 11px;
+  outline: none;
+}
+
+.editColumnsField{
+  height: 67%;
+}
+
+.formElement {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 15px;
+}
+
+.button {
+  margin: 0 10px;
+  padding: 0 18px;
+  height: 31px;
+  border-radius: 16px;
+  font: $text-button-bold-small;
+  background: none;
+}
+
+.saveButton {
+  background-color: $blue;
+  color: $white;
+  border: none;
+  &:hover {
+    box-shadow: 2px 2px 15.36px 0.64px rgba(29, 112, 197, 0.43);
+  }
+}
+
+.closeButton {
+  background-color: $white;
+  color: $dark-gray;
+  border: 1px solid $gray;
+  &:hover {
+    box-shadow: 2px 2px 15.36px 0.64px rgba(144, 171, 197, 0.43);
+  }
+}

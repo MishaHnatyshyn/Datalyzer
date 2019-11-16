@@ -9,21 +9,20 @@ import userReducer from './user/reducer';
 import adminUsersReducer from './adminUsers/reducer';
 import modelReducer from './model/reducer';
 import connectionsReducer from './connection/reducer';
+import createModelReducer from './createModel/reducer';
+import popupsReducer from './popups/reducer';
 
 const initialState = {};
 
-const composeEnhancers = typeof window === 'object'
-&& window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-  ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-  }) : compose;
+const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+  : compose;
 
 export const history = createBrowserHistory();
 
 const middleware = [thunk, routerMiddleware(history)];
 
-const enhancer = composeEnhancers(
-  applyMiddleware(...middleware),
-);
+const enhancer = composeEnhancers(applyMiddleware(...middleware));
 
 const rootReducer = combineReducers({
   router: connectRouter(history),
@@ -31,7 +30,9 @@ const rootReducer = combineReducers({
   user: userReducer,
   adminUsers: adminUsersReducer,
   models: modelReducer,
-  connections: connectionsReducer
+  connections: connectionsReducer,
+  createModel: createModelReducer,
+  popups: popupsReducer,
 });
 
 const store = createStore(rootReducer, initialState, enhancer);

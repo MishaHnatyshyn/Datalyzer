@@ -22,8 +22,12 @@ UsersAdmin.propTypes = {
 };
 
 const mapDispatchToPros = (dispatch) => ({
-  fetchUsersCount: () => { dispatch(getUsersCount()); },
-  fetchUsers: () => { dispatch(searchUsers()); },
+  fetchUsersCount: () => {
+    dispatch(getUsersCount());
+  },
+  fetchUsers: () => {
+    dispatch(searchUsers());
+  },
 });
 
 export default connect(null, mapDispatchToPros)(UsersAdmin);

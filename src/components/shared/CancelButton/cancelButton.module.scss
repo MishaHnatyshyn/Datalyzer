@@ -1,0 +1,20 @@
+@import "../../../assets/variables";
+
+.button {
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 31px;
+  border-radius: 16px;
+  font: $text-button-bold-small;
+  background: none;
+}
+
+.cancelButton {
+  color: $light-gray;
+  filter: drop-shadow(2.298px 1.928px 8px rgba(139,139,139,0.2));
+  border: 2px solid $light-gray;
+}
+
+.cancelButton:hover {
+  box-shadow: 0 0 4.36px 0.64px rgba(139, 139, 139, 0.2);
+}

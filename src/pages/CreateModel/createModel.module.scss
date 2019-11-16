@@ -1,0 +1,70 @@
+@import "../../assets/variables";
+
+.caption {
+  line-height: 30px;
+  color: black;
+  font: $text-bold;
+  font-size: 24px;
+  margin-right: 35px;
+}
+
+.action {
+  text-align: center;
+  padding-bottom: 30px;
+  padding-top: 45px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container {
+  position: relative;
+}
+
+
+.search {
+  width: 295px;
+}
+
+.search:focus {
+  width: 395px;
+}
+
+.content {
+  height: 55vh;
+  padding-bottom: 65px;
+  padding-top: 10px;
+}
+
+.stepsButton {
+  position: absolute;
+  right: 0;
+  top: 100%;
+}
+
+.buttonContainer {
+  margin-left: 250px;
+}
+
+.nameInput {
+  font: $text-button-bold;
+  border: 2px solid transparent;
+  box-shadow: 3.83px 3.214px 10.5px rgba(119, 119, 119, 0.39);
+  padding: 5px 10px;
+  border-radius: 6px;
+  height: 31px;
+  outline: none;
+  transition: border-color .6s;
+}
+
+.nameInputError {
+  transition: border-color .6s;
+  border-color: $red;
+}
+
+::placeholder {
+  color: $gray;
+}
