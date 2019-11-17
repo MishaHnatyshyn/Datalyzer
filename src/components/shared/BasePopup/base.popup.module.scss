@@ -70,3 +70,25 @@
 .buttons {
   padding-top: 30px;
 }
+
+select {
+  width: 100%;
+  height: 30px;
+  background-color: white;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-left: 5px;
+  font: normal 18px "Montserrat";
+  //background-size: contain;
+  margin-bottom: 30px;
+  //appearance: none;       /* Remove default arrow */
+  //background-image: url(https://cdn.icon-icons.com/icons2/38/PNG/512/downarrow_abajo_5820.png);   /* Add custom arrow */
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  padding: 5px;
+  border: 2px solid gray;
+  font: normal 18px "Montserrat";
+}

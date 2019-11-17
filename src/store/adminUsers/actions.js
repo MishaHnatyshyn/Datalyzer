@@ -43,7 +43,7 @@ export const createUserSuccess = createAction(CREATE_SUCCESS, (user) => user);
 export const setUsers = createAction(SET_USERS, (users) => users);
 export const appendUsers = createAction(APPEND_USERS, (users) => users);
 export const changeSearchInput = createAction(CHANGE_SEARCH_INPUT, (value) => value);
-export const getUserTypeValue = createAction(FORM_USER_TYPE_INPUT_VALUE, (value) => value);
+export const getUserTypeValue = createAction(FORM_USER_TYPE_INPUT_VALUE, (object) => object.value);
 export const getUsernameValue = createAction(FORM_USERNAME_INPUT_VALUE, (value) => value);
 export const getPasswordValue = createAction(FORM_PASSWORD_INPUT_VALUE, (value) => value);
 export const getUserDescriptionValue = createAction(FORM_DESCRIPTION_INPUT_VALUE, (value) => value);
