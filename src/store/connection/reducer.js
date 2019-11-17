@@ -7,7 +7,13 @@ import {
   CHANGE_SEARCH_INPUT,
   CREATE_FAILURE,
   CREATE_START,
-  NEXT_PAGE
+  NEXT_PAGE,
+  HOST_VALUE,
+  PORT_VALUE,
+  NAME_DB_VALUE,
+  USERNAME_VALUE,
+  PASSWORD_VALUE,
+  TYPE_VALUE,
 } from './types';
 
 const initialState = {
@@ -82,6 +88,18 @@ export default function connectionsReducer(state = initialState, action) {
         ...state,
         search: action.payload,
       };
+    case HOST_VALUE:
+      return { ...state, host: action.payload, error: false };
+    case PORT_VALUE:
+      return { ...state, port: action.payload, error: false };
+    case NAME_DB_VALUE:
+      return { ...state, nameDB: action.payload, error: false };
+    case USERNAME_VALUE:
+      return { ...state, username: action.payload, error: false };
+    case PASSWORD_VALUE:
+      return { ...state, password: action.payload, error: false };
+    case TYPE_VALUE:
+      return { ...state, type: action.payload, error: false };
     default:
       return state;
   }

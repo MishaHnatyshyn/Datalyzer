@@ -12,6 +12,13 @@ export const isError = compose(prop('error'), root);
 export const isLoading = compose(prop('isLoading'), root);
 export const hasNextPage = compose(prop('hasNextPage'), root);
 
+export const getType = compose(prop('type'), root);
+export const getUsername = compose(prop('username'), root);
+export const getPassword = compose(prop('password'), root);
+export const getPort = compose(prop('port'), root);
+export const getNameDB = compose(prop('nameDB'), root);
+export const getHost = compose(prop('host'), root);
+
 export const getPaging = createSelector(
   [getCurrentPage, getLastLoadedPage],
   (currentPage, lastLoadedPage) => ({ currentPage, lastLoadedPage })

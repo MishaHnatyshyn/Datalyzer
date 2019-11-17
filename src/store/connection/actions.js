@@ -9,7 +9,13 @@ import {
   CREATE_FAILURE,
   CREATE_START,
   CREATE_SUCCESS,
-  CHANGE_SEARCH_INPUT
+  CHANGE_SEARCH_INPUT,
+  HOST_VALUE,
+  PORT_VALUE,
+  NAME_DB_VALUE,
+  USERNAME_VALUE,
+  PASSWORD_VALUE,
+  TYPE_VALUE,
 } from './types';
 import { getPaging, getConnectionsSearchPayload } from './selectors';
 import { get } from '../../utils/http';
@@ -25,6 +31,14 @@ export const createConnectionSuccess = createAction(CREATE_SUCCESS, (connection)
 export const setConnections = createAction(SET_CONNECTIONS, (connections) => connections);
 export const appendConnections = createAction(APPEND_CONNECTIONS, (connections) => connections);
 export const changeSearchInput = createAction(CHANGE_SEARCH_INPUT, (value) => value);
+
+
+export const getHostValue = createAction(HOST_VALUE, (connection) => connection);
+export const getPortValue = createAction(PORT_VALUE, (connection) => connection);
+export const getNameDBValue = createAction(NAME_DB_VALUE, (connection) => connection);
+export const getUsernameValue = createAction(USERNAME_VALUE, (connection) => connection);
+export const getPasswordValue = createAction(PASSWORD_VALUE, (connection) => connection);
+export const getTypeValue = createAction(TYPE_VALUE, (connection) => connection.value);
 
 export const searchConnections = () => async (dispatch, getState) => {
   const { currentPage, itemsPerPage, search } = getConnectionsSearchPayload(getState());
@@ -66,4 +80,26 @@ export const getModelsCount = () => async (dispatch) => {
   } catch (e) {
     dispatch(fetchFailure());
   }
+};
+
+export const newConnectionAction = () => async (dispatch, getState) => {
+  // const { login: { username: name, password } } = getState();
+  //
+  // if (!name || !password) {
+  //   return dispatch(emptyFieldsError());
+  // }
+  //
+  // try {
+  //   const data = await post(LOGIN_ENDPOINT, { username: name, password });
+  //   const {
+  //     access_token, username, id, user_type
+  //   } = data;
+  //   setIntoLocalStorage(LOCAL_STORAGE_USER_KEY, {
+  //     access_token, username, id, user_type
+  //   });
+  //   dispatch(loginSuccess(access_token));
+  //   dispatch(setUserData({ username, userId: id, userType: user_type.name }));
+  // } catch (e) {
+  //   dispatch(loginFailure());
+  // }
 };
