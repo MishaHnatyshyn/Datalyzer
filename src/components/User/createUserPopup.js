@@ -12,10 +12,9 @@ import styles from '../shared/BasePopup/base.popup.module.scss';
 import '../shared/BasePopup/styles.scss';
 // import CreateButton from '../shared/CreateButton';
 // import Caption from '../shared/Caption';
-// import PopupButtons from '../shared/BasePopup/components/PopupButtons';
-// import LoginCaption from '../Login/LoginForm/LoginCaption';
-// import AlertMessage from '../shared/AlertMessage';
-// import LoginButton from '../Login/LoginForm/LoginButton';
+import AlertMessage from '../shared/AlertMessage';
+import { getErrorMessage } from '../../store/login/selectors';
+import PopupButtons from '../shared/BasePopup/components/PopupButtons';
 import {
   getUserType,
   getUsername,
@@ -32,8 +31,6 @@ import {
   getPasswordRepeatValue,
   getUserDescriptionValue
 } from '../../store/adminUsers/actions';
-import { getErrorMessage } from '../../store/login/selectors';
-import PopupButtons from '../shared/BasePopup/components/PopupButtons';
 
 const newUserForm = ({
   formUsername,
