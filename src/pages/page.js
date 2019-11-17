@@ -1,10 +1,10 @@
 import React from 'react';
 // import styles from './loginForm.module.scss';
-import newUserForm from '../components/User/createUserPopup';
+import NewUserForm from '../components/User/createUserPopup';
 
 const newUser = () => (
   <div>
-    <newUserForm />
+    <NewUserForm />
   </div>
 );
 

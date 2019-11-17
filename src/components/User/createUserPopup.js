@@ -1,68 +1,102 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-// eslint-disable-next-line import/no-unresolved
-// import styles from './loginForm.module.scss';
+import { CSSTransition } from 'react-transition-group';
 // import LoginCaption from './LoginCaption';
 // import LoginButton from './LoginButton';
 import Input from '../shared/Input';
-import {
-  getPassword, getUsername, getErrorMessage, isError
-} from '../../store/login/selectors';
+// import {
+//   getPassword, getUsername, getErrorMessage, isError
+// } from '../../store/login/selectors';
 // import { changePasswordValue, changeUsernameValue, login } from '../../../store/login/actions';
 // import AlertMessage from '../../shared/AlertMessage';
-// import { preventDefaultHandler } from '../../../utils';
+import { preventDefaultHandler } from '../../utils';
 // import BasePopup from '../shared/BasePopup';
-import CreateButton from '../shared/CreateButton';
-import Caption from '../shared/Caption';
+// import PopupButtons from '../shared/PopupButtons';
+import styles from '../shared/BasePopup/base.popup.module.scss';
+import '../shared/BasePopup/styles.scss';
+// import CreateButton from '../shared/CreateButton';
+// import Caption from '../shared/Caption';
+// import PopupButtons from '../shared/BasePopup/components/PopupButtons';
+// import LoginCaption from '../Login/LoginForm/LoginCaption';
+// import AlertMessage from '../shared/AlertMessage';
+// import LoginButton from '../Login/LoginForm/LoginButton';
+import {
+  getUserType,
+  getUsername,
+  getPassword,
+  getPasswordRepeat,
+  getUserDescription,
+  isError
+} from '../../store/adminUsers/selectors';
+import {
+  newUser,
+  getUserTypeValue,
+  getUsernameValue,
+  getPasswordValue,
+  getPasswordRepeatValue,
+  getUserDescriptionValue
+} from '../../store/adminUsers/actions';
+import { getErrorMessage } from '../../store/login/selectors';
 
 const newUserForm = ({
-                     formUsername,
-                     formPassword,
-                     formPasswordRepeat,
-                     formDescription,
-                     formUserType,
-                     changePassword,
-                     changeUsername,
-                     submitForm,
-                     isError,
-                     errorMessage,
-                   }) => {
+                       formUsername,
+                       formPassword,
+                       formPasswordRepeat,
+                       formUserType,
+                       formDescription,
+                       isCreatingInProgress,
+                       isVisible,
+                       changePassword,
+                       changeUsername,
+                       changePasswordRepeat,
+                       changeUserType,
+                       changeUserDescription,
+                       submitForm,
+                       isError
+                     }) => {
   const formHandler = useMemo(
-    // () => preventDefaultHandler(submitForm),
+    () => preventDefaultHandler(submitForm),
     [submitForm]
   );
-  // const alertClasses = useMemo(() => [
-  //   styles.error,
-  //   isError ? styles.visible : styles.hidden
-  // ], [isError]);
-  
+  const alertClasses = useMemo(() => [
+    styles.error,
+    isError ? styles.visible : styles.hidden
+  ], [isError]);
   return (
-    <div>
-      <Caption />
-      <div />
-      <form onSubmit={formHandler}>
-        <div>
-          <Input text="Username" type="text" onChange={changeUsername} value={formUsername}>
-          </Input>
-          <Input text="Password" type="password" onChange={changePassword} value={formPassword}>
-          </Input>
-          <Input text="Repeat password" type="password" value={formPasswordRepeat}>
-          </Input>
-          <Input text="User type" type="password" value={formUserType}>
-          </Input>
-          <Input text="Description" type="password" value={formDescription}>
-          </Input>
-        </div>
-        <AlertMessage message={errorMessage} classes={alertClasses}>
-          <img src="/images/report.png" alt="error message" />
-        </AlertMessage>
-        <CreateButton />
-      </form>
-    </div>
+    <CSSTransition
+      in={true}
+      timeout={300}
+      classNames="alert"
+      unmountOnExit
+    >
+      <div className={styles.loginForm}>
+        <div className={styles.line} />
+        <form onSubmit={formHandler}>
+          <div className={styles.inputFields}>
+            <Input text="Username" type="text" name="formUsername" onChange={changeUsername} value={formUsername}>
+              <img src="/images/user.png" alt="user icon" />
+            </Input>
+            <Input text="Password" type="password" name="password" onChange={changePassword} value={formPassword}>
+              <img src="/images/padlock.png" alt="password icon" />
+            </Input>
+            <Input text="PasswordRepeat" type="password" name="formPasswordRepeat" onChange={changePasswordRepeat} value={formPasswordRepeat}>
+              <img src="/images/padlock.png" alt="password icon" />
+            </Input>
+            <Input text="formDescription" type="text" name="formDescription" onChange={changeUserDescription} value={formDescription}>
+              <img src="/images/padlock.png" alt="password icon" />
+            </Input>
+          </div>
+        </form>
+      </div>
+    </CSSTransition>
   );
 };
 
+newUserForm.defaultProps = {
+  formDescription: '',
+  changeUserDescription: () => {},
+};
 
 newUserForm.propTypes = {
   formUsername: PropTypes.string.isRequired,
@@ -70,28 +104,32 @@ newUserForm.propTypes = {
   formPasswordRepeat: PropTypes.string.isRequired,
   formUserType: PropTypes.number.isRequired,
   formDescription: PropTypes.string,
+  submitForm: PropTypes.func.isRequired,
+  isVisible: PropTypes.bool.isRequired,
+  isCreatingInProgress: PropTypes.bool.isRequired,
+  isError: PropTypes.func.isRequired,
   changePassword: PropTypes.func.isRequired,
   changeUsername: PropTypes.func.isRequired,
-  submitForm: PropTypes.func.isRequired,
-  isError: PropTypes.bool.isRequired,
-  errorMessage: PropTypes.string.isRequired,
+  changePasswordRepeat: PropTypes.func.isRequired,
+  changeUserType: PropTypes.func.isRequired,
+  changeUserDescription: PropTypes.func,
 };
-
 const mapStateToProps = (state) => ({
   formUsername: getUsername(state),
   formPassword: getPassword(state),
-  // formPasswordRepeat: getPasswordRepeat(state),
-  // formUserType: getUserTypeId(state),
-  // formDescription: getDescription(state),
+  formPasswordRepeat: getPasswordRepeat(state),
+  formUserType: getUserType(state),
+  formUserDescription: getUserDescription(state),
   isError: isError(state),
   errorMessage: getErrorMessage(state),
 });
-
 const mapDispatchToProps = (dispatch) => ({
-  changePassword: (value) => { dispatch(changePasswordValue(value)); },
-  changeUsername: (value) => { dispatch(changeUsernameValue(value)); },
-  submitForm: () => { dispatch(login()); },
+  changePassword: (value) => { dispatch(getPasswordValue(value)); },
+  changeUsername: (value) => { dispatch(getUsernameValue(value)); },
+  changePasswordRepeat: (value) => { dispatch(getPasswordRepeatValue(value)); },
+  changeUserType: (value) => { dispatch(getUserTypeValue(value)); },
+  changeUserDescription: (value) => { dispatch(getUserDescriptionValue(value)); },
+  submitForm: () => { dispatch(newUser()); },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(newUserForm);
-
