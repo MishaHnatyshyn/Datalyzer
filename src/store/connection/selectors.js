@@ -17,6 +17,7 @@ export const getUsername = compose(prop('username'), root);
 export const getPassword = compose(prop('password'), root);
 export const getPort = compose(prop('port'), root);
 export const getNameDB = compose(prop('nameDB'), root);
+export const getNameConnection = compose(prop('nameConnection'), root);
 export const getHost = compose(prop('host'), root);
 
 export const getPaging = createSelector(

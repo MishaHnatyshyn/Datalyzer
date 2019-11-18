@@ -16,10 +16,16 @@ import {
   USERNAME_VALUE,
   PASSWORD_VALUE,
   TYPE_VALUE,
+  NAME_CONNECTION_VALUE,
 } from './types';
+import { EMPTY_FIELDS_ERROR } from '../login/types';
 import { getPaging, getConnectionsSearchPayload } from './selectors';
-import { get } from '../../utils/http';
-import { ADMIN_CONNECTIONS_ENDPOINT, ADMIN_CONNECTIONS_COUNT_ENDPOINT } from '../../config';
+import { get, post } from '../../utils/http';
+import {
+  ADMIN_CONNECTIONS_ENDPOINT,
+  ADMIN_CONNECTIONS_COUNT_ENDPOINT,
+  ADMIN_CONNECTIONS_CREATE_ENDPOINT
+} from '../../config';
 
 export const fetchStart = createAction(FETCH_START);
 export const fetchFailure = createAction(FETCH_FAILURE);
@@ -31,11 +37,13 @@ export const createConnectionSuccess = createAction(CREATE_SUCCESS, (connection)
 export const setConnections = createAction(SET_CONNECTIONS, (connections) => connections);
 export const appendConnections = createAction(APPEND_CONNECTIONS, (connections) => connections);
 export const changeSearchInput = createAction(CHANGE_SEARCH_INPUT, (value) => value);
+export const emptyFieldsError = createAction(EMPTY_FIELDS_ERROR);
 
 
 export const getHostValue = createAction(HOST_VALUE, (connection) => connection);
 export const getPortValue = createAction(PORT_VALUE, (connection) => connection);
 export const getNameDBValue = createAction(NAME_DB_VALUE, (connection) => connection);
+export const getNameConnectionValue = createAction(NAME_CONNECTION_VALUE, (connection) => connection);
 export const getUsernameValue = createAction(USERNAME_VALUE, (connection) => connection);
 export const getPasswordValue = createAction(PASSWORD_VALUE, (connection) => connection);
 export const getTypeValue = createAction(TYPE_VALUE, (connection) => connection.value);
@@ -83,23 +91,34 @@ export const getModelsCount = () => async (dispatch) => {
 };
 
 export const newConnectionAction = () => async (dispatch, getState) => {
-  // const { login: { username: name, password } } = getState();
-  //
-  // if (!name || !password) {
-  //   return dispatch(emptyFieldsError());
-  // }
-  //
-  // try {
-  //   const data = await post(LOGIN_ENDPOINT, { username: name, password });
-  //   const {
-  //     access_token, username, id, user_type
-  //   } = data;
-  //   setIntoLocalStorage(LOCAL_STORAGE_USER_KEY, {
-  //     access_token, username, id, user_type
-  //   });
-  //   dispatch(loginSuccess(access_token));
-  //   dispatch(setUserData({ username, userId: id, userType: user_type.name }));
-  // } catch (e) {
-  //   dispatch(loginFailure());
-  // }
+  const {
+    connections: {
+      host,
+      port,
+      nameDB,
+      username: name,
+      password,
+      type,
+      nameConnection,
+    }
+  } = getState();
+
+  if (!name || !password || !host || !port || !nameDB || !type || !nameConnection) {
+    return dispatch(emptyFieldsError());
+  }
+  dispatch(createConnectionStart());
+  try {
+    const data = await post(ADMIN_CONNECTIONS_CREATE_ENDPOINT, {
+      host,
+      port,
+      name: nameConnection,
+      databaseName: nameDB,
+      username: name,
+      password,
+      typeId: type,
+    });
+    dispatch(setConnections(data));
+  } catch (e) {
+    dispatch(createConnectionFailure());
+  }
 };

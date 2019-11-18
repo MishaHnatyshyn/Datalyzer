@@ -12,10 +12,6 @@ import styles from '../shared/BasePopup/base.popup.module.scss';
 import '../shared/BasePopup/styles.scss';
 // import CreateButton from '../shared/CreateButton';
 // import Caption from '../shared/Caption';
-// import PopupButtons from '../shared/BasePopup/components/PopupButtons';
-// import LoginCaption from '../Login/LoginForm/LoginCaption';
-// import AlertMessage from '../shared/AlertMessage';
-// import LoginButton from '../Login/LoginForm/LoginButton';
 import {
   getType,
   getUsername,
@@ -23,6 +19,7 @@ import {
   getHost,
   getPort,
   getNameDB,
+  getNameConnection,
   isError
 } from '../../store/connection/selectors';
 import {
@@ -33,9 +30,11 @@ import {
   getUsernameValue,
   getNameDBValue,
   getTypeValue,
+  getNameConnectionValue,
 } from '../../store/connection/actions';
 import { getErrorMessage } from '../../store/login/selectors';
 import PopupButtons from '../shared/BasePopup/components/PopupButtons';
+import AlertMessage from '../shared/AlertMessage';
 
 const newConnection = ({
   host,
@@ -44,10 +43,12 @@ const newConnection = ({
   username,
   password,
   type,
+  nameConnection,
   isCreatingInProgress,
   isVisible,
   submitForm,
   isError,
+  errorMessage,
   okButton,
   cancelButton,
   onClose,
@@ -56,6 +57,7 @@ const newConnection = ({
   changeHost,
   changeType,
   changePort,
+  changeNameConnection,
   changeNameDB,
 }) => {
   const formHandler = useMemo(
@@ -88,32 +90,37 @@ const newConnection = ({
             <div className={styles.line} />
             <form onSubmit={formHandler}>
               <div className={styles.inputFields}>
-                <Input type="text" name="Host" onChange={changeHost} value={host} />
-                <Input text="Port" type="text" name="Port" onChange={changePort} value={port} />
-                <Input text="DB" type="text" name="nameDB" onChange={changeNameDB} value={nameDB}>
-                  <img src="/images/padlock.png" alt="password icon" />
-                </Input>
-                <Input text="Username" type="text" name="Username" onChange={changeUsername} value={username}>
-                  <img src="/images/user.png" alt="user icon" />
-                </Input>
-                <Input text="Password" type="password" name="password" onChange={changePassword} value={password}>
-                  <img src="/images/padlock.png" alt="password icon" />
-                </Input>
-                <select value={type} onChange={changeType}>
+                <label className="label" htmlFor="hostField">HOST</label>
+                <Input id="hostField" type="text" name="Host" onChange={changeHost} value={host} />
+                <label className="label" htmlFor="portField">PORT</label>
+                <Input id="portField" type="text" name="Port" onChange={changePort} value={port} />
+                <label className="label" htmlFor="nameDBField">DATABASE NAME</label>
+                <Input id="nameDBField" type="text" name="nameDB" onChange={changeNameDB} value={nameDB} />
+                <label className="label" htmlFor="nameConnectionField">CONNECTION NAME</label>
+                <Input id="nameConnectionField" type="text" name="nameConnection" onChange={changeNameConnection} value={nameConnection} />
+                <label className="label" htmlFor="usernameField">USERNAME</label>
+                <Input id="usernameField" type="text" name="Username" onChange={changeUsername} value={username} />
+                <label className="label" htmlFor="passwordField">PASSWORD</label>
+                <Input id="passwordField" type="password" name="password" onChange={changePassword} value={password} />
+                <label className="label" htmlFor="typeField">TYPE</label>
+                <select id="typeField" value={type} onChange={changeType}>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
                 </select>
               </div>
+              <AlertMessage message={errorMessage} classes={alertClasses}>
+                <img src="/images/report.png" alt="error message" />
+              </AlertMessage>
+              <div className={styles.buttons}>
+                <PopupButtons
+                  okButton={okButton}
+                  cancelButton={cancelButton}
+                  onSubmit={submitForm}
+                  onClose={onClose}
+                />
+              </div>
             </form>
-            <div className={styles.buttons}>
-              <PopupButtons
-                okButton={okButton}
-                cancelButton={cancelButton}
-                onSubmit={submitForm}
-                onClose={onClose}
-              />
-            </div>
           </div>
         </div>
       </div>
@@ -124,13 +131,15 @@ const newConnection = ({
 newConnection.defaultProps = {
   okButton: true,
   cancelButton: true,
-  onClose: () => {}
+  onClose: () => {},
+  errorMessage: '',
 };
 
 newConnection.propTypes = {
   host: PropTypes.string.isRequired,
   port: PropTypes.string.isRequired,
   nameDB: PropTypes.string.isRequired,
+  nameConnection: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
   type: PropTypes.number.isRequired,
@@ -139,12 +148,14 @@ newConnection.propTypes = {
   isVisible: PropTypes.bool.isRequired,
   isCreatingInProgress: PropTypes.bool.isRequired,
   isError: PropTypes.func.isRequired,
+  errorMessage: PropTypes.string,
   changePassword: PropTypes.func.isRequired,
   changeUsername: PropTypes.func.isRequired,
   changeHost: PropTypes.func.isRequired,
   changeType: PropTypes.func.isRequired,
   changePort: PropTypes.func.isRequired,
   changeNameDB: PropTypes.func.isRequired,
+  changeNameConnection: PropTypes.func.isRequired,
   okButton: PropTypes.bool,
   cancelButton: PropTypes.bool,
 };
@@ -154,6 +165,7 @@ const mapStateToProps = (state) => ({
   host: getHost(state),
   port: getPort(state),
   nameDB: getNameDB(state),
+  nameConnection: getNameConnection(state),
   type: getType(state),
   isError: isError(state),
   errorMessage: getErrorMessage(state),
@@ -162,6 +174,7 @@ const mapDispatchToProps = (dispatch) => ({
   changeHost: (value) => { dispatch(getHostValue(value)); },
   changePort: (value) => { dispatch(getPortValue(value)); },
   changeNameDB: (value) => { dispatch(getNameDBValue(value)); },
+  changeNameConnection: (value) => { dispatch(getNameConnectionValue(value)); },
   changePassword: (value) => { dispatch(getPasswordValue(value)); },
   changeUsername: (value) => { dispatch(getUsernameValue(value)); },
   changeType: (value) => { dispatch(getTypeValue(value)); },

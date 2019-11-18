@@ -34,8 +34,8 @@
 }
 
 .popup {
-  max-width: 410px;
-  min-width: 320px;
+  max-width: 600px;
+  min-width: 450px;
   position: relative;
 
   padding: 25px;
@@ -69,4 +69,20 @@
 
 .buttons {
   padding-top: 30px;
+}
+
+label {
+  font: $text-regular;
+}
+
+form {
+  width: 80%;
+}
+
+input {
+  width: 80%;
+}
+
+.visible {
+  visibility: visible;
 }
