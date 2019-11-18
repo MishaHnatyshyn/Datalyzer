@@ -6,7 +6,13 @@ export const getLastLoadedPage = compose(prop('lastLoadedPage'), root);
 export const getCurrentPage = compose(prop('currentPage'), root);
 export const getItemsPerPage = compose(prop('itemsPerPage'), root);
 export const getSearchInputText = compose(prop('search'), root);
-export const getNewUserFormValues = compose(prop('newUserForm'), root);
+
+export const getUserType = compose(prop('formUserType'), root);
+export const getUsername = compose(prop('formUsername'), root);
+export const getPassword = compose(prop('formPassword'), root);
+export const getUserDescription = compose(prop('formDescription'), root);
+export const getPasswordRepeat = compose(prop('formPasswordRepeat'), root);
+
 export const getUsersCountData = compose(prop('totalUsers'), root);
 export const getUsers = compose(prop('users'), root);
 export const hasNextPage = compose(prop('hasNextPage'), root);

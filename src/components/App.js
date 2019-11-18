@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch } from 'react-router-dom';
-import Login from '../pages/Login';
+import newUser from '../pages/page';
 import { NotLoggedInRoute, ProtectedAdminRoute, ProtectedUserRoute } from './shared/ProtectedRoutes';
 import newConnection from '../pages/page';
 import {
@@ -9,6 +9,7 @@ import {
 import Admin from '../pages/Admin';
 
 const App = () => (
+  
   <div>
     <Switch>
       <NotLoggedInRoute exact path={ROOT_URL} component={Login} />

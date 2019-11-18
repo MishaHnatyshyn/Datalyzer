@@ -9,7 +9,13 @@ import {
   CREATE_SUCCESS,
   CREATE_START,
   CREATE_FAILURE,
-  SET_TOTAL_USERS, CHANGE_SEARCH_INPUT,
+  SET_TOTAL_USERS,
+  CHANGE_SEARCH_INPUT,
+  FORM_USER_TYPE_INPUT_VALUE,
+  FORM_DESCRIPTION_INPUT_VALUE,
+  FORM_USERNAME_INPUT_VALUE,
+  FORM_PASSWORD_INPUT_VALUE,
+  FORM_PASSWORD_REPEAT_INPUT_VALUE,
 } from './types';
 
 const initialState = {
@@ -29,9 +35,10 @@ const initialState = {
     formUsername: '',
     formPassword: '',
     formPasswordRepeat: '',
-    formUserType: '',
+    formUserType: 1,
     formDescription: '',
     isCreatingInProgress: false,
+    isVisible: true,
   }
 };
 
@@ -113,9 +120,19 @@ export default function adminUsersReducer(state = initialState, action) {
         formUsername: '',
         formPassword: '',
         formPasswordRepeat: '',
-        formUserType: '',
+        formUserType: 1,
         formDescription: '',
       };
+    case FORM_USERNAME_INPUT_VALUE:
+      return { ...state, formUsername: action.payload, error: false };
+    case FORM_PASSWORD_INPUT_VALUE:
+      return { ...state, formPassword: action.payload, error: false };
+    case FORM_PASSWORD_REPEAT_INPUT_VALUE:
+      return { ...state, formPasswordRepeat: action.payload, error: false };
+    case FORM_DESCRIPTION_INPUT_VALUE:
+      return { ...state, formDescription: action.payload, error: false };
+    case FORM_USER_TYPE_INPUT_VALUE:
+      return { ...state, formUserType: action.payload, error: false };
     default:
       return state;
   }
