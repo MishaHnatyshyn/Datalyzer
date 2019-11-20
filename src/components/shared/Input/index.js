@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import styles from './textField.module.scss';
 
 const Input = ({
-  text, children, type, onChange, value
+  text, children, type, onChange, value, classes
 }) => {
   function handleChange(event) {
     onChange(event.target.value);
@@ -12,7 +13,7 @@ const Input = ({
   return (
     <div className={styles.container}>
       <input
-        className={styles.input}
+        className={classes}
         value={value}
         type={type}
         placeholder={text}
@@ -23,11 +24,16 @@ const Input = ({
   );
 };
 
+Input.defaultProps = {
+  classes: [styles.input]
+};
+
 Input.propTypes = {
   text: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   type: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  classes: PropTypes.string,
   value: PropTypes.string.isRequired,
 };
 

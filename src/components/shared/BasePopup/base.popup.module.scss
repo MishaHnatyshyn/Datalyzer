@@ -73,6 +73,7 @@
 
 label {
   font: $text-regular;
+  display: flex;
 }
 
 form {
@@ -80,11 +81,28 @@ form {
 }
 
 input {
-  width: 80%;
+  width: 82%;
 }
 
 .visible {
   visibility: visible;
+  img {
+    margin-left: 5px;
+  }
+  p {
+    margin: 15px 0;
+  }
+}
+
+//.error {
+//  margin: 0 auto 25px auto;
+//  width: 320px;
+//  transition: opacity .5s ease-in-out;
+//}
+
+.hidden {
+  visibility: hidden;
+}
 
 select {
   width: 100%;
@@ -95,13 +113,14 @@ select {
   padding-left: 5px;
   font: normal 18px "Montserrat";
   //background-size: contain;
-  margin-bottom: 30px;
+  margin: 20px 0;
   //appearance: none;       /* Remove default arrow */
   //background-image: url(https://cdn.icon-icons.com/icons2/38/PNG/512/downarrow_abajo_5820.png);   /* Add custom arrow */
 }
 
 textarea {
-  width: 100%;
+  width: 96%;
+  resize: none;
   height: 100px;
   padding: 5px;
   border: 2px solid gray;

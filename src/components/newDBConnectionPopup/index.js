@@ -2,17 +2,14 @@ import React, { useMemo, useCallback } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
-// import LoginCaption from './LoginCaption';
-// import LoginButton from './LoginButton';
 import Input from '../shared/Input';
-// import AlertMessage from '../../shared/AlertMessage';
+import AlertMessage from '../shared/AlertMessage';
 import { preventDefaultHandler } from '../../utils';
-// import BasePopup from '../shared/BasePopup';
 import styles from '../shared/BasePopup/base.popup.module.scss';
 import '../shared/BasePopup/styles.scss';
-// import CreateButton from '../shared/CreateButton';
-// import Caption from '../shared/Caption';
+import NewDBCaption from './NewDBCaption';
 import {
+  getVisible,
   getType,
   getUsername,
   getPassword,
@@ -20,7 +17,8 @@ import {
   getPort,
   getNameDB,
   getNameConnection,
-  isError
+  isError,
+  getErrorMessage,
 } from '../../store/connection/selectors';
 import {
   newConnectionAction,
@@ -31,10 +29,10 @@ import {
   getNameDBValue,
   getTypeValue,
   getNameConnectionValue,
+  onCloseAction,
 } from '../../store/connection/actions';
-import { getErrorMessage } from '../../store/login/selectors';
 import PopupButtons from '../shared/BasePopup/components/PopupButtons';
-import AlertMessage from '../shared/AlertMessage';
+import stylesInput from '../shared/Input/textField.module.scss';
 
 const newConnection = ({
   host,
@@ -50,6 +48,7 @@ const newConnection = ({
   isError,
   errorMessage,
   okButton,
+  okButtonType,
   cancelButton,
   onClose,
   changeUsername,
@@ -73,7 +72,7 @@ const newConnection = ({
   ), [onClose]);
   return (
     <CSSTransition
-      in={true}
+      in={isVisible}
       timeout={300}
       classNames="alert"
       unmountOnExit
@@ -86,27 +85,27 @@ const newConnection = ({
               <img src="/images/Popup/cross.png" alt="" />
             </div>
           </div>
+          <NewDBCaption />
           <div className={styles.body}>
             <div className={styles.line} />
             <form onSubmit={formHandler}>
               <div className={styles.inputFields}>
                 <label className="label" htmlFor="hostField">HOST</label>
-                <Input id="hostField" type="text" name="Host" onChange={changeHost} value={host} />
+                <Input id="hostField" classes={stylesInput.noImage} type="text" name="Host" onChange={changeHost} value={host} />
                 <label className="label" htmlFor="portField">PORT</label>
-                <Input id="portField" type="text" name="Port" onChange={changePort} value={port} />
+                <Input id="portField" classes={stylesInput.noImage} type="text" name="Port" onChange={changePort} value={port} />
                 <label className="label" htmlFor="nameDBField">DATABASE NAME</label>
-                <Input id="nameDBField" type="text" name="nameDB" onChange={changeNameDB} value={nameDB} />
+                <Input id="nameDBField" classes={stylesInput.noImage} type="text" name="nameDB" onChange={changeNameDB} value={nameDB} />
                 <label className="label" htmlFor="nameConnectionField">CONNECTION NAME</label>
-                <Input id="nameConnectionField" type="text" name="nameConnection" onChange={changeNameConnection} value={nameConnection} />
+                <Input id="nameConnectionField" classes={stylesInput.noImage} type="text" name="nameConnection" onChange={changeNameConnection} value={nameConnection} />
                 <label className="label" htmlFor="usernameField">USERNAME</label>
-                <Input id="usernameField" type="text" name="Username" onChange={changeUsername} value={username} />
+                <Input id="usernameField" classes={stylesInput.noImage} type="text" name="Username" onChange={changeUsername} value={username} />
                 <label className="label" htmlFor="passwordField">PASSWORD</label>
-                <Input id="passwordField" type="password" name="password" onChange={changePassword} value={password} />
+                <Input id="passwordField" classes={stylesInput.noImage} type="password" name="password" onChange={changePassword} value={password} />
                 <label className="label" htmlFor="typeField">TYPE</label>
                 <select id="typeField" value={type} onChange={changeType}>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
+                  <option value="">type</option>
+                  <option value="1">PostgreSQL</option>
                 </select>
               </div>
               <AlertMessage message={errorMessage} classes={alertClasses}>
@@ -118,6 +117,7 @@ const newConnection = ({
                   cancelButton={cancelButton}
                   onSubmit={submitForm}
                   onClose={onClose}
+                  okButtonType={okButtonType}
                 />
               </div>
             </form>
@@ -133,6 +133,7 @@ newConnection.defaultProps = {
   cancelButton: true,
   onClose: () => {},
   errorMessage: '',
+  okButtonType: 'submit'
 };
 
 newConnection.propTypes = {
@@ -157,9 +158,11 @@ newConnection.propTypes = {
   changeNameDB: PropTypes.func.isRequired,
   changeNameConnection: PropTypes.func.isRequired,
   okButton: PropTypes.bool,
+  okButtonType: PropTypes.string,
   cancelButton: PropTypes.bool,
 };
 const mapStateToProps = (state) => ({
+  isVisible: getVisible(state),
   username: getUsername(state),
   password: getPassword(state),
   host: getHost(state),
@@ -178,6 +181,7 @@ const mapDispatchToProps = (dispatch) => ({
   changePassword: (value) => { dispatch(getPasswordValue(value)); },
   changeUsername: (value) => { dispatch(getUsernameValue(value)); },
   changeType: (value) => { dispatch(getTypeValue(value)); },
+  onClose: () => { dispatch(onCloseAction()); },
   submitForm: () => { dispatch(newConnectionAction()); },
 });
 

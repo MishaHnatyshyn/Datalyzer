@@ -12,6 +12,8 @@ export const getUsername = compose(prop('formUsername'), root);
 export const getPassword = compose(prop('formPassword'), root);
 export const getUserDescription = compose(prop('formDescription'), root);
 export const getPasswordRepeat = compose(prop('formPasswordRepeat'), root);
+export const getErrorMessage = compose(prop('errorMessage'), root);
+export const getVisible = compose(prop('isVisible'), root);
 
 export const getUsersCountData = compose(prop('totalUsers'), root);
 export const getUsers = compose(prop('users'), root);

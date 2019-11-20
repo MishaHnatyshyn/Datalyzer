@@ -17,16 +17,29 @@ import {
   FORM_USERNAME_INPUT_VALUE,
   FORM_PASSWORD_INPUT_VALUE,
   FORM_PASSWORD_REPEAT_INPUT_VALUE,
+  PASSWORD_LENGTH_ERROR,
+  PASSWORD_EQUAL_ERROR,
+  EMPTY_FIELDS_ERROR,
+  CLOSE_ACTION,
 } from './types';
 import { getPaging, getUsersSearchPayload } from './selectors';
 import { get, post } from '../../utils/http';
-import { ADMIN_USERS_COUNT_ENDPOINT, ADMIN_USERS_ENDPOINT, LOGIN_ENDPOINT } from '../../config';
+import {
+  ADMIN_CONNECTIONS_CREATE_ENDPOINT,
+  ADMIN_USERS_COUNT_ENDPOINT,
+  ADMIN_USERS_ENDPOINT,
+  LOGIN_ENDPOINT
+} from '../../config';
 import { set as setIntoLocalStorage } from '../../utils/localStorage';
 import { LOCAL_STORAGE_USER_KEY } from '../login/constants';
 import { setUserData } from '../user/actions';
-import { emptyFieldsError, loginFailure, loginSuccess } from '../login/actions';
 import { compose, prop } from 'lodash/fp';
-import { USERNAME_INPUT_VALUE } from '../login/types';
+import {
+  createConnectionFailure,
+  createConnectionStart,
+  setConnections
+} from '../connection/actions';
+import adminUsersReducer from './reducer';
 
 export const changeInputField = createAction(
   CHANGE_FORM_FIELD,
@@ -34,6 +47,7 @@ export const changeInputField = createAction(
 );
 export const fetchStart = createAction(FETCH_START);
 export const fetchFailure = createAction(FETCH_FAILURE);
+export const emptyFieldsError = createAction(EMPTY_FIELDS_ERROR);
 export const nextPage = createAction(NEXT_PAGE);
 export const prevPage = createAction(PREV_PAGE);
 export const setTotalUsers = createAction(SET_TOTAL_USERS, (count) => count);
@@ -43,11 +57,14 @@ export const createUserSuccess = createAction(CREATE_SUCCESS, (user) => user);
 export const setUsers = createAction(SET_USERS, (users) => users);
 export const appendUsers = createAction(APPEND_USERS, (users) => users);
 export const changeSearchInput = createAction(CHANGE_SEARCH_INPUT, (value) => value);
-export const getUserTypeValue = createAction(FORM_USER_TYPE_INPUT_VALUE, (object) => object.value);
+export const passwordLengthError = createAction(PASSWORD_LENGTH_ERROR, (value) => value);
+export const passwordEqualError = createAction(PASSWORD_EQUAL_ERROR, (value) => value);
+export const getUserTypeValue = createAction(FORM_USER_TYPE_INPUT_VALUE, (object) => object.target.value);
 export const getUsernameValue = createAction(FORM_USERNAME_INPUT_VALUE, (value) => value);
 export const getPasswordValue = createAction(FORM_PASSWORD_INPUT_VALUE, (value) => value);
-export const getUserDescriptionValue = createAction(FORM_DESCRIPTION_INPUT_VALUE, (value) => value);
+export const getUserDescriptionValue = createAction(FORM_DESCRIPTION_INPUT_VALUE, (value) => value.target.value);
 export const getPasswordRepeatValue = createAction(FORM_PASSWORD_REPEAT_INPUT_VALUE, (value) => value);
+export const onCloseAction = createAction(CLOSE_ACTION);
 
 export const searchUsers = () => async (dispatch, getState) => {
   const { currentPage, itemsPerPage, search } = getUsersSearchPayload(getState());
@@ -92,23 +109,34 @@ export const getUsersCount = () => async (dispatch) => {
 };
 
 export const newUser = () => async (dispatch, getState) => {
-  // const { login: { username: name, password } } = getState();
-  //
-  // if (!name || !password) {
-  //   return dispatch(emptyFieldsError());
-  // }
-  //
-  // try {
-  //   const data = await post(LOGIN_ENDPOINT, { username: name, password });
-  //   const {
-  //     access_token, username, id, user_type
-  //   } = data;
-  //   setIntoLocalStorage(LOCAL_STORAGE_USER_KEY, {
-  //     access_token, username, id, user_type
-  //   });
-  //   dispatch(loginSuccess(access_token));
-  //   dispatch(setUserData({ username, userId: id, userType: user_type.name }));
-  // } catch (e) {
-  //   dispatch(loginFailure());
-  // }
+  const {
+    adminUsers: {
+      formUserType,
+      formDescription,
+      formPasswordRepeat,
+      formUsername,
+      formPassword,
+    }
+  } = getState();
+  if (!formUsername || !formPassword || !formUserType || !formPasswordRepeat) {
+    return dispatch(emptyFieldsError());
+  }
+  if (formPassword.length < 6) {
+    return dispatch(passwordLengthError());
+  }
+  if (formPassword !== formPasswordRepeat) {
+    return dispatch(passwordEqualError());
+  }
+  dispatch(createUserStart());
+  try {
+    const data = await post(ADMIN_USERS_ENDPOINT, {
+      username: formUsername,
+      password: formPassword,
+      user_type_id: formUserType,
+      description: formDescription
+    });
+    dispatch(setUsers(data));
+  } catch (e) {
+    dispatch(createUserFailure());
+  }
 };

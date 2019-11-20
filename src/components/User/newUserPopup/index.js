@@ -4,33 +4,33 @@ import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 // import LoginCaption from './LoginCaption';
 // import LoginButton from './LoginButton';
-import Input from '../shared/Input';
-// import AlertMessage from '../../shared/AlertMessage';
-import { preventDefaultHandler } from '../../utils';
-// import BasePopup from '../shared/BasePopup';
-import styles from '../shared/BasePopup/base.popup.module.scss';
-import '../shared/BasePopup/styles.scss';
-// import CreateButton from '../shared/CreateButton';
-// import Caption from '../shared/Caption';
-import AlertMessage from '../shared/AlertMessage';
-import { getErrorMessage } from '../../store/login/selectors';
-import PopupButtons from '../shared/BasePopup/components/PopupButtons';
+import Input from '../../shared/Input';
+import { preventDefaultHandler } from '../../../utils';
+import NewUserCaption from './NewUserCaption';
+import styles from '../../shared/BasePopup/base.popup.module.scss';
+import stylesInput from '../../shared/Input/textField.module.scss';
+import '../../shared/BasePopup/styles.scss';
+import AlertMessage from '../../shared/AlertMessage';
+import PopupButtons from '../../shared/BasePopup/components/PopupButtons';
 import {
   getUserType,
   getUsername,
   getPassword,
   getPasswordRepeat,
   getUserDescription,
-  isError
-} from '../../store/adminUsers/selectors';
+  getErrorMessage,
+  getVisible,
+  isError,
+} from '../../../store/adminUsers/selectors';
 import {
   newUser,
   getUserTypeValue,
   getUsernameValue,
   getPasswordValue,
   getPasswordRepeatValue,
-  getUserDescriptionValue
-} from '../../store/adminUsers/actions';
+  getUserDescriptionValue,
+  onCloseAction,
+} from '../../../store/adminUsers/actions';
 
 const newUserForm = ({
   formUsername,
@@ -46,8 +46,10 @@ const newUserForm = ({
   changeUserType,
   changeUserDescription,
   submitForm,
+  errorMessage,
   isError,
   okButton,
+  okButtonType,
   cancelButton,
   onClose,
 }) => {
@@ -55,16 +57,21 @@ const newUserForm = ({
     () => preventDefaultHandler(submitForm),
     [submitForm]
   );
+  const alertClassesPassLen = useMemo(() => [
+    errorMessage === 'Password must be 6 or mor characters' ? styles.visible : styles.hidden,
+  ], [isError]);
+  const alertClassesPassRepeat = useMemo(() => [
+    errorMessage === 'Passwords are not the same' ? styles.visible : styles.hidden,
+  ], [isError]);
   const alertClasses = useMemo(() => [
-    styles.error,
-    isError ? styles.visible : styles.hidden
+    isError ? styles.visible : styles.hidden,
   ], [isError]);
   const backgroundHandler = useCallback((e) => (
     e.currentTarget === e.target && onClose()
   ), [onClose]);
   return (
     <CSSTransition
-      in={true}
+      in={isVisible}
       timeout={300}
       classNames="alert"
       unmountOnExit
@@ -77,37 +84,49 @@ const newUserForm = ({
               <img src="/images/Popup/cross.png" alt="" />
             </div>
           </div>
+          <NewUserCaption />
           <div className={styles.body}>
             <div className={styles.line} />
             <form onSubmit={formHandler}>
               <div className={styles.inputFields}>
-                <Input text="Username" type="text" name="formUsername" onChange={changeUsername} value={formUsername}>
-                  <img src="/images/user.png" alt="user icon" />
-                </Input>
-                <Input text="Password" type="password" name="password" onChange={changePassword} value={formPassword}>
-                  <img src="/images/padlock.png" alt="password icon" />
-                </Input>
-                <Input text="PasswordRepeat" type="password" name="formPasswordRepeat" onChange={changePasswordRepeat} value={formPasswordRepeat}>
-                  <img src="/images/padlock.png" alt="password icon" />
-                </Input>
-                <select value={formUserType} onChange={changeUserType}>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
+                <label className="label" htmlFor="formUsername">USERNAME</label>
+                <Input id="formUsername" classes={stylesInput.noImage} type="text" name="formUsername" onChange={changeUsername} value={formUsername} />
+                <label className="label" htmlFor="formPassword">
+                  PASSWORD
+                  <AlertMessage classes={alertClassesPassLen}>
+                    <img src="/images/report.png" alt="error message" />
+                  </AlertMessage>
+                </label>
+                <Input id="formPassword" classes={stylesInput.noImage} type="password" name="password" onChange={changePassword} value={formPassword} />
+                <label className="label" htmlFor="formPasswordRepeat">
+                  REPEAT PASSWORD
+                  <AlertMessage classes={alertClassesPassRepeat}>
+                    <img src="/images/report.png" alt="error message" />
+                  </AlertMessage>
+                </label>
+                <Input id="formPasswordRepeat" classes={stylesInput.noImage} type="password" name="formPasswordRepeat" onChange={changePasswordRepeat} value={formPasswordRepeat} />
+                <label className="label" htmlFor="formUserType">USER TYPE</label>
+                <select id="formUserType" value={formUserType} onChange={changeUserType}>
+                  <option value="">user type</option>
+                  <option value="1">admin</option>
+                  <option value="2">user</option>
                 </select>
-                <textarea name="formDescription" onChange={changeUserDescription} value={formDescription}>
+                <label className="label" htmlFor="formDescription">DESCRIPTION</label>
+                <textarea id="formDescription" name="formDescription" onChange={changeUserDescription} value={formDescription}>
                   <img src="/images/user.png" alt="user icon" />
                 </textarea>
               </div>
-            </form>
-            <div className={styles.buttons}>
+              <AlertMessage message={errorMessage} classes={alertClasses}>
+                <img src="/images/report.png" alt="error message" />
+              </AlertMessage>
               <PopupButtons
                 okButton={okButton}
                 cancelButton={cancelButton}
                 onSubmit={submitForm}
                 onClose={onClose}
+                okButtonType={okButtonType}
               />
-            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -119,7 +138,9 @@ newUserForm.defaultProps = {
   formDescription: '',
   changeUserDescription: () => {},
   okButton: true,
+  okButtonType: 'submit',
   cancelButton: true,
+  errorMessage: '',
   onClose: () => {}
 };
 
@@ -133,7 +154,9 @@ newUserForm.propTypes = {
   submitForm: PropTypes.func.isRequired,
   isVisible: PropTypes.bool.isRequired,
   isCreatingInProgress: PropTypes.bool.isRequired,
-  isError: PropTypes.func.isRequired,
+  isError: PropTypes.bool.isRequired,
+  errorMessage: PropTypes.string,
+  okButtonType: PropTypes.string,
   changePassword: PropTypes.func.isRequired,
   changeUsername: PropTypes.func.isRequired,
   changePasswordRepeat: PropTypes.func.isRequired,
@@ -143,6 +166,7 @@ newUserForm.propTypes = {
   cancelButton: PropTypes.bool,
 };
 const mapStateToProps = (state) => ({
+  isVisible: getVisible(state),
   formUsername: getUsername(state),
   formPassword: getPassword(state),
   formPasswordRepeat: getPasswordRepeat(state),
@@ -157,6 +181,7 @@ const mapDispatchToProps = (dispatch) => ({
   changePasswordRepeat: (value) => { dispatch(getPasswordRepeatValue(value)); },
   changeUserType: (value) => { dispatch(getUserTypeValue(value)); },
   changeUserDescription: (value) => { dispatch(getUserDescriptionValue(value)); },
+  onClose: () => { dispatch(onCloseAction()); },
   submitForm: () => { dispatch(newUser()); },
 });
 

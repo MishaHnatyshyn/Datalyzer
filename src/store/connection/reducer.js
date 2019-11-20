@@ -18,6 +18,7 @@ import {
 } from './types';
 import { EMPTY_FIELDS_ERROR } from '../login/types';
 import { EMPTY_FIELDS_ERROR_MESSAGE } from '../login/constants';
+import { CLOSE_ACTION } from '../adminUsers/types';
 
 const initialState = {
   connections: [],
@@ -32,6 +33,7 @@ const initialState = {
   error: false,
   isLoading: false,
   hasNextPage: true,
+  isVisible: true,
 };
 
 export default function connectionsReducer(state = initialState, action) {
@@ -111,6 +113,18 @@ export default function connectionsReducer(state = initialState, action) {
       return { ...state, password: action.payload, error: false };
     case TYPE_VALUE:
       return { ...state, type: action.payload, error: false };
+    case CLOSE_ACTION:
+      return {
+        ...state,
+        isCreatingInProgress: false,
+        formUsername: '',
+        formPassword: '',
+        formPasswordRepeat: '',
+        formUserType: '',
+        formDescription: '',
+        error: false,
+        isVisible: false,
+      };
     default:
       return state;
   }

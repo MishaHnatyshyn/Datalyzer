@@ -16,7 +16,12 @@ import {
   FORM_USERNAME_INPUT_VALUE,
   FORM_PASSWORD_INPUT_VALUE,
   FORM_PASSWORD_REPEAT_INPUT_VALUE,
+  PASSWORD_LENGTH_ERROR,
+  PASSWORD_EQUAL_ERROR,
+  EMPTY_FIELDS_ERROR,
+  CLOSE_ACTION,
 } from './types';
+import { EMPTY_FIELDS_ERROR_MESSAGE } from '../login/constants';
 
 const initialState = {
   totalUsers: {
@@ -31,15 +36,13 @@ const initialState = {
   isLoading: false,
   hasNextPage: true,
   users: [],
-  newUserForm: {
-    formUsername: '',
-    formPassword: '',
-    formPasswordRepeat: '',
-    formUserType: 1,
-    formDescription: '',
-    isCreatingInProgress: false,
-    isVisible: true,
-  }
+  formUsername: '',
+  formPassword: '',
+  formPasswordRepeat: '',
+  formUserType: '',
+  formDescription: '',
+  isCreatingInProgress: false,
+  isVisible: true,
 };
 
 export default function adminUsersReducer(state = initialState, action) {
@@ -120,8 +123,9 @@ export default function adminUsersReducer(state = initialState, action) {
         formUsername: '',
         formPassword: '',
         formPasswordRepeat: '',
-        formUserType: 1,
+        formUserType: '',
         formDescription: '',
+        isError: false,
       };
     case FORM_USERNAME_INPUT_VALUE:
       return { ...state, formUsername: action.payload, error: false };
@@ -133,6 +137,36 @@ export default function adminUsersReducer(state = initialState, action) {
       return { ...state, formDescription: action.payload, error: false };
     case FORM_USER_TYPE_INPUT_VALUE:
       return { ...state, formUserType: action.payload, error: false };
+    case PASSWORD_EQUAL_ERROR:
+      return {
+        ...state,
+        error: true,
+        errorMessage: 'Passwords are not the same'
+      };
+    case PASSWORD_LENGTH_ERROR:
+      return {
+        ...state,
+        error: true,
+        errorMessage: 'Password must be 6 or mor characters'
+      };
+    case EMPTY_FIELDS_ERROR:
+      return {
+        ...state,
+        error: true,
+        errorMessage: EMPTY_FIELDS_ERROR_MESSAGE
+      };
+    case CLOSE_ACTION:
+      return {
+        ...state,
+        isCreatingInProgress: false,
+        formUsername: '',
+        formPassword: '',
+        formPasswordRepeat: '',
+        formUserType: '',
+        formDescription: '',
+        error: false,
+        isVisible: false,
+      };
     default:
       return state;
   }

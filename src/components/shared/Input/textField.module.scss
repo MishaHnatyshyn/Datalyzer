@@ -30,6 +30,15 @@
   opacity: 0.5;
 }
 
+.noImage {
+  border: none;
+  outline: none;
+  width: 100%;
+  border-bottom: 2px solid #cbcbcb;
+  padding: 10px 0;
+  font: $text-regular;
+}
+
 ::-webkit-input-placeholder { /* Edge */
   color: $gray;
 }

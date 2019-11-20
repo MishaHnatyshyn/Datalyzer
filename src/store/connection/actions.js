@@ -17,6 +17,7 @@ import {
   PASSWORD_VALUE,
   TYPE_VALUE,
   NAME_CONNECTION_VALUE,
+  CLOSE_ACTION,
 } from './types';
 import { EMPTY_FIELDS_ERROR } from '../login/types';
 import { getPaging, getConnectionsSearchPayload } from './selectors';
@@ -38,6 +39,7 @@ export const setConnections = createAction(SET_CONNECTIONS, (connections) => con
 export const appendConnections = createAction(APPEND_CONNECTIONS, (connections) => connections);
 export const changeSearchInput = createAction(CHANGE_SEARCH_INPUT, (value) => value);
 export const emptyFieldsError = createAction(EMPTY_FIELDS_ERROR);
+export const onCloseAction = createAction(CLOSE_ACTION);
 
 
 export const getHostValue = createAction(HOST_VALUE, (connection) => connection);
