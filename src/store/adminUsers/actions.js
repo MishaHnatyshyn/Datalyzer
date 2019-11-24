@@ -11,9 +11,11 @@ import {
   CREATE_FAILURE,
   CREATE_START,
   CREATE_SUCCESS,
-  CHANGE_SEARCH_INPUT
+  CHANGE_SEARCH_INPUT,
+  FETCH_COUNT_START,
+  FETCH_COUNT_FAILURE,
 } from './types';
-import { getPaging, getUsersSearchPayload } from './selectors';
+import { getPaging, getUsersCountData, getUsersSearchPayload } from './selectors';
 import { get } from '../../utils/http';
 import { ADMIN_USERS_COUNT_ENDPOINT, ADMIN_USERS_ENDPOINT } from '../../config';
 
@@ -32,10 +34,12 @@ export const createUserSuccess = createAction(CREATE_SUCCESS, (user) => user);
 export const setUsers = createAction(SET_USERS, (users) => users);
 export const appendUsers = createAction(APPEND_USERS, (users) => users);
 export const changeSearchInput = createAction(CHANGE_SEARCH_INPUT, (value) => value);
+export const fetchCountStart = createAction(FETCH_COUNT_START);
+export const fetchCountFailure = createAction(FETCH_COUNT_FAILURE);
 
 export const searchUsers = () => async (dispatch, getState) => {
-  const { currentPage, itemsPerPage, search } = getUsersSearchPayload(getState());
-  const params = { currentPage, itemsPerPage };
+  const { itemsPerPage, search } = getUsersSearchPayload(getState());
+  const params = { page: 1, itemsPerPage };
   if (search) params.search = search;
   dispatch(fetchStart());
   try {
@@ -48,7 +52,7 @@ export const searchUsers = () => async (dispatch, getState) => {
 
 export const fetchNextPage = () => async (dispatch, getState) => {
   const { currentPage, itemsPerPage, search } = getUsersSearchPayload(getState());
-  const params = { currentPage: currentPage + 1, itemsPerPage };
+  const params = { page: currentPage + 1, itemsPerPage };
   if (search) params.search = search;
   dispatch(fetchStart());
   try {
@@ -66,8 +70,13 @@ export const moveToNextPage = () => (dispatch, getState) => {
   dispatch(nextPage());
 };
 
-export const getUsersCount = () => async (dispatch) => {
+export const getUsersCount = () => async (dispatch, getState) => {
+  const { count } = getUsersCountData(getState());
+  if (count !== 0) {
+    return;
+  }
   try {
+    dispatch(fetchCountStart());
     const data = await get(ADMIN_USERS_COUNT_ENDPOINT);
     dispatch(setTotalUsers(data.count));
   } catch (e) {

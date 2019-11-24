@@ -1,45 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import AdminDatabasesPageHeader from './AdminDatabasesPageHeader';
 import DatabaseDataCard from '../../components/DatabaseDataCard';
 import DataCardGrid from '../../components/shared/DataCardGrid';
+import { getConnectionsCount, searchConnections } from '../../store/connection/actions';
+import { getConnections } from '../../store/connection/selectors';
 
-const connections = [
-  {
-    db_name: 'db_name',
-    connection_name: 'connection_name_misha_dno',
-    username: 'username',
-    password: 'password',
-    host: 'host',
-    port: 'port'
-  },
-  {
-    db_name: 'db_name',
-    connection_name: 'connection_name',
-    username: 'username',
-    password: 'password',
-    host: 'host',
-    port: 'port'
-  },
-  {
-    db_name: 'db_name',
-    connection_name: 'connection_name',
-    username: 'username',
-    password: 'password',
-    host: 'host',
-    port: 'port'
-  },
-];
-
-const DatabasesAdmin = ({ connections }) => (
-  <div>
-    <AdminDatabasesPageHeader />
-    <DataCardGrid>
-      {connections.map((connection) => <DatabaseDataCard {...connection} />)}
-    </DataCardGrid>
-  </div>
-);
+const DatabasesAdmin = ({ connections, fetchConnectionsCount, fetchConnections }) => {
+  useEffect(() => {
+    fetchConnectionsCount();
+    fetchConnections();
+  }, []);
+  return (
+    <div>
+      <AdminDatabasesPageHeader />
+      <DataCardGrid>
+        {connections.map((connection) => <DatabaseDataCard {...connection} key={connection.id} />)}
+      </DataCardGrid>
+    </div>
+  );
+};
 
 DatabasesAdmin.propTypes = {
   connections: PropTypes.arrayOf(PropTypes.shape({
@@ -49,11 +31,18 @@ DatabasesAdmin.propTypes = {
     password: PropTypes.string,
     host: PropTypes.string,
     port: PropTypes.string,
-  })).isRequired
+  })).isRequired,
+  fetchConnectionsCount: PropTypes.func.isRequired,
+  fetchConnections: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = () => ({
-  connections,
+const mapStateToProps = createStructuredSelector({
+  connections: getConnections
 });
 
-export default connect(mapStateToProps)(DatabasesAdmin);
+const mapDispatchToPros = (dispatch) => ({
+  fetchConnectionsCount: () => { dispatch(getConnectionsCount()); },
+  fetchConnections: () => { dispatch(searchConnections()); }
+});
+
+export default connect(mapStateToProps, mapDispatchToPros)(DatabasesAdmin);

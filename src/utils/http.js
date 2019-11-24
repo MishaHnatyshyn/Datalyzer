@@ -9,11 +9,17 @@ import { LOGIN_URL } from '../config/routing';
 import { LOGIN_ENDPOINT, API_URL } from '../config/endpoints';
 import store, { history } from '../store';
 import { getToken } from '../store/login/selectors';
-
+import {
+  remove as removeFromLocalStorage
+} from './localStorage';
+import { LOCAL_STORAGE_USER_KEY } from '../store/login/constants';
 
 const handleUnAuthorizedError = (error) => {
   const { response: { status, config: { url } } } = error;
-  if (status === 401 && url !== LOGIN_ENDPOINT) return history.push(LOGIN_URL);
+  if (status === 401 && url !== LOGIN_ENDPOINT) {
+    removeFromLocalStorage(LOCAL_STORAGE_USER_KEY);
+    return history.push(LOGIN_URL);
+  }
   throw error;
 };
 

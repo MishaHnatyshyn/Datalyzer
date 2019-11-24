@@ -9,9 +9,11 @@ import {
   CREATE_FAILURE,
   CREATE_START,
   CREATE_SUCCESS,
-  CHANGE_SEARCH_INPUT
+  CHANGE_SEARCH_INPUT,
+  FETCH_COUNT_START,
+  FETCH_COUNT_FAILURE
 } from './types';
-import { getPaging, getConnectionsSearchPayload } from './selectors';
+import { getPaging, getConnectionsSearchPayload, getConnectionsCountData } from './selectors';
 import { get } from '../../utils/http';
 import { ADMIN_CONNECTIONS_ENDPOINT, ADMIN_CONNECTIONS_COUNT_ENDPOINT } from '../../config';
 
@@ -25,10 +27,12 @@ export const createConnectionSuccess = createAction(CREATE_SUCCESS, (connection)
 export const setConnections = createAction(SET_CONNECTIONS, (connections) => connections);
 export const appendConnections = createAction(APPEND_CONNECTIONS, (connections) => connections);
 export const changeSearchInput = createAction(CHANGE_SEARCH_INPUT, (value) => value);
+export const fetchCountStart = createAction(FETCH_COUNT_START);
+export const fetchCountFailure = createAction(FETCH_COUNT_FAILURE);
 
 export const searchConnections = () => async (dispatch, getState) => {
-  const { currentPage, itemsPerPage, search } = getConnectionsSearchPayload(getState());
-  const params = { currentPage, itemsPerPage };
+  const { itemsPerPage, search } = getConnectionsSearchPayload(getState());
+  const params = { page: 1, itemsPerPage };
   if (search) params.search = search;
   dispatch(fetchStart());
   try {
@@ -41,7 +45,7 @@ export const searchConnections = () => async (dispatch, getState) => {
 
 export const fetchNextPage = () => async (dispatch, getState) => {
   const { currentPage, itemsPerPage, search } = getConnectionsSearchPayload(getState());
-  const params = { currentPage: currentPage + 1, itemsPerPage };
+  const params = { page: currentPage + 1, itemsPerPage };
   if (search) params.search = search;
   dispatch(fetchStart());
   try {
@@ -59,8 +63,13 @@ export const moveToNextPage = () => (dispatch, getState) => {
   dispatch(nextPage());
 };
 
-export const getModelsCount = () => async (dispatch) => {
+export const getConnectionsCount = () => async (dispatch, getState) => {
+  const { count } = getConnectionsCountData(getState());
+  if (count !== 0) {
+    return;
+  }
   try {
+    dispatch(fetchCountStart());
     const data = await get(ADMIN_CONNECTIONS_COUNT_ENDPOINT);
     dispatch(setTotalConnections(data.count));
   } catch (e) {
