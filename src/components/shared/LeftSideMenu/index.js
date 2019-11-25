@@ -31,7 +31,7 @@ const LeftSideMenu = ({ menuElements }) => (
   <div className={styles.container}>
     {
       menuElements.map((element) => (
-        <div className={styles.block}>
+        <div className={styles.block} key={element.link}>
           <Link to={element.link}>
             <div className={styles.item}>
               <img src={element.image} alt={element.alt} />

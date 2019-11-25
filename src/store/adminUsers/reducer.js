@@ -9,7 +9,10 @@ import {
   CREATE_SUCCESS,
   CREATE_START,
   CREATE_FAILURE,
-  SET_TOTAL_USERS, CHANGE_SEARCH_INPUT,
+  SET_TOTAL_USERS,
+  CHANGE_SEARCH_INPUT,
+  FETCH_COUNT_START,
+  FETCH_COUNT_FAILURE,
 } from './types';
 
 const initialState = {
@@ -37,6 +40,29 @@ const initialState = {
 
 export default function adminUsersReducer(state = initialState, action) {
   switch (action.type) {
+    case FETCH_COUNT_START:
+      return {
+        ...state,
+        totalUsers: {
+          isLoading: true
+        }
+      };
+    case FETCH_COUNT_FAILURE:
+      return {
+        ...state,
+        totalUsers: {
+          count: 0,
+          isLoading: false
+        }
+      };
+    case SET_TOTAL_USERS:
+      return {
+        ...state,
+        totalUsers: {
+          count: action.payload,
+          isLoading: false
+        }
+      };
     case FETCH_START:
       return {
         ...state,
@@ -85,14 +111,6 @@ export default function adminUsersReducer(state = initialState, action) {
       return {
         ...state,
         isCreatingInProgress: true
-      };
-    case SET_TOTAL_USERS:
-      return {
-        ...state,
-        totalUsers: {
-          count: action.payload,
-          isLoading: false,
-        }
       };
     case CREATE_FAILURE:
       return {
