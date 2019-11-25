@@ -21,6 +21,8 @@ import {
   PASSWORD_EQUAL_ERROR,
   EMPTY_FIELDS_ERROR,
   CLOSE_ACTION,
+  FETCH_COUNT_START,
+  FETCH_COUNT_FAILURE,
 } from './types';
 import { getPaging, getUsersSearchPayload } from './selectors';
 import { get, post } from '../../utils/http';
@@ -40,6 +42,10 @@ import {
   setConnections
 } from '../connection/actions';
 import adminUsersReducer from './reducer';
+import { getPaging, getUsersCountData, getUsersSearchPayload } from './selectors';
+import { get } from '../../utils/http';
+import { ADMIN_USERS_COUNT_ENDPOINT, ADMIN_USERS_ENDPOINT } from '../../config';
+
 
 export const changeInputField = createAction(
   CHANGE_FORM_FIELD,
@@ -65,10 +71,12 @@ export const getPasswordValue = createAction(FORM_PASSWORD_INPUT_VALUE, (value) 
 export const getUserDescriptionValue = createAction(FORM_DESCRIPTION_INPUT_VALUE, (value) => value.target.value);
 export const getPasswordRepeatValue = createAction(FORM_PASSWORD_REPEAT_INPUT_VALUE, (value) => value);
 export const onCloseAction = createAction(CLOSE_ACTION);
+export const fetchCountStart = createAction(FETCH_COUNT_START);
+export const fetchCountFailure = createAction(FETCH_COUNT_FAILURE);
 
 export const searchUsers = () => async (dispatch, getState) => {
-  const { currentPage, itemsPerPage, search } = getUsersSearchPayload(getState());
-  const params = { currentPage, itemsPerPage };
+  const { itemsPerPage, search } = getUsersSearchPayload(getState());
+  const params = { page: 1, itemsPerPage };
   if (search) params.search = search;
   dispatch(fetchStart());
   try {
@@ -81,7 +89,7 @@ export const searchUsers = () => async (dispatch, getState) => {
 
 export const fetchNextPage = () => async (dispatch, getState) => {
   const { currentPage, itemsPerPage, search } = getUsersSearchPayload(getState());
-  const params = { currentPage: currentPage + 1, itemsPerPage };
+  const params = { page: currentPage + 1, itemsPerPage };
   if (search) params.search = search;
   dispatch(fetchStart());
   try {
@@ -99,8 +107,13 @@ export const moveToNextPage = () => (dispatch, getState) => {
   dispatch(nextPage());
 };
 
-export const getUsersCount = () => async (dispatch) => {
+export const getUsersCount = () => async (dispatch, getState) => {
+  const { count } = getUsersCountData(getState());
+  if (count !== 0) {
+    return;
+  }
   try {
+    dispatch(fetchCountStart());
     const data = await get(ADMIN_USERS_COUNT_ENDPOINT);
     dispatch(setTotalUsers(data.count));
   } catch (e) {

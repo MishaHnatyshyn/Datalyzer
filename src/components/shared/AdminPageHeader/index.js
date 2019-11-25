@@ -3,13 +3,19 @@ import PropTypes from 'prop-types';
 import styles from './adminPageHeader.module.scss';
 import CreateButton from '../CreateButton';
 import Search from '../Search';
+import Loader from '../Loader';
 
 const AdminPageHeader = ({
   pageName, buttonText, countData, placeholder, search, searchValue, submitForm
 }) => (
   <div className={styles.container}>
     <div className={styles.leftBlock}>
-      <p className={styles.pagesResult}>{`${pageName}: ${countData.isLoading ? 'loading...' : countData.count}`}</p>
+      <div className={styles.pagesResult}>
+        <span>{`${pageName}: `}</span>
+        <span className={styles.pagesCountBlock}>
+          {countData.isLoading ? <Loader classes={styles.spinner} /> : countData.count}
+        </span>
+      </div>
       <Search
         placeholder={placeholder}
         onChange={search}

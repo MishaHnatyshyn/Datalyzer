@@ -18,6 +18,8 @@ import {
   TYPE_VALUE,
   NAME_CONNECTION_VALUE,
   CLOSE_ACTION,
+  FETCH_COUNT_START,
+  FETCH_COUNT_FAILURE
 } from './types';
 import { EMPTY_FIELDS_ERROR } from '../login/types';
 import { getPaging, getConnectionsSearchPayload } from './selectors';
@@ -27,6 +29,10 @@ import {
   ADMIN_CONNECTIONS_COUNT_ENDPOINT,
   ADMIN_CONNECTIONS_CREATE_ENDPOINT
 } from '../../config';
+
+import { getPaging, getConnectionsSearchPayload, getConnectionsCountData } from './selectors';
+import { get } from '../../utils/http';
+import { ADMIN_CONNECTIONS_ENDPOINT, ADMIN_CONNECTIONS_COUNT_ENDPOINT } from '../../config';
 
 export const fetchStart = createAction(FETCH_START);
 export const fetchFailure = createAction(FETCH_FAILURE);
@@ -48,11 +54,13 @@ export const getNameDBValue = createAction(NAME_DB_VALUE, (connection) => connec
 export const getNameConnectionValue = createAction(NAME_CONNECTION_VALUE, (connection) => connection);
 export const getUsernameValue = createAction(USERNAME_VALUE, (connection) => connection);
 export const getPasswordValue = createAction(PASSWORD_VALUE, (connection) => connection);
-export const getTypeValue = createAction(TYPE_VALUE, (connection) => connection.value);
+export const getTypeValue = createAction(TYPE_VALUE, (connection) => connection.value);ё
+export const fetchCountStart = createAction(FETCH_COUNT_START);
+export const fetchCountFailure = createAction(FETCH_COUNT_FAILURE);
 
 export const searchConnections = () => async (dispatch, getState) => {
-  const { currentPage, itemsPerPage, search } = getConnectionsSearchPayload(getState());
-  const params = { currentPage, itemsPerPage };
+  const { itemsPerPage, search } = getConnectionsSearchPayload(getState());
+  const params = { page: 1, itemsPerPage };
   if (search) params.search = search;
   dispatch(fetchStart());
   try {
@@ -65,7 +73,7 @@ export const searchConnections = () => async (dispatch, getState) => {
 
 export const fetchNextPage = () => async (dispatch, getState) => {
   const { currentPage, itemsPerPage, search } = getConnectionsSearchPayload(getState());
-  const params = { currentPage: currentPage + 1, itemsPerPage };
+  const params = { page: currentPage + 1, itemsPerPage };
   if (search) params.search = search;
   dispatch(fetchStart());
   try {
@@ -83,8 +91,13 @@ export const moveToNextPage = () => (dispatch, getState) => {
   dispatch(nextPage());
 };
 
-export const getModelsCount = () => async (dispatch) => {
+export const getConnectionsCount = () => async (dispatch, getState) => {
+  const { count } = getConnectionsCountData(getState());
+  if (count !== 0) {
+    return;
+  }
   try {
+    dispatch(fetchCountStart());
     const data = await get(ADMIN_CONNECTIONS_COUNT_ENDPOINT);
     dispatch(setTotalConnections(data.count));
   } catch (e) {

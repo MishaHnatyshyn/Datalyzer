@@ -8,6 +8,8 @@ import {
   FETCH_FAILURE,
   FETCH_START,
   NEXT_PAGE,
+  FETCH_COUNT_START,
+  FETCH_COUNT_FAILURE,
 } from './types';
 
 const initialState = {
@@ -27,6 +29,29 @@ const initialState = {
 
 export default function modelReducer(state = initialState, action) {
   switch (action.type) {
+    case FETCH_COUNT_START:
+      return {
+        ...state,
+        totalModels: {
+          isLoading: true
+        }
+      };
+    case FETCH_COUNT_FAILURE:
+      return {
+        ...state,
+        totalModels: {
+          count: 0,
+          isLoading: false
+        }
+      };
+    case SET_TOTAL_MODELS:
+      return {
+        ...state,
+        totalModels: {
+          count: action.payload,
+          isLoading: false
+        }
+      };
     case FETCH_START:
       return {
         ...state,
@@ -62,14 +87,6 @@ export default function modelReducer(state = initialState, action) {
       return {
         ...state,
         isCreatingInProgress: true
-      };
-    case SET_TOTAL_MODELS:
-      return {
-        ...state,
-        totalModels: {
-          count: action.payload,
-          isLoading: false,
-        }
       };
     case CREATE_FAILURE:
       return {
