@@ -94,12 +94,6 @@ input {
   }
 }
 
-//.error {
-//  margin: 0 auto 25px auto;
-//  width: 320px;
-//  transition: opacity .5s ease-in-out;
-//}
-
 .hidden {
   visibility: hidden;
 }
@@ -112,10 +106,7 @@ select {
   -moz-appearance: none;
   padding-left: 5px;
   font: normal 18px "Montserrat";
-  //background-size: contain;
   margin: 20px 0;
-  //appearance: none;       /* Remove default arrow */
-  //background-image: url(https://cdn.icon-icons.com/icons2/38/PNG/512/downarrow_abajo_5820.png);   /* Add custom arrow */
 }
 
 textarea {

@@ -2,8 +2,6 @@ import React, { useMemo, useCallback } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
-// import LoginCaption from './LoginCaption';
-// import LoginButton from './LoginButton';
 import Input from '../../shared/Input';
 import { preventDefaultHandler } from '../../../utils';
 import NewUserCaption from './NewUserCaption';
