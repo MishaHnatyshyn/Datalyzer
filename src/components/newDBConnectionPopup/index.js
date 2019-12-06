@@ -34,7 +34,7 @@ import {
 import PopupButtons from '../shared/BasePopup/components/PopupButtons';
 import stylesInput from '../shared/Input/textField.module.scss';
 
-const newConnection = ({
+const NewConnection = ({
   host,
   port,
   nameDB,
@@ -128,7 +128,7 @@ const newConnection = ({
   );
 };
 
-newConnection.defaultProps = {
+NewConnection.defaultProps = {
   okButton: true,
   cancelButton: true,
   onClose: () => {},
@@ -136,7 +136,7 @@ newConnection.defaultProps = {
   okButtonType: 'submit'
 };
 
-newConnection.propTypes = {
+NewConnection.propTypes = {
   host: PropTypes.string.isRequired,
   port: PropTypes.string.isRequired,
   nameDB: PropTypes.string.isRequired,
@@ -185,4 +185,4 @@ const mapDispatchToProps = (dispatch) => ({
   submitForm: () => { dispatch(newConnectionAction()); },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(newConnection);
+export default connect(mapStateToProps, mapDispatchToProps)(NewConnection);

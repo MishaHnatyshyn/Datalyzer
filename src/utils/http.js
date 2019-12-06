@@ -2,7 +2,7 @@ import {
   get as rawGet,
   post as rawPost,
   patch as rawPatch,
-  del as rawDelete,
+  del as rawDelete, default as axios,
 } from 'axios';
 import { merge } from 'lodash/fp';
 import { LOGIN_URL } from '../config/routing';
@@ -23,15 +23,29 @@ const createHeaderWithBearerToken = (token) => ({
   }
 });
 
+// export const sendWithUserAuthToken = (httpMethod) => (url, config = {}) => {
+//   const token = getToken(store.getState());
+//   const authHeader = token ? createHeaderWithBearerToken(token) : {};
+//   return httpMethod(`${API_URL}${url}`, merge(config, authHeader))
+//     .then((res) => res.data)
+//     .catch(handleUnAuthorizedError);
+// };
+
 export const sendWithUserAuthToken = (httpMethod) => (url, config = {}) => {
   const token = getToken(store.getState());
-  const authHeader = token ? createHeaderWithBearerToken(token) : {};
-  return httpMethod(`${API_URL}${url}`, merge(config, authHeader))
+  const authHeader = createHeaderWithBearerToken(token);
+  const options = {
+    url: `${API_URL}${url}`,
+    method: httpMethod,
+    ...config,
+    ...authHeader
+  };
+  return axios(options)
     .then((res) => res.data)
     .catch(handleUnAuthorizedError);
 };
 
-export const get = sendWithUserAuthToken(rawGet);
-export const post = sendWithUserAuthToken(rawPost);
-export const patch = sendWithUserAuthToken(rawPatch);
-export const del = sendWithUserAuthToken(rawDelete);
+export const get = sendWithUserAuthToken('get');
+export const post = sendWithUserAuthToken('post');
+export const patch = sendWithUserAuthToken('patch');
+export const del = sendWithUserAuthToken('delete');

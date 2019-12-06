@@ -1,0 +1,15 @@
+.textarea {
+  width: 96%;
+  resize: none;
+  height: 100px;
+  padding: 5px;
+  border: 2px solid gray;
+  font: normal 18px "Montserrat";
+}
+.container {
+  position: relative;
+  margin-bottom: 25px;
+}
+.textarea:focus{
+  outline: none;
+}

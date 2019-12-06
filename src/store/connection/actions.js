@@ -48,7 +48,7 @@ export const getNameDBValue = createAction(NAME_DB_VALUE, (connection) => connec
 export const getNameConnectionValue = createAction(NAME_CONNECTION_VALUE, (connection) => connection);
 export const getUsernameValue = createAction(USERNAME_VALUE, (connection) => connection);
 export const getPasswordValue = createAction(PASSWORD_VALUE, (connection) => connection);
-export const getTypeValue = createAction(TYPE_VALUE, (connection) => connection.value);
+export const getTypeValue = createAction(TYPE_VALUE, (connection) => connection.target.value);
 
 export const searchConnections = () => async (dispatch, getState) => {
   const { currentPage, itemsPerPage, search } = getConnectionsSearchPayload(getState());
@@ -111,13 +111,15 @@ export const newConnectionAction = () => async (dispatch, getState) => {
   dispatch(createConnectionStart());
   try {
     const data = await post(ADMIN_CONNECTIONS_CREATE_ENDPOINT, {
-      host,
-      port,
-      name: nameConnection,
-      databaseName: nameDB,
-      username: name,
-      password,
-      typeId: type,
+      data: {
+        host,
+        port,
+        name: nameConnection,
+        databaseName: nameDB,
+        username: name,
+        password,
+        typeId: Number(type),
+      }
     });
     dispatch(setConnections(data));
   } catch (e) {

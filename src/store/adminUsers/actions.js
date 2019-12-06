@@ -25,7 +25,6 @@ import {
 import { getPaging, getUsersSearchPayload } from './selectors';
 import { get, post } from '../../utils/http';
 import {
-  ADMIN_CONNECTIONS_CREATE_ENDPOINT,
   ADMIN_USERS_COUNT_ENDPOINT,
   ADMIN_USERS_ENDPOINT,
   LOGIN_ENDPOINT
@@ -62,7 +61,7 @@ export const passwordEqualError = createAction(PASSWORD_EQUAL_ERROR, (value) => 
 export const getUserTypeValue = createAction(FORM_USER_TYPE_INPUT_VALUE, (object) => object.target.value);
 export const getUsernameValue = createAction(FORM_USERNAME_INPUT_VALUE, (value) => value);
 export const getPasswordValue = createAction(FORM_PASSWORD_INPUT_VALUE, (value) => value);
-export const getUserDescriptionValue = createAction(FORM_DESCRIPTION_INPUT_VALUE, (value) => value.target.value);
+export const getUserDescriptionValue = createAction(FORM_DESCRIPTION_INPUT_VALUE, (value) => value);
 export const getPasswordRepeatValue = createAction(FORM_PASSWORD_REPEAT_INPUT_VALUE, (value) => value);
 export const onCloseAction = createAction(CLOSE_ACTION);
 
@@ -130,10 +129,12 @@ export const newUser = () => async (dispatch, getState) => {
   dispatch(createUserStart());
   try {
     const data = await post(ADMIN_USERS_ENDPOINT, {
-      username: formUsername,
-      password: formPassword,
-      user_type_id: formUserType,
-      description: formDescription
+      data: {
+        username: formUsername,
+        password: formPassword,
+        user_type_id: Number(formUserType),
+        description: formDescription,
+      }
     });
     dispatch(setUsers(data));
   } catch (e) {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch } from 'react-router-dom';
 import Login from '../pages/Login';
+import Frm from '../pages/page';
 import { NotLoggedInRoute, ProtectedAdminRoute, ProtectedUserRoute } from './shared/ProtectedRoutes';
 import {
   LOGIN_URL, ROOT_URL, USER_HOME_URL, ADMIN_BASE_URL
@@ -12,7 +13,7 @@ const App = () => (
     <Switch>
       <NotLoggedInRoute exact path={ROOT_URL} component={Login} />
       <NotLoggedInRoute exact path={LOGIN_URL} component={Login} />
-      <ProtectedAdminRoute path={ADMIN_BASE_URL} component={Admin} />
+      <ProtectedAdminRoute path={ADMIN_BASE_URL} component={Frm} />
       <ProtectedUserRoute path={USER_HOME_URL} component={() => <div>USER PAGE</div>} />
     </Switch>
   </div>

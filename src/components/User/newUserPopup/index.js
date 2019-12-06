@@ -10,6 +10,7 @@ import stylesInput from '../../shared/Input/textField.module.scss';
 import '../../shared/BasePopup/styles.scss';
 import AlertMessage from '../../shared/AlertMessage';
 import PopupButtons from '../../shared/BasePopup/components/PopupButtons';
+import Textarea from '../../shared/Textarea';
 import {
   getUserType,
   getUsername,
@@ -30,7 +31,7 @@ import {
   onCloseAction,
 } from '../../../store/adminUsers/actions';
 
-const newUserForm = ({
+const NewUserForm = ({
   formUsername,
   formPassword,
   formPasswordRepeat,
@@ -110,9 +111,7 @@ const newUserForm = ({
                   <option value="2">user</option>
                 </select>
                 <label className="label" htmlFor="formDescription">DESCRIPTION</label>
-                <textarea id="formDescription" name="formDescription" onChange={changeUserDescription} value={formDescription}>
-                  <img src="/images/user.png" alt="user icon" />
-                </textarea>
+                <Textarea id="formDescription" name="formDescription" onChange={changeUserDescription} value={formDescription} />
               </div>
               <AlertMessage message={errorMessage} classes={alertClasses}>
                 <img src="/images/report.png" alt="error message" />
@@ -132,7 +131,7 @@ const newUserForm = ({
   );
 };
 
-newUserForm.defaultProps = {
+NewUserForm.defaultProps = {
   formDescription: '',
   changeUserDescription: () => {},
   okButton: true,
@@ -142,7 +141,7 @@ newUserForm.defaultProps = {
   onClose: () => {}
 };
 
-newUserForm.propTypes = {
+NewUserForm.propTypes = {
   formUsername: PropTypes.string.isRequired,
   formPassword: PropTypes.string.isRequired,
   formPasswordRepeat: PropTypes.string.isRequired,
@@ -183,4 +182,4 @@ const mapDispatchToProps = (dispatch) => ({
   submitForm: () => { dispatch(newUser()); },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(newUserForm);
+export default connect(mapStateToProps, mapDispatchToProps)(NewUserForm);

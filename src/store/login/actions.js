@@ -33,7 +33,7 @@ export const login = () => async (dispatch, getState) => {
   }
 
   try {
-    const data = await post(LOGIN_ENDPOINT, { username: name, password });
+    const data = await post(LOGIN_ENDPOINT, { data: { username: name, password } });
     const {
       access_token, username, id, user_type
     } = data;
@@ -43,6 +43,7 @@ export const login = () => async (dispatch, getState) => {
     dispatch(loginSuccess(access_token));
     dispatch(setUserData({ username, userId: id, userType: user_type.name }));
   } catch (e) {
+    console.log(e)
     dispatch(loginFailure());
   }
 };
