@@ -9,6 +9,7 @@ import userReducer from './user/reducer';
 import adminUsersReducer from './adminUsers/reducer';
 import modelReducer from './model/reducer';
 import connectionsReducer from './connection/reducer';
+import reduxLogger from 'redux-logger';
 
 const initialState = {};
 
@@ -19,7 +20,7 @@ const composeEnhancers = typeof window === 'object'
 
 export const history = createBrowserHistory();
 
-const middleware = [thunk, routerMiddleware(history)];
+const middleware = [thunk, routerMiddleware(history), reduxLogger];
 
 const enhancer = composeEnhancers(
   applyMiddleware(...middleware),

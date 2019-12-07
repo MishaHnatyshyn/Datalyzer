@@ -26,7 +26,7 @@ const initialState = {
   lastLoadedPage: 1,
   error: false,
   isLoading: false,
-  hasNextPage: true,
+  hasNextPage: false,
   users: [],
   newUserForm: {
     formUsername: '',
@@ -79,7 +79,8 @@ export default function adminUsersReducer(state = initialState, action) {
         ...state,
         users: action.payload,
         error: false,
-        isLoading: false
+        isLoading: false,
+        // hasNextPage: us
       };
     case APPEND_USERS:
       return {

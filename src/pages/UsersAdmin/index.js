@@ -1,17 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import AdminUsersPageHeader from './AdminUsersPageHeader';
+import UsersTable from './components/UsersTable/UsersTable';
 import { getUsersCount, searchUsers } from '../../store/adminUsers/actions';
 
 const UsersAdmin = ({ fetchUsersCount, fetchUsers }) => {
-  useEffect(() => {
-    fetchUsersCount();
+  const fetchUsersData = useMemo(() => async () => {
+    await fetchUsersCount();
     fetchUsers();
   }, []);
+
+  useEffect(() => {
+    fetchUsersData()
+  }, []);
+
   return (
     <div>
       <AdminUsersPageHeader />
+      <UsersTable />
     </div>
   );
 };
