@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 import Input from '../shared/Input';
 import AlertMessage from '../shared/AlertMessage';
+
+
 import { preventDefaultHandler } from '../../utils';
 import styles from '../shared/BasePopup/base.popup.module.scss';
 import '../shared/BasePopup/styles.scss';
@@ -115,7 +117,6 @@ const NewConnection = ({
                 <PopupButtons
                   okButton={okButton}
                   cancelButton={cancelButton}
-                  onSubmit={submitForm}
                   onClose={onClose}
                   okButtonType={okButtonType}
                 />

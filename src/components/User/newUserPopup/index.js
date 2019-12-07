@@ -119,7 +119,6 @@ const NewUserForm = ({
               <PopupButtons
                 okButton={okButton}
                 cancelButton={cancelButton}
-                onSubmit={submitForm}
                 onClose={onClose}
                 okButtonType={okButtonType}
               />
