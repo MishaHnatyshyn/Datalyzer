@@ -5,9 +5,9 @@ import AdminCardDataItem from '../shared/AdminCardDataItem';
 import AdminCardDataItemPassword from '../shared/AdminCardDataItemPassword';
 
 const DatabaseDataCard = ({
-  db_name, connection_name, username, password, host, port
+  db_name, name, username, password, host, port
 }) => (
-  <DataCard caption={connection_name} secondIcon="/images/controls.png" firstIcon="/images/update-arrows.png" thirdIcon="/images/cross.png">
+  <DataCard caption={name} secondIcon="/images/controls.png" firstIcon="/images/update-arrows.png" thirdIcon="/images/cross.png">
     <AdminCardDataItem name="DB name" value={db_name} />
     <AdminCardDataItem name="Host" value={host} />
     <AdminCardDataItem name="Port" value={port} />
@@ -18,7 +18,7 @@ const DatabaseDataCard = ({
 
 DatabaseDataCard.propTypes = {
   db_name: PropTypes.string.isRequired,
-  connection_name: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
   host: PropTypes.string.isRequired,

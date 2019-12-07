@@ -1,52 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import AdminModelsPageHeader from './AdminModelsPageHeader';
 import DataCardGrid from '../../components/shared/DataCardGrid';
 import ModelsDataCard from '../../components/ModelsDataCard';
+import { getModelsCount, searchModels } from '../../store/model/actions';
+import { getModels } from '../../store/model/selectors';
 
-const models = [
-  {
-    name: 'name',
-    connection_name: 'connection_name',
-    users: 'users',
-    tables: 'tables',
-    created_at: 'created_at',
-    rows: 'rows',
-    usages: 'usages',
-    status: 'active'
-  },
-  {
-    name: 'name',
-    connection_name: 'connection_name',
-    users: 'users',
-    tables: 'tables',
-    created_at: 'created_at',
-    rows: 'rows',
-    usages: 'usages',
-    status: 'active'
-  },
-  {
-    name: 'name',
-    connection_name: 'connection_name',
-    users: 'users',
-    tables: 'tables',
-    created_at: 'created_at',
-    rows: 'rows',
-    usages: 'usages',
-    status: 'disabled'
-  },
-];
+const ModelsAdmin = ({ models, fetchModelsCount, fetchModels }) => {
+  useEffect(() => {
+    fetchModelsCount();
+    fetchModels();
+  }, []);
+  return (
+    <div>
+      <AdminModelsPageHeader />
+      <DataCardGrid>
+        {models.map((model) => <ModelsDataCard {...model} key={model.id} />)}
+      </DataCardGrid>
 
-const ModelsAdmin = ({ models }) => (
-  <div>
-    <AdminModelsPageHeader />
-    <DataCardGrid>
-      {models.map((model) => <ModelsDataCard {...model} />)}
-    </DataCardGrid>
-
-  </div>
-);
+    </div>
+  );
+};
 
 ModelsAdmin.propTypes = {
   models: PropTypes.arrayOf(PropTypes.shape({
@@ -59,10 +35,17 @@ ModelsAdmin.propTypes = {
     usages: PropTypes.string,
     status: PropTypes.string,
   })).isRequired,
+  fetchModelsCount: PropTypes.func.isRequired,
+  fetchModels: PropTypes.func.isRequired
 };
 
-const mapStateToProps = () => ({
-  models,
+const mapStateToProps = createStructuredSelector({
+  models: getModels
 });
 
-export default connect(mapStateToProps)(ModelsAdmin);
+const mapDispatchToPros = (dispatch) => ({
+  fetchModelsCount: () => { dispatch(getModelsCount()); },
+  fetchModels: () => { dispatch(searchModels()); },
+});
+
+export default connect(mapStateToProps, mapDispatchToPros)(ModelsAdmin);

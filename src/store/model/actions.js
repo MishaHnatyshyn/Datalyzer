@@ -9,16 +9,20 @@ import {
   CREATE_FAILURE,
   CREATE_START,
   CREATE_SUCCESS,
-  CHANGE_SEARCH_INPUT
+  CHANGE_SEARCH_INPUT,
+  FETCH_COUNT_START,
+  FETCH_COUNT_FAILURE
 } from './types';
-import { getPaging, getModelsSearchPayload } from './selectors';
+import { getPaging, getModelsSearchPayload, getModelsCountData } from './selectors';
 import { get } from '../../utils/http';
 import { ADMIN_MODELS_ENDPOINT, ADMIN_MODELS_COUNT_ENDPOINT } from '../../config';
 
 export const fetchStart = createAction(FETCH_START);
+export const fetchCountStart = createAction(FETCH_COUNT_START);
+export const fetchCountFailure = createAction(FETCH_COUNT_FAILURE);
+export const setTotalModels = createAction(SET_TOTAL_MODELS, (count) => count);
 export const fetchFailure = createAction(FETCH_FAILURE);
 export const nextPage = createAction(NEXT_PAGE);
-export const setTotalModels = createAction(SET_TOTAL_MODELS, (count) => count);
 export const createModelFailure = createAction(CREATE_FAILURE);
 export const createModelStart = createAction(CREATE_START);
 export const createModelSuccess = createAction(CREATE_SUCCESS, (model) => model);
@@ -27,8 +31,8 @@ export const appendModels = createAction(APPEND_MODELS, (models) => models);
 export const changeSearchInput = createAction(CHANGE_SEARCH_INPUT, (value) => value);
 
 export const searchModels = () => async (dispatch, getState) => {
-  const { currentPage, itemsPerPage, search } = getModelsSearchPayload(getState());
-  const params = { currentPage, itemsPerPage };
+  const { itemsPerPage, search } = getModelsSearchPayload(getState());
+  const params = { page: 1, itemsPerPage };
   if (search) params.search = search;
   dispatch(fetchStart());
   try {
@@ -41,7 +45,7 @@ export const searchModels = () => async (dispatch, getState) => {
 
 export const fetchNextPage = () => async (dispatch, getState) => {
   const { currentPage, itemsPerPage, search } = getModelsSearchPayload(getState());
-  const params = { currentPage: currentPage + 1, itemsPerPage };
+  const params = { page: currentPage + 1, itemsPerPage };
   if (search) params.search = search;
   dispatch(fetchStart());
   try {
@@ -59,11 +63,16 @@ export const moveToNextPage = () => (dispatch, getState) => {
   dispatch(nextPage());
 };
 
-export const getModelsCount = () => async (dispatch) => {
+export const getModelsCount = () => async (dispatch, getState) => {
+  const { count } = getModelsCountData(getState());
+  if (count !== 0) {
+    return;
+  }
   try {
+    dispatch(fetchCountStart());
     const data = await get(ADMIN_MODELS_COUNT_ENDPOINT);
     dispatch(setTotalModels(data.count));
   } catch (e) {
-    dispatch(fetchFailure());
+    dispatch(fetchCountFailure());
   }
 };
