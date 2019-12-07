@@ -24,13 +24,7 @@ import {
   FETCH_COUNT_START,
   FETCH_COUNT_FAILURE,
 } from './types';
-import { getPaging, getUsersSearchPayload } from './selectors';
 import { get, post } from '../../utils/http';
-import {
-  ADMIN_USERS_COUNT_ENDPOINT,
-  ADMIN_USERS_ENDPOINT,
-  LOGIN_ENDPOINT
-} from '../../config';
 import { set as setIntoLocalStorage } from '../../utils/localStorage';
 import { LOCAL_STORAGE_USER_KEY } from '../login/constants';
 import { setUserData } from '../user/actions';
@@ -42,7 +36,6 @@ import {
 } from '../connection/actions';
 import adminUsersReducer from './reducer';
 import { getPaging, getUsersCountData, getUsersSearchPayload } from './selectors';
-import { get } from '../../utils/http';
 import { ADMIN_USERS_COUNT_ENDPOINT, ADMIN_USERS_ENDPOINT } from '../../config';
 
 

@@ -126,6 +126,7 @@ export default function adminUsersReducer(state = initialState, action) {
         ...state,
         isCreatingInProgress: false,
         error: true,
+        errorMessage: 'Creation failed'
       };
     case CHANGE_SEARCH_INPUT:
       return {

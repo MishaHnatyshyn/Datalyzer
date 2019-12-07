@@ -19,20 +19,16 @@ import {
   NAME_CONNECTION_VALUE,
   CLOSE_ACTION,
   FETCH_COUNT_START,
-  FETCH_COUNT_FAILURE
+  FETCH_COUNT_FAILURE,
 } from './types';
 import { EMPTY_FIELDS_ERROR } from '../login/types';
-import { getPaging, getConnectionsSearchPayload } from './selectors';
+import { getPaging, getConnectionsSearchPayload, getConnectionsCountData } from './selectors';
 import { get, post } from '../../utils/http';
 import {
   ADMIN_CONNECTIONS_ENDPOINT,
   ADMIN_CONNECTIONS_COUNT_ENDPOINT,
   ADMIN_CONNECTIONS_CREATE_ENDPOINT
 } from '../../config';
-
-import { getPaging, getConnectionsSearchPayload, getConnectionsCountData } from './selectors';
-import { get } from '../../utils/http';
-import { ADMIN_CONNECTIONS_ENDPOINT, ADMIN_CONNECTIONS_COUNT_ENDPOINT } from '../../config';
 
 export const fetchStart = createAction(FETCH_START);
 export const fetchFailure = createAction(FETCH_FAILURE);
