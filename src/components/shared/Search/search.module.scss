@@ -1,7 +1,7 @@
 @import "../../../assets/variables";
 
 .input {
-  width: 195px;
+  width: 250px;
   border: none;
   background-color: $light-gray;
   border-radius: 45px;
@@ -11,7 +11,6 @@
   color: black;
   padding: 7px 45px 7px 15px;
   outline: none;
-  transition: width .4s;
 }
 
 .container {
@@ -22,10 +21,6 @@
 .icon {
   width: 17px;
   opacity: 0.5;
-}
-
-.input:focus {
-  width: 250px;
 }
 
 .search {

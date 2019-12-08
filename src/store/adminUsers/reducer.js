@@ -12,7 +12,7 @@ import {
   SET_TOTAL_USERS,
   CHANGE_SEARCH_INPUT,
   FETCH_COUNT_START,
-  FETCH_COUNT_FAILURE,
+  FETCH_COUNT_FAILURE, FETCH_END,
 } from './types';
 
 const initialState = {
@@ -74,31 +74,39 @@ export default function adminUsersReducer(state = initialState, action) {
         error: true,
         isLoading: false
       };
+    case FETCH_END:
+      return {
+        ...state,
+        isLoading: false,
+        lastLoadedPage: action.payload,
+        error: false,
+      };
     case SET_USERS:
       return {
         ...state,
         users: action.payload,
-        error: false,
-        isLoading: false,
-        // hasNextPage: us
+        hasNextPage: action.payload.length < state.totalUsers.count,
       };
     case APPEND_USERS:
+      const users = [...state.users, ...action.payload];
       return {
         ...state,
-        users: [...state.users, ...action.payload],
-        hasNextPage: action.payload.length > 0,
-        error: false,
-        isLoading: false
+        users,
+        hasNextPage: users.length < state.totalUsers.count,
       };
     case NEXT_PAGE:
+      const nextPage = state.currentPage + 1;
       return {
         ...state,
-        currentPage: state.currentPage + 1
+        currentPage: nextPage,
+        hasNextPage: nextPage * state.itemsPerPage < state.totalUsers.count,
       };
     case PREV_PAGE:
+      const prevPage = state.currentPage - 1;
       return {
         ...state,
-        currentPage: state.currentPage - 1
+        currentPage: prevPage,
+        hasNextPage: prevPage * state.itemsPerPage < state.totalUsers.count
       };
     case CHANGE_FORM_FIELD:
       return {

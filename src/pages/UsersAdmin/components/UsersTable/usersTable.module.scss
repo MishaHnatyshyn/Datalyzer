@@ -3,19 +3,24 @@
 .users {
   display: flex;
   align-items: center;
+
+  margin-top: 50px;
 }
 
 .tableButtons {
-
+  padding-left: 20px;
+  width: 53px;
 }
 
 .tableButton {
+  padding: 20px 0;
+}
 
+.tableButtonDown {
+  transform: rotate(180deg);
 }
 
 .tableWrapper {
-  margin-top: 50px;
-
   width: 100%;
   overflow: auto;
 
@@ -35,12 +40,28 @@
 
 }
 
-.usersCell {
+.usersCellIds {
+  width: 61px;
   text-align: center;
-  vertical-align: middle;
+}
+
+.usersCellEdit {
+  width: 100px;
+}
+
+.usersCell {
   padding: 10px 15px;
+  font-size: 13px;
+  font-weight: bold;
 
   border: 2px solid $blue;
+
+  vertical-align: top;
+}
+
+.usersCellButtons {
+  display: flex;
+  justify-content: space-between;
 }
 
 .usersHeaderCell {

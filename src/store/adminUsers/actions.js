@@ -3,6 +3,7 @@ import {
   CHANGE_FORM_FIELD,
   FETCH_FAILURE,
   FETCH_START,
+  FETCH_END,
   SET_USERS,
   APPEND_USERS,
   NEXT_PAGE,
@@ -25,6 +26,7 @@ export const changeInputField = createAction(
 );
 export const fetchStart = createAction(FETCH_START);
 export const fetchFailure = createAction(FETCH_FAILURE);
+export const fetchEnd = createAction(FETCH_END);
 export const nextPage = createAction(NEXT_PAGE);
 export const prevPage = createAction(PREV_PAGE);
 export const setTotalUsers = createAction(SET_TOTAL_USERS, (count) => count);
@@ -41,8 +43,9 @@ export const searchUsers = () => async (dispatch, getState) => {
   const { itemsPerPage, search } = getUsersSearchPayload(getState());
   const params = { page: 1, itemsPerPage };
   if (search) params.search = search;
-  dispatch(fetchStart());
   try {
+    await dispatch(getUsersCount());
+    dispatch(fetchStart());
     const data = await get(ADMIN_USERS_ENDPOINT, { params });
     dispatch(setUsers(data));
   } catch (e) {
@@ -52,11 +55,13 @@ export const searchUsers = () => async (dispatch, getState) => {
 
 export const fetchNextPage = () => async (dispatch, getState) => {
   const { currentPage, itemsPerPage, search } = getUsersSearchPayload(getState());
-  const params = { page: currentPage + 1, itemsPerPage };
+  const nextPageNumber = currentPage + 1;
+  const params = { page: nextPageNumber, itemsPerPage };
   if (search) params.search = search;
   dispatch(fetchStart());
   try {
     const data = await get(ADMIN_USERS_ENDPOINT, { params });
+    dispatch(fetchEnd(nextPage));
     dispatch(appendUsers(data));
     dispatch(nextPage());
   } catch (e) {
@@ -70,14 +75,27 @@ export const moveToNextPage = () => (dispatch, getState) => {
   dispatch(nextPage());
 };
 
-export const getUsersCount = () => async (dispatch, getState) => {
-  const { count } = getUsersCountData(getState());
-  if (count !== 0) {
-    return;
+export const moveToPrevPage = () => {
+  return (dispatch, getState) => {
+    const { currentPage } = getPaging(getState());
+    if (currentPage === 1) {
+      return
+    }
+    dispatch(prevPage())
   }
+};
+
+export const getUsersCount = () => async (dispatch, getState) => {
+  const state = getState();
+  const { search } = getUsersSearchPayload(state);
+  const params = {};
+  if (search) {
+    params.search = search;
+  }
+
   try {
     dispatch(fetchCountStart());
-    const data = await get(ADMIN_USERS_COUNT_ENDPOINT);
+    const data = await get(ADMIN_USERS_COUNT_ENDPOINT, { params });
     dispatch(setTotalUsers(data.count));
   } catch (e) {
     dispatch(fetchFailure());
