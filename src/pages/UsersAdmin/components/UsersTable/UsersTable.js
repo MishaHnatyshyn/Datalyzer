@@ -13,13 +13,17 @@ const UsersTableHeaderCell = ({ content, className }) => (
     </th>
   );
 
-const TableButton = ({ onClick, content, visible, className }) => {
-  if (!visible) {
-    return null
-  }
-
+const TableButton = ({ onClick, content, enabled, className }) => {
   return (
-    <button className={classNames(styles.tableButton, className)} onClick={onClick}>
+    <button
+      className={classNames(
+        styles.tableButton,
+        className,
+        { [styles.tableButtonDisabled]: !enabled }
+        )}
+      onClick={onClick}
+      disabled={!enabled}
+    >
       {content}
     </button>
   )
@@ -36,9 +40,9 @@ const UsersTable = ({ users, hasNextPage, moveToPrevPage, moveToNextPage, curren
           <tbody>
           <tr>
             <UsersTableHeaderCell content={'№'} className={styles.usersCellIds} />
-            <UsersTableHeaderCell content={'Username'} />
+            <UsersTableHeaderCell content={'Username'} className={styles.usersCellUsername} />
             <UsersTableHeaderCell content={'Description'} />
-            <UsersTableHeaderCell content={'Created'} />
+            <UsersTableHeaderCell content={'Created'} className={styles.usersCellEdit} />
             <UsersTableHeaderCell content={'Edit'} className={styles.usersCellEdit} />
           </tr>
           {
@@ -52,12 +56,12 @@ const UsersTable = ({ users, hasNextPage, moveToPrevPage, moveToNextPage, curren
       <div className={styles.tableButtons}>
         <TableButton
           content={<img src="/images/usersAdmin/up-arrow.png" alt=""/>}
-          visible={currentPage !== 1}
+          enabled={currentPage !== 1}
           onClick={moveToPrevPage}
         />
         <TableButton
           content={<img src="/images/usersAdmin/up-arrow.png" alt=""/>}
-          visible={hasNextPage}
+          enabled={hasNextPage}
           onClick={moveToNextPage}
           className={styles.tableButtonDown}
         />

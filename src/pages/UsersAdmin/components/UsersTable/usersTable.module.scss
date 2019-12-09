@@ -14,6 +14,13 @@
 
 .tableButton {
   padding: 20px 0;
+
+  transition: all .15s linear;
+}
+
+.tableButtonDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .tableButtonDown {
@@ -40,6 +47,18 @@
 }
 
 .usersCellEdit {
+  width: 100px;
+}
+
+.usersCellDescription {
+
+}
+
+.usersCellUsername {
+  width: 100px;
+}
+
+.usersCellDate {
   width: 100px;
 }
 
