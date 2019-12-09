@@ -1,18 +1,15 @@
 import React, { useMemo } from 'react';
-import styles from './usersTable.module.scss';
 import classNames from 'classnames';
 import { DateTime } from 'luxon';
+import styles from './usersTable.module.scss';
 
-const UsersTableCell = ({ content, className }) => {
-  return (
+const UsersTableCell = ({ content, className }) => (
     <td className={classNames(styles.usersCell, className)}>
       {content}
     </td>
-  )
-};
+  );
 
-const UsersTableEditButtons = ({  }) => {
-  return (
+const UsersTableEditButtons = () => (
     <div className={styles.usersCellButtons}>
       <button>
         <img src="/images/usersAdmin/edit-user@1X.png" alt=""/>
@@ -21,8 +18,7 @@ const UsersTableEditButtons = ({  }) => {
         <img src="/images/usersAdmin/delete-user@1X.png" alt=""/>
       </button>
     </div>
-  )
-};
+  );
 
 const UsersTableRow = ({id, username, description, created_at: createdAt}) => {
   const parsedTime = useMemo(() => {

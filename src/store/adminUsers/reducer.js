@@ -12,7 +12,8 @@ import {
   SET_TOTAL_USERS,
   CHANGE_SEARCH_INPUT,
   FETCH_COUNT_START,
-  FETCH_COUNT_FAILURE, FETCH_END,
+  FETCH_COUNT_FAILURE,
+  FETCH_END,
 } from './types';
 
 const initialState = {

@@ -1,19 +1,17 @@
 import React, {useMemo}  from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 import {getCurrentPage, getUsers, getItemsPerPage, hasNextPage} from "../../../../store/adminUsers/selectors";
 import UsersTableRow from './UsersTableRow';
-import classNames from 'classnames';
 import styles from './usersTable.module.scss';
 import { moveToNextPage, moveToPrevPage } from '../../../../store/adminUsers/actions';
 
-const UsersTableHeaderCell = ({ content, className }) => {
-  return (
+const UsersTableHeaderCell = ({ content, className }) => (
     <th className={classNames(styles.usersCell, styles.usersHeaderCell, className)}>
       {content}
     </th>
-  )
-};
+  );
 
 const TableButton = ({ onClick, content, visible, className }) => {
   if (!visible) {
@@ -29,9 +27,7 @@ const TableButton = ({ onClick, content, visible, className }) => {
 
 const UsersTable = ({ users, hasNextPage, moveToPrevPage, moveToNextPage, currentPage, itemsPerPage }) => {
 
-  const usersList = useMemo(() => {
-    return users.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-  }, [currentPage, itemsPerPage, users]);
+  const usersList = useMemo(() => users.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage), [currentPage, itemsPerPage, users]);
 
   return (
     <div className={styles.users}>
@@ -46,11 +42,9 @@ const UsersTable = ({ users, hasNextPage, moveToPrevPage, moveToNextPage, curren
             <UsersTableHeaderCell content={'Edit'} className={styles.usersCellEdit} />
           </tr>
           {
-            usersList.map((user) => {
-              return (
+            usersList.map((user) => (
                 <UsersTableRow {...user} />
-              )
-            })
+              ))
           }
           </tbody>
         </table>

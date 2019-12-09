@@ -75,15 +75,13 @@ export const moveToNextPage = () => (dispatch, getState) => {
   dispatch(nextPage());
 };
 
-export const moveToPrevPage = () => {
-  return (dispatch, getState) => {
+export const moveToPrevPage = () => (dispatch, getState) => {
     const { currentPage } = getPaging(getState());
     if (currentPage === 1) {
       return
     }
     dispatch(prevPage())
-  }
-};
+  };
 
 export const getUsersCount = () => async (dispatch, getState) => {
   const state = getState();
