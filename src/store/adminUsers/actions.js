@@ -16,7 +16,7 @@ import {
   FETCH_COUNT_START,
   FETCH_COUNT_FAILURE,
 } from './types';
-import { getPaging, getUsersCountData, getUsersSearchPayload } from './selectors';
+import { getItemsPerPage, getPaging, getUsersCountData, getUsersSearchPayload } from './selectors';
 import { get } from '../../utils/http';
 import { ADMIN_USERS_COUNT_ENDPOINT, ADMIN_USERS_ENDPOINT } from '../../config';
 
@@ -70,9 +70,14 @@ export const fetchNextPage = () => async (dispatch, getState) => {
 };
 
 export const moveToNextPage = () => (dispatch, getState) => {
-  const { lastLoadedPage, currentPage } = getPaging(getState());
+  const state = getState();
+  const { lastLoadedPage, currentPage } = getPaging(state);
+  const itemsPerPage = getItemsPerPage(state);
+  const { count } = getUsersCountData(state);
   if (currentPage === lastLoadedPage) return dispatch(fetchNextPage());
-  dispatch(nextPage());
+  if (currentPage * itemsPerPage < count) {
+    dispatch(nextPage());
+  }
 };
 
 export const moveToPrevPage = () => (dispatch, getState) => {

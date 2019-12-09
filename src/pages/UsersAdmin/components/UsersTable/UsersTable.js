@@ -53,19 +53,23 @@ const UsersTable = ({ users, hasNextPage, moveToPrevPage, moveToNextPage, curren
           </tbody>
         </table>
       </div>
-      <div className={styles.tableButtons}>
-        <TableButton
-          content={<img src="/images/usersAdmin/up-arrow.png" alt=""/>}
-          enabled={currentPage !== 1}
-          onClick={moveToPrevPage}
-        />
-        <TableButton
-          content={<img src="/images/usersAdmin/up-arrow.png" alt=""/>}
-          enabled={hasNextPage}
-          onClick={moveToNextPage}
-          className={styles.tableButtonDown}
-        />
-      </div>
+      {
+        !users.length ? null : (
+          <div className={styles.tableButtons}>
+            <TableButton
+              content={<img src="/images/usersAdmin/up-arrow.png" alt=""/>}
+              enabled={currentPage !== 1}
+              onClick={moveToPrevPage}
+            />
+            <TableButton
+              content={<img src="/images/usersAdmin/up-arrow.png" alt=""/>}
+              enabled={hasNextPage}
+              onClick={moveToNextPage}
+              className={styles.tableButtonDown}
+            />
+          </div>
+        )
+      }
     </div>
   )
 };
