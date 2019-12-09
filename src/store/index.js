@@ -4,6 +4,7 @@ import {
 import thunk from 'redux-thunk';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
+import reduxLogger from 'redux-logger';
 import loginReducer from './login/reducer';
 import userReducer from './user/reducer';
 import adminUsersReducer from './adminUsers/reducer';
@@ -22,7 +23,13 @@ export const history = createBrowserHistory();
 
 const middleware = [thunk, routerMiddleware(history)];
 
-const enhancer = composeEnhancers(applyMiddleware(...middleware));
+if (process.env.NODE_ENV !== 'production') {
+  middleware.push(reduxLogger);
+}
+
+const enhancer = composeEnhancers(
+  applyMiddleware(...middleware),
+);
 
 const rootReducer = combineReducers({
   router: connectRouter(history),
