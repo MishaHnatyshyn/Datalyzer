@@ -12,10 +12,22 @@ import {
   CHANGE_SEARCH_INPUT,
   FETCH_COUNT_START,
   FETCH_COUNT_FAILURE,
+  DELETE_CONNECTION,
+  DELETE_CONNECTION_START,
+  DELETE_CONNECTION_SUCCESS,
+  DELETE_CONNECTION_ERROR,
 } from './types';
-import { getPaging, getConnectionsSearchPayload, getConnectionsCountData } from './selectors';
-import { get } from '../../utils/http';
+import {
+  getPaging,
+  getConnectionsSearchPayload,
+  getConnectionsCountData,
+  getConnectionForDeleting,
+} from './selectors';
+import { del, get } from '../../utils/http';
 import { ADMIN_CONNECTIONS_ENDPOINT, ADMIN_CONNECTIONS_COUNT_ENDPOINT } from '../../config';
+import { createConnectionDeleteRoute } from '../../utils/routeCreators';
+import { displayCustomPopup } from '../popups/actions';
+import PopupTypes from '../popups/popupTypes';
 
 export const fetchStart = createAction(FETCH_START);
 export const fetchFailure = createAction(FETCH_FAILURE);
@@ -27,8 +39,12 @@ export const createConnectionSuccess = createAction(CREATE_SUCCESS, (connection)
 export const setConnections = createAction(SET_CONNECTIONS, (connections) => connections);
 export const appendConnections = createAction(APPEND_CONNECTIONS, (connections) => connections);
 export const changeSearchInput = createAction(CHANGE_SEARCH_INPUT, (value) => value);
+export const setConnectionForDeleting = createAction(DELETE_CONNECTION, (value) => value);
 export const fetchCountStart = createAction(FETCH_COUNT_START);
 export const fetchCountFailure = createAction(FETCH_COUNT_FAILURE);
+export const deleteConnectionStart = createAction(DELETE_CONNECTION_START);
+export const deleteConnectionSuccess = createAction(DELETE_CONNECTION_SUCCESS);
+export const deleteConnectionError = createAction(DELETE_CONNECTION_ERROR);
 
 export const searchConnections = () => async (dispatch, getState) => {
   const { itemsPerPage, search } = getConnectionsSearchPayload(getState());
@@ -74,5 +90,18 @@ export const getConnectionsCount = () => async (dispatch, getState) => {
     dispatch(setTotalConnections(data.count));
   } catch (e) {
     dispatch(fetchFailure());
+  }
+};
+
+export const deleteConnection = () => async (dispatch, getState) => {
+  const connectionId = getConnectionForDeleting(getState());
+  try {
+    dispatch(deleteConnectionStart());
+    await del(createConnectionDeleteRoute(connectionId));
+    dispatch(deleteConnectionSuccess());
+    dispatch(displayCustomPopup(PopupTypes.DELETE_CONNECTION_SUCCESS));
+  } catch (e) {
+    dispatch(deleteConnectionError());
+    dispatch(displayCustomPopup(PopupTypes.DELETE_CONNECTION_ERROR));
   }
 };

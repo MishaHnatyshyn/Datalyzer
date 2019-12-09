@@ -10,13 +10,15 @@ import {
   NEXT_PAGE,
   FETCH_COUNT_START,
   FETCH_COUNT_FAILURE,
+  DELETE_CONNECTION,
+  DELETE_CONNECTION_SUCCESS,
 } from './types';
 
 const initialState = {
   connections: [],
   totalConnections: {
     count: 0,
-    isLoading: true
+    isLoading: true,
   },
   currentPage: 1,
   search: '',
@@ -25,6 +27,7 @@ const initialState = {
   error: false,
   isLoading: false,
   hasNextPage: true,
+  connectionForDeleting: null,
 };
 
 export default function connectionsReducer(state = initialState, action) {
@@ -33,42 +36,42 @@ export default function connectionsReducer(state = initialState, action) {
       return {
         ...state,
         totalConnections: {
-          isLoading: true
-        }
+          isLoading: true,
+        },
       };
     case FETCH_COUNT_FAILURE:
       return {
         ...state,
         totalConnections: {
           count: 0,
-          isLoading: false
-        }
+          isLoading: false,
+        },
       };
     case SET_TOTAL_CONNECTIONS:
       return {
         ...state,
         totalConnections: {
           count: action.payload,
-          isLoading: false
-        }
+          isLoading: false,
+        },
       };
     case FETCH_START:
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
       };
     case FETCH_FAILURE:
       return {
         ...state,
         error: true,
-        isLoading: false
+        isLoading: false,
       };
     case SET_CONNECTIONS:
       return {
         ...state,
         connections: action.payload,
         error: false,
-        isLoading: false
+        isLoading: false,
       };
     case APPEND_CONNECTIONS:
       return {
@@ -76,17 +79,17 @@ export default function connectionsReducer(state = initialState, action) {
         connections: [...state.connections, ...action.payload],
         hasNextPage: action.payload.length > 0,
         error: false,
-        isLoading: false
+        isLoading: false,
       };
     case NEXT_PAGE:
       return {
         ...state,
-        currentPage: state.currentPage + 1
+        currentPage: state.currentPage + 1,
       };
     case CREATE_START:
       return {
         ...state,
-        isCreatingInProgress: true
+        isCreatingInProgress: true,
       };
     case CREATE_FAILURE:
       return {
@@ -98,6 +101,19 @@ export default function connectionsReducer(state = initialState, action) {
       return {
         ...state,
         search: action.payload,
+      };
+    case DELETE_CONNECTION:
+      return {
+        ...state,
+        connectionForDeleting: action.payload,
+      };
+    case DELETE_CONNECTION_SUCCESS:
+      return {
+        ...state,
+        connections: state.connections.filter(
+          (connection) => connection.id !== state.connectionForDeleting,
+        ),
+        connectionForDeleting: null,
       };
     default:
       return state;

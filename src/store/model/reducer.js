@@ -9,8 +9,9 @@ import {
   FETCH_START,
   NEXT_PAGE,
   FETCH_COUNT_START,
-  FETCH_COUNT_FAILURE,
+  FETCH_COUNT_FAILURE, DELETE_MODEL, DELETE_MODEL_SUCCESS,
 } from './types';
+import {DELETE_CONNECTION, DELETE_CONNECTION_SUCCESS} from "../connection/types";
 
 const initialState = {
   models: [],
@@ -25,6 +26,7 @@ const initialState = {
   error: false,
   isLoading: false,
   hasNextPage: true,
+  modelForDeleting: null,
 };
 
 export default function modelReducer(state = initialState, action) {
@@ -99,7 +101,19 @@ export default function modelReducer(state = initialState, action) {
         ...state,
         search: action.payload,
       };
-
+    case DELETE_MODEL:
+      return {
+        ...state,
+        modelForDeleting: action.payload,
+      };
+    case DELETE_MODEL_SUCCESS:
+      return {
+        ...state,
+        models: state.models.filter(
+          (model) => model.id !== state.modelForDeleting,
+        ),
+        modelForDeleting: null,
+      };
     default:
       return state;
   }
