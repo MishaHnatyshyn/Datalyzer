@@ -31,7 +31,7 @@ const ModelsDataCard = ({
   return (
     <DataCard
       caption={name}
-      secondIcon="/images/update-arrows.png"
+      secondIcon="/images/controls.png"
       thirdIcon="/images/cross.png"
       onSecondButtonClick={updateModel}
       onThirdButtonClick={onDelete}
