@@ -4,7 +4,7 @@ import styles from './dataCard.module.scss';
 import DataContainer from '../DataContainer';
 
 const DataCard = ({
-  caption, children, firstIcon, secondIcon, thirdIcon
+  caption, children, secondIcon, thirdIcon, onSecondButtonClick, onThirdButtonClick
 }) => (
   <DataContainer topText={caption}>
     <div className={styles.bottomBlock}>
@@ -13,13 +13,10 @@ const DataCard = ({
         <div className={styles.line} />
       </div>
       <div className={styles.iconsBlock}>
-        <button>
-          <img src={firstIcon} alt="first icon" className={styles.icon} />
-        </button>
-        <button>
+        <button onClick={onSecondButtonClick}>
           <img src={secondIcon} alt="second icon" className={styles.icon} />
         </button>
-        <button>
+        <button onClick={onThirdButtonClick}>
           <img src={thirdIcon} alt="third icon" className={styles.icon} />
         </button>
       </div>
@@ -30,9 +27,10 @@ const DataCard = ({
 DataCard.propTypes = {
   caption: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
-  firstIcon: PropTypes.string.isRequired,
   secondIcon: PropTypes.string.isRequired,
   thirdIcon: PropTypes.string.isRequired,
+  onSecondButtonClick: PropTypes.func.isRequired,
+  onThirdButtonClick: PropTypes.func.isRequired
 };
 
 export default DataCard;

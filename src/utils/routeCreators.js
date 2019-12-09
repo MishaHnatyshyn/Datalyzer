@@ -6,3 +6,5 @@ export const createHomeRoute = () => `/${getUserType(store.getState())}/home`;
 export const createModelsRoute = () => `/${getUserType(store.getState())}/models`;
 export const createConnectionTablesDataRoute = (id) => `/connections/${id}/tables`;
 export const createConnectionRelationsDataRoute = (id) => `/connections/${id}/relations`;
+export const createConnectionDeleteRoute = (id) => `/connections/${id}`;
+export const createModelDeleteRoute = (id) => `/models/${id}`;

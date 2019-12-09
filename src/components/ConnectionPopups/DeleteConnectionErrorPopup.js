@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import { closePopup } from '../../store/popups/actions';
 import ErrorPopup from '../shared/ErrorPopup';
 
-const message = 'Failed to create model. Check your data and try again.';
+const message = 'Failed to delete connection. Check your data and try again.';
 
-const CreateModelErrorPopup = ({ closePopup }) => (
+const DeleteConnectionErrorPopup = ({ closePopup }) => (
   <ErrorPopup onClose={closePopup} text={message} isVisible />
 );
 
-CreateModelErrorPopup.propTypes = {
+DeleteConnectionErrorPopup.propTypes = {
   closePopup: PropTypes.func.isRequired,
 };
 const mapDispatchToProps = (dispatch) => ({
@@ -19,4 +19,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(null, mapDispatchToProps)(CreateModelErrorPopup);
+export default connect(null, mapDispatchToProps)(DeleteConnectionErrorPopup);

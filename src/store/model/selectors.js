@@ -11,6 +11,7 @@ export const getModels = compose(prop('models'), root);
 export const isError = compose(prop('error'), root);
 export const isLoading = compose(prop('isLoading'), root);
 export const hasNextPage = compose(prop('hasNextPage'), root);
+export const getModelForDeleting = compose(prop('modelForDeleting'), root);
 
 export const getPaging = createSelector(
   [getCurrentPage, getLastLoadedPage],

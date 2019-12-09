@@ -12,10 +12,19 @@ import {
   CHANGE_SEARCH_INPUT,
   FETCH_COUNT_START,
   FETCH_COUNT_FAILURE,
+  DELETE_MODEL_START,
+  DELETE_MODEL_SUCCESS,
+  DELETE_MODEL_ERROR,
+  DELETE_MODEL,
 } from './types';
-import { getPaging, getModelsSearchPayload, getModelsCountData } from './selectors';
-import { get } from '../../utils/http';
+import {getPaging, getModelsSearchPayload, getModelsCountData, getModelForDeleting} from './selectors';
+import {del, get} from '../../utils/http';
 import { ADMIN_MODELS_ENDPOINT, ADMIN_MODELS_COUNT_ENDPOINT } from '../../config';
+import {getConnectionForDeleting} from "../connection/selectors";
+import {createConnectionDeleteRoute, createModelDeleteRoute} from "../../utils/routeCreators";
+import {displayCustomPopup} from "../popups/actions";
+import PopupTypes from "../popups/popupTypes";
+import {deleteConnectionError, deleteConnectionStart, deleteConnectionSuccess} from "../connection/actions";
 
 export const fetchStart = createAction(FETCH_START);
 export const fetchCountStart = createAction(FETCH_COUNT_START);
@@ -29,6 +38,10 @@ export const createModelSuccess = createAction(CREATE_SUCCESS, (model) => model)
 export const setModels = createAction(SET_MODELS, (models) => models);
 export const appendModels = createAction(APPEND_MODELS, (models) => models);
 export const changeSearchInput = createAction(CHANGE_SEARCH_INPUT, (value) => value);
+export const setModelForDeleting = createAction(DELETE_MODEL, (value) => value);
+export const deleteModelStart = createAction(DELETE_MODEL_START);
+export const deleteModelSuccess = createAction(DELETE_MODEL_SUCCESS);
+export const deleteModelError = createAction(DELETE_MODEL_ERROR);
 
 export const searchModels = () => async (dispatch, getState) => {
   const { itemsPerPage, search } = getModelsSearchPayload(getState());
@@ -74,5 +87,18 @@ export const getModelsCount = () => async (dispatch, getState) => {
     dispatch(setTotalModels(data.count));
   } catch (e) {
     dispatch(fetchCountFailure());
+  }
+};
+
+export const deleteModel = () => async (dispatch, getState) => {
+  const modelId = getModelForDeleting(getState());
+  try {
+    dispatch(deleteModelStart());
+    await del(createModelDeleteRoute(modelId));
+    dispatch(deleteModelSuccess());
+    dispatch(displayCustomPopup(PopupTypes.DELETE_MODEL_SUCCESS));
+  } catch (e) {
+    dispatch(deleteModelError());
+    dispatch(displayCustomPopup(PopupTypes.DELETE_MODEL_ERROR));
   }
 };

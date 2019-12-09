@@ -1,24 +1,41 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styles from './modelsDataCard.module.scss';
 import DataCard from '../shared/DataCard';
 import AdminCardDataItem from '../shared/AdminCardDataItem';
+import { connect } from 'react-redux';
+import { displayCustomPopup } from '../../store/popups/actions';
+import PopupTypes from '../../store/popups/popupTypes';
+import { setModelForDeleting } from '../../store/model/actions';
 
 const getStatusName = (isActive) => (isActive ? 'active' : 'disabled');
 
 const ModelsDataCard = ({
-  name, connection, users, tables, created, fields, usages, active
+  name,
+  connection,
+  users,
+  tables,
+  created,
+  fields,
+  usages,
+  active,
+  updateModel,
+  deleteModel,
+  id,
 }) => {
-  const status = useMemo(
-    () => getStatusName(active),
-    [active]
-  );
-  const formattedCreationDate = useMemo(
-    () => new Date(created).toLocaleDateString(),
-    [created]
-  );
+  const status = useMemo(() => getStatusName(active), [active]);
+  const formattedCreationDate = useMemo(() => new Date(created).toLocaleDateString(), [created]);
+  const onDelete = useCallback(() => {
+    deleteModel(id);
+  }, [id, deleteModel]);
   return (
-    <DataCard caption={name} firstIcon="/images/security.png" secondIcon="/images/update-arrows.png" thirdIcon="/images/cross.png">
+    <DataCard
+      caption={name}
+      secondIcon="/images/controls.png"
+      thirdIcon="/images/cross.png"
+      onSecondButtonClick={updateModel}
+      onThirdButtonClick={onDelete}
+    >
       <AdminCardDataItem name="Connection name" value={connection} />
       <AdminCardDataItem name="Users" value={users} />
       <AdminCardDataItem name="Tables" value={tables} />
@@ -32,6 +49,7 @@ const ModelsDataCard = ({
 
 ModelsDataCard.propTypes = {
   name: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   connection: PropTypes.string.isRequired,
   users: PropTypes.string.isRequired,
   tables: PropTypes.string.isRequired,
@@ -39,6 +57,16 @@ ModelsDataCard.propTypes = {
   fields: PropTypes.string.isRequired,
   usages: PropTypes.string.isRequired,
   active: PropTypes.string.isRequired,
+  updateModel: PropTypes.func.isRequired,
+  deleteModel: PropTypes.func.isRequired,
 };
 
-export default ModelsDataCard;
+const mapDispatchToProps = (dispatch) => ({
+  updateModel: () => {},
+  deleteModel: (id) => {
+    dispatch(setModelForDeleting(id));
+    dispatch(displayCustomPopup(PopupTypes.DELETE_MODEL));
+  },
+});
+
+export default connect(null, mapDispatchToProps)(ModelsDataCard);
