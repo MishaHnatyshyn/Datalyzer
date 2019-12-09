@@ -11,6 +11,7 @@
     "comma-dangle": "off",
     "consistent-return": "off",
     "no-shadow": "off",
+    "import/no-cycle": "off",
     "no-param-reassign": "off",
     "linebreak-style": "off",
     "react/jsx-filename-extension": "off",
@@ -19,6 +20,7 @@
     "no-underscore-dangle": "off",
     "react/button-has-type": "off",
     "react/jsx-props-no-spreading": "off",
-    "camelcase": "off"
+    "camelcase": "off",
+    "max-len": "error"
   }
 }

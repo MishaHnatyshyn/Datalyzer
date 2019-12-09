@@ -42,13 +42,18 @@ table {
   border-spacing: 0;
 }
 
+a {
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+}
+
 .hidden {
   visibility: hidden;
 }
 
-button {
-  background: none;
-  outline: none;
-  border: none;
-  cursor: pointer;
-}
