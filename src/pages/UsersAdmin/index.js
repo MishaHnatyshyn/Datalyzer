@@ -12,7 +12,7 @@ const UsersAdmin = ({ fetchUsersCount, fetchUsers }) => {
   }, []);
 
   useEffect(() => {
-    fetchUsersData()
+    fetchUsersData();
   }, []);
 
   return (

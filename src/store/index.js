@@ -24,8 +24,8 @@ export const history = createBrowserHistory();
 const middleware = [thunk, routerMiddleware(history)];
 
 if (process.env.NODE_ENV !== 'production') {
-  middleware.push(reduxLogger)
-};
+  middleware.push(reduxLogger);
+}
 
 const enhancer = composeEnhancers(
   applyMiddleware(...middleware),

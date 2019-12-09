@@ -16,7 +16,9 @@ import {
   FETCH_COUNT_START,
   FETCH_COUNT_FAILURE,
 } from './types';
-import { getItemsPerPage, getPaging, getUsersCountData, getUsersSearchPayload } from './selectors';
+import {
+  getItemsPerPage, getPaging, getUsersCountData, getUsersSearchPayload
+} from './selectors';
 import { get } from '../../utils/http';
 import { ADMIN_USERS_COUNT_ENDPOINT, ADMIN_USERS_ENDPOINT } from '../../config';
 
@@ -38,6 +40,23 @@ export const appendUsers = createAction(APPEND_USERS, (users) => users);
 export const changeSearchInput = createAction(CHANGE_SEARCH_INPUT, (value) => value);
 export const fetchCountStart = createAction(FETCH_COUNT_START);
 export const fetchCountFailure = createAction(FETCH_COUNT_FAILURE);
+
+export const getUsersCount = () => async (dispatch, getState) => {
+  const state = getState();
+  const { search } = getUsersSearchPayload(state);
+  const params = {};
+  if (search) {
+    params.search = search;
+  }
+
+  try {
+    dispatch(fetchCountStart());
+    const data = await get(ADMIN_USERS_COUNT_ENDPOINT, { params });
+    dispatch(setTotalUsers(data.count));
+  } catch (e) {
+    dispatch(fetchFailure());
+  }
+};
 
 export const searchUsers = () => async (dispatch, getState) => {
   const { itemsPerPage, search } = getUsersSearchPayload(getState());
@@ -81,26 +100,9 @@ export const moveToNextPage = () => (dispatch, getState) => {
 };
 
 export const moveToPrevPage = () => (dispatch, getState) => {
-    const { currentPage } = getPaging(getState());
-    if (currentPage === 1) {
-      return
-    }
-    dispatch(prevPage())
-  };
-
-export const getUsersCount = () => async (dispatch, getState) => {
-  const state = getState();
-  const { search } = getUsersSearchPayload(state);
-  const params = {};
-  if (search) {
-    params.search = search;
+  const { currentPage } = getPaging(getState());
+  if (currentPage === 1) {
+    return;
   }
-
-  try {
-    dispatch(fetchCountStart());
-    const data = await get(ADMIN_USERS_COUNT_ENDPOINT, { params });
-    dispatch(setTotalUsers(data.count));
-  } catch (e) {
-    dispatch(fetchFailure());
-  }
+  dispatch(prevPage());
 };

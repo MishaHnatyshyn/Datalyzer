@@ -23,7 +23,7 @@ const initialState = {
   },
   currentPage: 1,
   search: '',
-  itemsPerPage: 4,
+  itemsPerPage: 8,
   lastLoadedPage: 1,
   error: false,
   isLoading: false,

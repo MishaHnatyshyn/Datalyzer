@@ -21,6 +21,7 @@
     "react/button-has-type": "off",
     "react/jsx-props-no-spreading": "off",
     "camelcase": "off",
+    "no-case-declarations": "off",
     "max-len": "error"
   }
 }
