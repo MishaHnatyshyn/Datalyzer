@@ -17,6 +17,7 @@
   padding: 20px 0;
 
   transition: all .15s linear;
+  user-select: none;
 }
 
 .tableButtonDisabled {
@@ -76,9 +77,13 @@
 .usersCellButtons {
   display: flex;
   justify-content: space-between;
+
+  user-select: none;
 }
 
 .usersHeaderCell {
   font-size: 18px;
   font-weight: bold;
+
+  user-select: none;
 }

@@ -11,7 +11,7 @@ import {
   CREATE_SUCCESS,
   CHANGE_SEARCH_INPUT,
   FETCH_COUNT_START,
-  FETCH_COUNT_FAILURE
+  FETCH_COUNT_FAILURE,
 } from './types';
 import { getPaging, getConnectionsSearchPayload, getConnectionsCountData } from './selectors';
 import { get } from '../../utils/http';

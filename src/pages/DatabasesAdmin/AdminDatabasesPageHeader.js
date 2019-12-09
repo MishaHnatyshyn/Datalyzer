@@ -6,12 +6,16 @@ import { changeSearchInput, searchConnections } from '../../store/connection/act
 
 const mapStateToProps = (state) => ({
   searchValue: getSearchInputText(state),
-  countData: getConnectionsCountData(state)
+  countData: getConnectionsCountData(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  search: (e) => { dispatch(changeSearchInput(e.target.value)); },
-  submitForm: () => { dispatch(searchConnections()); }
+  search: (e) => {
+    dispatch(changeSearchInput(e.target.value));
+  },
+  submitForm: () => {
+    dispatch(searchConnections());
+  },
 });
 
 const AdminDatabasesPageHeader = (props) => (
@@ -20,6 +24,7 @@ const AdminDatabasesPageHeader = (props) => (
     buttonText="Create model"
     pageName="Total connections"
     placeholder="search by name..."
+    link="/admin/create_model"
   />
 );
 

@@ -1,0 +1,57 @@
+@import "../../../assets/variables";
+
+
+.container {
+  position: relative;
+  cursor: pointer;
+}
+
+.options {
+  padding-left: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.options:hover {
+  background-color: $light-gray;
+}
+
+.selectedValue {
+  font: $text-semibold-small;
+  border: none;
+  box-shadow: 3.83px 3.214px 10.5px rgba(119, 119, 119, 0.39);
+  height: 20px;
+  padding: 1px 0 1px 10px;
+  outline: none;
+  width: 100%;
+  background-color: white;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+
+  p {
+    max-width: 88px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.optionsBlock {
+  position: absolute;
+  z-index: 5;
+  top: 101%;
+  left: 0;
+  background-color: white;
+  width: 100%;
+  font: $text-semibold-small;
+  border-top: 1px solid $gray;
+}
+
+.arrow {
+  width: 12px;
+  filter: invert(50%);
+  position: absolute;
+  right: 10px;
+  transform: translateY(-50%) rotate(90deg);
+  top: 50%;
+}

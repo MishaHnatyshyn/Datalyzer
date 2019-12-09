@@ -20,10 +20,10 @@ import { getItemsPerPage, getPaging, getUsersCountData, getUsersSearchPayload } 
 import { get } from '../../utils/http';
 import { ADMIN_USERS_COUNT_ENDPOINT, ADMIN_USERS_ENDPOINT } from '../../config';
 
-export const changeInputField = createAction(
-  CHANGE_FORM_FIELD,
-  (field, value) => ({ field, value })
-);
+export const changeInputField = createAction(CHANGE_FORM_FIELD, (field, value) => ({
+  field,
+  value,
+}));
 export const fetchStart = createAction(FETCH_START);
 export const fetchFailure = createAction(FETCH_FAILURE);
 export const fetchEnd = createAction(FETCH_END);

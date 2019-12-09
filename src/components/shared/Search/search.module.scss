@@ -38,14 +38,6 @@
   opacity: 1;
 }
 
-::-webkit-input-placeholder { /* Edge */
-  color: $dark-gray;
-}
-
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: $dark-gray;
-}
-
-::placeholder {
+.input::placeholder {
   color: $dark-gray;
 }
