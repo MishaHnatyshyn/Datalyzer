@@ -39,6 +39,13 @@ const initialState = {
   hasNextPage: true,
   isVisible: true,
   connectionForDeleting: null,
+  host: '',
+  port: '',
+  nameDB: '',
+  nameConnection: '',
+  username: '',
+  password: '',
+  type: '',
 };
 
 export default function connectionsReducer(state = initialState, action) {
@@ -87,7 +94,7 @@ export default function connectionsReducer(state = initialState, action) {
     case APPEND_CONNECTIONS:
       return {
         ...state,
-        connections: [...state.connections, ...action.payload],
+        connections: [...state.connections, action.payload],
         hasNextPage: action.payload.length > 0,
         error: false,
         isLoading: false,
@@ -138,11 +145,13 @@ export default function connectionsReducer(state = initialState, action) {
       return {
         ...state,
         isCreatingInProgress: false,
-        formUsername: '',
-        formPassword: '',
-        formPasswordRepeat: '',
-        formUserType: '',
-        formDescription: '',
+        host: '',
+        port: '',
+        nameDB: '',
+        nameConnection: '',
+        username: '',
+        password: '',
+        type: '',
         error: false,
         isVisible: false,
       };

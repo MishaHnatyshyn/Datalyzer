@@ -99,7 +99,7 @@ export default function adminUsersReducer(state = initialState, action) {
         hasNextPage: action.payload.length < state.totalUsers.count,
       };
     case APPEND_USERS:
-      const users = [...state.users, ...action.payload];
+      const users = [...state.users, action.payload];
       return {
         ...state,
         users,
