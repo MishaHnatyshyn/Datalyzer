@@ -1,4 +1,5 @@
 import { createAction } from 'redux-actions';
+import { push } from 'connected-react-router';
 import {
   CHANGE_FORM_FIELD,
   FETCH_FAILURE,
@@ -180,7 +181,8 @@ export const newUser = () => async (dispatch, getState) => {
         description: formDescription,
       }
     });
-    dispatch(setUsers(data));
+    dispatch(createUserSuccess(data));
+    dispatch(push('/admin/users'));
   } catch (e) {
     dispatch(createUserFailure());
   }

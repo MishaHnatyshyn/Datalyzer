@@ -1,4 +1,5 @@
 import { createAction } from 'redux-actions';
+import { push } from 'connected-react-router';
 import {
   FETCH_FAILURE,
   FETCH_START,
@@ -160,6 +161,7 @@ export const newConnectionAction = () => async (dispatch, getState) => {
       }
     });
     dispatch(setConnections(data));
+    dispatch(push('/admin/databases'));
   } catch (e) {
     dispatch(createConnectionFailure());
   }

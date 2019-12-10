@@ -30,6 +30,7 @@ import {
   getUserDescriptionValue,
   onCloseAction,
 } from '../../../store/adminUsers/actions';
+import { goBack } from 'connected-react-router';
 
 const NewUserForm = ({
   formUsername,
@@ -177,7 +178,10 @@ const mapDispatchToProps = (dispatch) => ({
   changePasswordRepeat: (value) => { dispatch(getPasswordRepeatValue(value)); },
   changeUserType: (value) => { dispatch(getUserTypeValue(value)); },
   changeUserDescription: (value) => { dispatch(getUserDescriptionValue(value)); },
-  onClose: () => { dispatch(onCloseAction()); },
+  onClose: () => {
+    dispatch(onCloseAction());
+    dispatch(goBack());
+  },
   submitForm: () => { dispatch(newUser()); },
 });
 

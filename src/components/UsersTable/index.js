@@ -17,9 +17,7 @@ const UsersTableRow = ({
     isError ? styles.visible : styles.hidden
   ], [isError]);
   return (
-    <div className={styles.usersTable}>
-    
-    </div>
+    <div className={styles.usersTable} />
   );
 };
 

@@ -1,11 +1,10 @@
 import React, { useMemo, useCallback } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { goBack } from 'connected-react-router';
 import { CSSTransition } from 'react-transition-group';
 import Input from '../shared/Input';
 import AlertMessage from '../shared/AlertMessage';
-
-
 import { preventDefaultHandler } from '../../utils';
 import styles from '../shared/BasePopup/base.popup.module.scss';
 import '../shared/BasePopup/styles.scss';
@@ -44,8 +43,6 @@ const NewConnection = ({
   password,
   type,
   nameConnection,
-  isCreatingInProgress,
-  isVisible,
   submitForm,
   isError,
   errorMessage,
@@ -74,7 +71,7 @@ const NewConnection = ({
   ), [onClose]);
   return (
     <CSSTransition
-      in={isVisible}
+      in
       timeout={300}
       classNames="alert"
       unmountOnExit
@@ -182,7 +179,10 @@ const mapDispatchToProps = (dispatch) => ({
   changePassword: (value) => { dispatch(getPasswordValue(value)); },
   changeUsername: (value) => { dispatch(getUsernameValue(value)); },
   changeType: (value) => { dispatch(getTypeValue(value)); },
-  onClose: () => { dispatch(onCloseAction()); },
+  onClose: () => {
+    dispatch(onCloseAction());
+    dispatch(goBack());
+  },
   submitForm: () => { dispatch(newConnectionAction()); },
 });
 

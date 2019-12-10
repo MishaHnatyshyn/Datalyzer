@@ -148,6 +148,10 @@ export default function adminUsersReducer(state = initialState, action) {
       return {
         ...state,
         users: [action.payload, ...state.users],
+        totalUsers: {
+          count: state.totalUsers.count + 1,
+          isLoading: false
+        },
         isCreatingInProgress: false,
         formUsername: '',
         formPassword: '',

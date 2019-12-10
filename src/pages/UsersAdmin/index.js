@@ -1,9 +1,11 @@
 import React, { useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Route } from 'react-router-dom';
 import AdminUsersPageHeader from './AdminUsersPageHeader';
 import UsersTable from './components/UsersTable/UsersTable';
 import { getUsersCount, searchUsers } from '../../store/adminUsers/actions';
+import NewUserForm from '../../components/User/newUserPopup';
 
 const UsersAdmin = ({ fetchUsersCount, fetchUsers }) => {
   const fetchUsersData = useMemo(() => async () => {
@@ -17,6 +19,7 @@ const UsersAdmin = ({ fetchUsersCount, fetchUsers }) => {
 
   return (
     <div>
+      <Route path="/admin/users/create" component={NewUserForm} />
       <AdminUsersPageHeader />
       <UsersTable />
     </div>
