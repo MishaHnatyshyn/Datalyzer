@@ -11,6 +11,7 @@ export const getConnections = compose(prop('connections'), root);
 export const isError = compose(prop('error'), root);
 export const isLoading = compose(prop('isLoading'), root);
 export const hasNextPage = compose(prop('hasNextPage'), root);
+export const getConnectionForDeleting = compose(prop('connectionForDeleting'), root);
 
 export const getType = compose(prop('type'), root);
 export const getUsername = compose(prop('username'), root);

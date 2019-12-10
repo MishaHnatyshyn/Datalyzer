@@ -1,0 +1,58 @@
+@import "../../assets/variables";
+
+.container {
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  user-select: none;
+  border-radius: 3px;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 13px;
+  width: 13px;
+  background-color: $light-gray;
+  border: 1.5px solid $darker-gray;
+  cursor: pointer;
+}
+
+.container input:checked ~ .checkmark {
+  background-color: $blue;
+  border: 2px solid $blue;
+  box-shadow: 2px 1px 8.64px 0.36px rgba(33, 118, 206, 0.4);
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container .checkmark:after {
+  left: 4px;
+  top: 1px;
+  width: 2px;
+  height: 7px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}

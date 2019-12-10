@@ -6,7 +6,7 @@ import Search from '../Search';
 import Loader from '../Loader';
 
 const AdminPageHeader = ({
-  pageName, buttonText, countData, placeholder, search, searchValue, submitForm
+  pageName, buttonText, countData, placeholder, search, searchValue, submitForm, link
 }) => (
   <div className={styles.container}>
     <div className={styles.leftBlock}>
@@ -23,7 +23,7 @@ const AdminPageHeader = ({
         submitForm={submitForm}
       />
     </div>
-    <CreateButton onclick={() => {}} type="button">
+    <CreateButton onclick={() => {}} type="button" link={link}>
       {buttonText}
     </CreateButton>
   </div>
@@ -39,7 +39,8 @@ AdminPageHeader.propTypes = {
   placeholder: PropTypes.string.isRequired,
   search: PropTypes.func.isRequired,
   searchValue: PropTypes.string.isRequired,
-  submitForm: PropTypes.func.isRequired
+  submitForm: PropTypes.func.isRequired,
+  link: PropTypes.string.isRequired
 };
 
 export default AdminPageHeader;

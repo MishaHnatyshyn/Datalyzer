@@ -20,6 +20,7 @@ export const getUsers = compose(prop('users'), root);
 export const hasNextPage = compose(prop('hasNextPage'), root);
 export const isError = compose(prop('error'), root);
 export const isLoading = compose(prop('isLoading'), root)``;
+export const getUserForDeleting = compose(prop('userForDeleting'), root);
 
 export const getPaging = createSelector(
   [getCurrentPage, getLastLoadedPage],

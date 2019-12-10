@@ -1,0 +1,59 @@
+@import "../../assets/variables";
+
+.container {
+  background: $light-gray;
+  border-radius: 6px;
+  width: 100%;
+  padding: 15px 20px;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.rowContainer {
+  height: 80%;
+}
+
+.tableHeader {
+  font: $text-semibold;
+  color: $middle-gray;
+  text-align: left;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.tableCell {
+  padding-top: 10px;
+  box-sizing: border-box;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 38% 38% 1fr;
+  grid-gap: 10px;
+}
+
+.columnNameInput {
+  font: $text-semibold-small;
+  border: none;
+  box-shadow: 3.83px 3.214px 10.5px rgba(119, 119, 119, 0.39);
+  padding-left: 10px;
+  height: 20px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.columnName {
+  box-sizing: border-box;
+}
+
+.thirdColumn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

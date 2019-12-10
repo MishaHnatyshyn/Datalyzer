@@ -1,0 +1,89 @@
+@import "../../../../assets/variables";
+
+.users {
+  display: flex;
+  align-items: center;
+
+  margin-top: 50px;
+}
+
+.tableButtons {
+  padding-left: 20px;
+  width: 53px;
+}
+
+.tableButton {
+  width: 100%;
+  padding: 20px 0;
+
+  transition: all .15s linear;
+  user-select: none;
+}
+
+.tableButtonDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tableButtonDown {
+  transform: rotate(180deg);
+}
+
+.tableWrapper {
+  width: 100%;
+  overflow: auto;
+
+  border-radius: 5px;
+}
+
+.usersTable {
+  width: 100%;
+  min-width: 800px;
+
+  overflow: hidden;
+}
+
+.usersCellIds {
+  width: 61px;
+  text-align: center;
+}
+
+.usersCellEdit {
+  width: 100px;
+}
+
+.usersCellDescription {
+
+}
+
+.usersCellUsername {
+  width: 100px;
+}
+
+.usersCellDate {
+  width: 100px;
+}
+
+.usersCell {
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: bold;
+
+  border: 2px solid $blue;
+
+  vertical-align: top;
+}
+
+.usersCellButtons {
+  display: flex;
+  justify-content: space-between;
+
+  user-select: none;
+}
+
+.usersHeaderCell {
+  font-size: 18px;
+  font-weight: bold;
+
+  user-select: none;
+}

@@ -6,14 +6,14 @@ import {
   LOGIN_FAILURE,
   LOGIN_SUCCESS,
   EMPTY_FIELDS_ERROR,
-  REMOVE_TOKEN
+  REMOVE_TOKEN,
 } from './types';
 import { post } from '../../utils/http';
 import { LOGIN_ENDPOINT, LOGIN_URL } from '../../config';
 import {
   set as setIntoLocalStorage,
   get as getFromLocalStorage,
-  remove as removeFromLocalStorage
+  remove as removeFromLocalStorage,
 } from '../../utils/localStorage';
 import { clearUserData, setUserData } from '../user/actions';
 import { LOCAL_STORAGE_USER_KEY } from './constants';
@@ -26,7 +26,9 @@ export const emptyFieldsError = createAction(EMPTY_FIELDS_ERROR);
 export const removeToken = createAction(REMOVE_TOKEN);
 
 export const login = () => async (dispatch, getState) => {
-  const { login: { username: name, password } } = getState();
+  const {
+    login: { username: name, password },
+  } = getState();
 
   if (!name || !password) {
     return dispatch(emptyFieldsError());
@@ -38,7 +40,10 @@ export const login = () => async (dispatch, getState) => {
       access_token, username, id, user_type
     } = data;
     setIntoLocalStorage(LOCAL_STORAGE_USER_KEY, {
-      access_token, username, id, user_type
+      access_token,
+      username,
+      id,
+      user_type,
     });
     dispatch(loginSuccess(access_token));
     dispatch(setUserData({ username, userId: id, userType: user_type.name }));
