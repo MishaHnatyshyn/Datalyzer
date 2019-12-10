@@ -13,7 +13,7 @@ const Input = ({
   return (
     <div className={styles.container}>
       <input
-        className={classes}
+        className={classnames(styles.input, classes)}
         value={value}
         type={type}
         placeholder={text}
@@ -25,7 +25,7 @@ const Input = ({
 };
 
 Input.defaultProps = {
-  classes: [styles.input]
+  classes: ''
 };
 
 Input.propTypes = {

@@ -25,24 +25,9 @@ import {
   FETCH_COUNT_FAILURE,
 } from './types';
 import { get, post } from '../../utils/http';
-import { set as setIntoLocalStorage } from '../../utils/localStorage';
-import { LOCAL_STORAGE_USER_KEY } from '../login/constants';
-import { setUserData } from '../user/actions';
-import { compose, prop } from 'lodash/fp';
-import {
-  createConnectionFailure,
-  createConnectionStart,
-  setConnections
-} from '../connection/actions';
-import adminUsersReducer from './reducer';
 import { getPaging, getUsersCountData, getUsersSearchPayload } from './selectors';
 import { ADMIN_USERS_COUNT_ENDPOINT, ADMIN_USERS_ENDPOINT } from '../../config';
 
-
-export const changeInputField = createAction(
-  CHANGE_FORM_FIELD,
-  (field, value) => ({ field, value })
-);
 export const fetchStart = createAction(FETCH_START);
 export const fetchFailure = createAction(FETCH_FAILURE);
 export const emptyFieldsError = createAction(EMPTY_FIELDS_ERROR);
@@ -57,11 +42,11 @@ export const appendUsers = createAction(APPEND_USERS, (users) => users);
 export const changeSearchInput = createAction(CHANGE_SEARCH_INPUT, (value) => value);
 export const passwordLengthError = createAction(PASSWORD_LENGTH_ERROR, (value) => value);
 export const passwordEqualError = createAction(PASSWORD_EQUAL_ERROR, (value) => value);
-export const getUserTypeValue = createAction(FORM_USER_TYPE_INPUT_VALUE, (object) => object.target.value);
-export const getUsernameValue = createAction(FORM_USERNAME_INPUT_VALUE, (value) => value);
-export const getPasswordValue = createAction(FORM_PASSWORD_INPUT_VALUE, (value) => value);
-export const getUserDescriptionValue = createAction(FORM_DESCRIPTION_INPUT_VALUE, (value) => value);
-export const getPasswordRepeatValue = createAction(FORM_PASSWORD_REPEAT_INPUT_VALUE, (value) => value);
+export const changeUserTypeValue = createAction(FORM_USER_TYPE_INPUT_VALUE, (object) => object.target.value);
+export const changeUsernameValue = createAction(FORM_USERNAME_INPUT_VALUE, (value) => value);
+export const changePasswordValue = createAction(FORM_PASSWORD_INPUT_VALUE, (value) => value);
+export const changeUserDescriptionValue = createAction(FORM_DESCRIPTION_INPUT_VALUE, (value) => value);
+export const changePasswordRepeatValue = createAction(FORM_PASSWORD_REPEAT_INPUT_VALUE, (value) => value);
 export const onCloseAction = createAction(CLOSE_ACTION);
 export const fetchCountStart = createAction(FETCH_COUNT_START);
 export const fetchCountFailure = createAction(FETCH_COUNT_FAILURE);

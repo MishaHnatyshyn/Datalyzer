@@ -20,6 +20,7 @@ import {
   CLOSE_ACTION,
   FETCH_COUNT_START,
   FETCH_COUNT_FAILURE,
+  SHOW_CONNECTION_POPUP,
 } from './types';
 import { EMPTY_FIELDS_ERROR } from '../login/types';
 import { getPaging, getConnectionsSearchPayload, getConnectionsCountData } from './selectors';
@@ -44,15 +45,17 @@ export const emptyFieldsError = createAction(EMPTY_FIELDS_ERROR);
 export const onCloseAction = createAction(CLOSE_ACTION);
 
 
-export const getHostValue = createAction(HOST_VALUE, (connection) => connection);
-export const getPortValue = createAction(PORT_VALUE, (connection) => connection);
-export const getNameDBValue = createAction(NAME_DB_VALUE, (connection) => connection);
-export const getNameConnectionValue = createAction(NAME_CONNECTION_VALUE, (connection) => connection);
-export const getUsernameValue = createAction(USERNAME_VALUE, (connection) => connection);
-export const getPasswordValue = createAction(PASSWORD_VALUE, (connection) => connection);
-export const getTypeValue = createAction(TYPE_VALUE, (connection) => connection.target.value);
+export const changeHostValue = createAction(HOST_VALUE, (connection) => connection);
+export const changePortValue = createAction(PORT_VALUE, (connection) => connection);
+export const changeNameDBValue = createAction(NAME_DB_VALUE, (connection) => connection);
+export const changeNameConnectionValue = createAction(NAME_CONNECTION_VALUE, (connection) => connection);
+export const changeUsernameValue = createAction(USERNAME_VALUE, (connection) => connection);
+export const changePasswordValue = createAction(PASSWORD_VALUE, (connection) => connection);
+export const changeTypeValue = createAction(TYPE_VALUE, (connection) => connection.target.value);
 export const fetchCountStart = createAction(FETCH_COUNT_START);
 export const fetchCountFailure = createAction(FETCH_COUNT_FAILURE);
+
+export const showConnectionPopup = createAction(SHOW_CONNECTION_POPUP);
 
 export const searchConnections = () => async (dispatch, getState) => {
   const { itemsPerPage, search } = getConnectionsSearchPayload(getState());

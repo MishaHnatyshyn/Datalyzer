@@ -29,14 +29,6 @@ const createHeaderWithBearerToken = (token) => ({
   }
 });
 
-// export const sendWithUserAuthToken = (httpMethod) => (url, config = {}) => {
-//   const token = getToken(store.getState());
-//   const authHeader = token ? createHeaderWithBearerToken(token) : {};
-//   return httpMethod(`${API_URL}${url}`, merge(config, authHeader))
-//     .then((res) => res.data)
-//     .catch(handleUnAuthorizedError);
-// };
-
 export const sendWithUserAuthToken = (httpMethod) => (url, config = {}) => {
   const token = getToken(store.getState());
   const authHeader = createHeaderWithBearerToken(token);

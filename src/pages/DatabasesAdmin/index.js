@@ -7,6 +7,7 @@ import DatabaseDataCard from '../../components/DatabaseDataCard';
 import DataCardGrid from '../../components/shared/DataCardGrid';
 import { getConnectionsCount, searchConnections } from '../../store/connection/actions';
 import { getConnections } from '../../store/connection/selectors';
+import NewDBConnectionPopup from '../../components/newDBConnectionPopup';
 
 const DatabasesAdmin = ({ connections, fetchConnectionsCount, fetchConnections }) => {
   useEffect(() => {
@@ -16,6 +17,7 @@ const DatabasesAdmin = ({ connections, fetchConnectionsCount, fetchConnections }
   return (
     <div>
       <AdminDatabasesPageHeader />
+      <NewDBConnectionPopup isVisible={false} />
       <DataCardGrid>
         {connections.map((connection) => <DatabaseDataCard {...connection} key={connection.id} />)}
       </DataCardGrid>

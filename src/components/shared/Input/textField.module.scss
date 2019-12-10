@@ -4,7 +4,8 @@
   border: none;
   outline: none;
   border-bottom: 2px solid #cbcbcb;
-  padding: 15px 15px 11px 45px;
+  padding: 10px 0;
+  width: 100%;
   font: $text-regular;
 
   &:focus {
@@ -30,13 +31,9 @@
   opacity: 0.5;
 }
 
-.noImage {
-  border: none;
-  outline: none;
+.withImage {
   width: 100%;
-  border-bottom: 2px solid #cbcbcb;
-  padding: 10px 0;
-  font: $text-regular;
+  padding: 15px 15px 11px 45px;
 }
 
 ::-webkit-input-placeholder { /* Edge */
@@ -53,7 +50,7 @@
 
 @media all and (max-width: $small-mobile-width) {
   .input {
-    width: 80%;
+    width: 180px;
   }
 }
 

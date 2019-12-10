@@ -9,6 +9,8 @@ import userReducer from './user/reducer';
 import adminUsersReducer from './adminUsers/reducer';
 import modelReducer from './model/reducer';
 import connectionsReducer from './connection/reducer';
+import connectionFormsReducer from './connectionForm/reducer';
+import createUserReducer from './createUser/reducer';
 
 const initialState = {};
 
@@ -31,7 +33,9 @@ const rootReducer = combineReducers({
   user: userReducer,
   adminUsers: adminUsersReducer,
   models: modelReducer,
-  connections: connectionsReducer
+  connections: connectionsReducer,
+  connectionForms: connectionFormsReducer,
+  createUser: createUserReducer,
 });
 
 const store = createStore(rootReducer, initialState, enhancer);
