@@ -30,7 +30,7 @@ import {
   getUserDescriptionValue,
   onCloseAction,
 } from '../../../store/adminUsers/actions';
-import { goBack } from 'connected-react-router';
+import {goBack, push} from 'connected-react-router';
 
 const NewUserForm = ({
   formUsername,
@@ -71,7 +71,7 @@ const NewUserForm = ({
   ), [onClose]);
   return (
     <CSSTransition
-      in={isVisible}
+      in={true}
       timeout={300}
       classNames="alert"
       unmountOnExit
@@ -180,7 +180,7 @@ const mapDispatchToProps = (dispatch) => ({
   changeUserDescription: (value) => { dispatch(getUserDescriptionValue(value)); },
   onClose: () => {
     dispatch(onCloseAction());
-    dispatch(goBack());
+    dispatch(push('/admin/users'));
   },
   submitForm: () => { dispatch(newUser()); },
 });

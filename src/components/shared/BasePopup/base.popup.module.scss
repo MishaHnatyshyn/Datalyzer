@@ -30,7 +30,7 @@
   left: 0;
   bottom: 0;
 
-  background: $white;
+  background: $black;
   opacity: .4;
 }
 
@@ -77,11 +77,11 @@ label {
   display: flex;
 }
 
-form {
+.form {
   width: 80%;
 }
 
-input {
+.input {
   width: 82%;
 }
 

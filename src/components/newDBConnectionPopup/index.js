@@ -1,7 +1,7 @@
 import React, { useMemo, useCallback } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { goBack } from 'connected-react-router';
+import {goBack, push} from 'connected-react-router';
 import { CSSTransition } from 'react-transition-group';
 import Input from '../shared/Input';
 import AlertMessage from '../shared/AlertMessage';
@@ -181,7 +181,7 @@ const mapDispatchToProps = (dispatch) => ({
   changeType: (value) => { dispatch(getTypeValue(value)); },
   onClose: () => {
     dispatch(onCloseAction());
-    dispatch(goBack());
+    dispatch(push('/admin/databases'));
   },
   submitForm: () => { dispatch(newConnectionAction()); },
 });
