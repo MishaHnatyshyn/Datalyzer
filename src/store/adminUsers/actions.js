@@ -15,12 +15,19 @@ import {
   CHANGE_SEARCH_INPUT,
   FETCH_COUNT_START,
   FETCH_COUNT_FAILURE,
+  DELETE_USER,
+  DELETE_USER_START,
+  DELETE_USER_ERROR,
+  DELETE_USER_SUCCESS,
 } from './types';
 import {
-  getItemsPerPage, getPaging, getUsersCountData, getUsersSearchPayload
+  getItemsPerPage, getPaging, getUserForDeleting, getUsersCountData, getUsersSearchPayload
 } from './selectors';
-import { get } from '../../utils/http';
+import { del, get } from '../../utils/http';
 import { ADMIN_USERS_COUNT_ENDPOINT, ADMIN_USERS_ENDPOINT } from '../../config';
+import { createUserDeleteRoute } from '../../utils/routeCreators';
+import { displayCustomPopup } from '../popups/actions';
+import PopupTypes from '../popups/popupTypes';
 
 export const changeInputField = createAction(CHANGE_FORM_FIELD, (field, value) => ({
   field,
@@ -38,8 +45,12 @@ export const createUserSuccess = createAction(CREATE_SUCCESS, (user) => user);
 export const setUsers = createAction(SET_USERS, (users) => users);
 export const appendUsers = createAction(APPEND_USERS, (users) => users);
 export const changeSearchInput = createAction(CHANGE_SEARCH_INPUT, (value) => value);
+export const setUserForDeleting = createAction(DELETE_USER, (value) => value);
 export const fetchCountStart = createAction(FETCH_COUNT_START);
 export const fetchCountFailure = createAction(FETCH_COUNT_FAILURE);
+export const deleteUserStart = createAction(DELETE_USER_START);
+export const deleteUserSuccess = createAction(DELETE_USER_SUCCESS);
+export const deleteUserError = createAction(DELETE_USER_ERROR);
 
 export const getUsersCount = () => async (dispatch, getState) => {
   const state = getState();
@@ -105,4 +116,17 @@ export const moveToPrevPage = () => (dispatch, getState) => {
     return;
   }
   dispatch(prevPage());
+};
+
+export const deleteUser = () => async (dispatch, getState) => {
+  const userId = getUserForDeleting(getState());
+  try {
+    dispatch(deleteUserStart());
+    await del(createUserDeleteRoute(userId));
+    dispatch(deleteUserSuccess());
+    dispatch(displayCustomPopup(PopupTypes.DELETE_USER_SUCCESS));
+  } catch (e) {
+    dispatch(deleteUserError());
+    dispatch(displayCustomPopup(PopupTypes.DELETE_USER_ERROR));
+  }
 };

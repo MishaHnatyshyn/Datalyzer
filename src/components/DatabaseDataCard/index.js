@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import DataCard from '../shared/DataCard';
 import AdminCardDataItem from '../shared/AdminCardDataItem';
 import AdminCardDataItemPassword from '../shared/AdminCardDataItemPassword';
-import { connect } from 'react-redux';
-import {setConnectionForDeleting} from "../../store/connection/actions";
-import {displayCustomPopup} from "../../store/popups/actions";
+import { setConnectionForDeleting } from '../../store/connection/actions';
+import { displayCustomPopup } from '../../store/popups/actions';
 import PopupTypes from '../../store/popups/popupTypes';
 
 const DatabaseDataCard = ({
