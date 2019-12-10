@@ -11,7 +11,6 @@ import {
   FETCH_COUNT_START,
   FETCH_COUNT_FAILURE, DELETE_MODEL, DELETE_MODEL_SUCCESS,
 } from './types';
-import {DELETE_CONNECTION, DELETE_CONNECTION_SUCCESS} from "../connection/types";
 
 const initialState = {
   models: [],

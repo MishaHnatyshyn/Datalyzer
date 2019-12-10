@@ -1,9 +1,9 @@
 import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import styles from './modelsDataCard.module.scss';
 import DataCard from '../shared/DataCard';
 import AdminCardDataItem from '../shared/AdminCardDataItem';
-import { connect } from 'react-redux';
 import { displayCustomPopup } from '../../store/popups/actions';
 import PopupTypes from '../../store/popups/popupTypes';
 import { setModelForDeleting } from '../../store/model/actions';

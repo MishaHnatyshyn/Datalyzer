@@ -13,7 +13,7 @@ import {
   CHANGE_SEARCH_INPUT,
   FETCH_COUNT_START,
   FETCH_COUNT_FAILURE,
-  FETCH_END,
+  FETCH_END, DELETE_USER, DELETE_USER_SUCCESS,
 } from './types';
 
 const initialState = {
@@ -36,7 +36,8 @@ const initialState = {
     formUserType: '',
     formDescription: '',
     isCreatingInProgress: false,
-  }
+  },
+  userForDeleting: null,
 };
 
 export default function adminUsersReducer(state = initialState, action) {
@@ -143,6 +144,19 @@ export default function adminUsersReducer(state = initialState, action) {
         formPasswordRepeat: '',
         formUserType: '',
         formDescription: '',
+      };
+    case DELETE_USER:
+      return {
+        ...state,
+        userForDeleting: action.payload,
+      };
+    case DELETE_USER_SUCCESS:
+      return {
+        ...state,
+        users: state.users.filter(
+          (user) => user.id !== state.userForDeleting,
+        ),
+        userForDeleting: null,
       };
     default:
       return state;

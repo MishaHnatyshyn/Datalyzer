@@ -8,3 +8,4 @@ export const createConnectionTablesDataRoute = (id) => `/connections/${id}/table
 export const createConnectionRelationsDataRoute = (id) => `/connections/${id}/relations`;
 export const createConnectionDeleteRoute = (id) => `/connections/${id}`;
 export const createModelDeleteRoute = (id) => `/models/${id}`;
+export const createUserDeleteRoute = (id) => `/users/${id}`;
