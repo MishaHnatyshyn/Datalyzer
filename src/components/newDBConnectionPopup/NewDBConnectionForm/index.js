@@ -16,7 +16,7 @@ import {
   getNameConnection,
   isError,
   getErrorMessage,
-} from '../../../store/connection/selectors';
+} from '../../../store/connectionForm/selectors';
 import {
   changeHostValue,
   changePortValue,
@@ -25,7 +25,7 @@ import {
   changeNameDBValue,
   changeTypeValue,
   changeNameConnectionValue,
-} from '../../../store/connection/actions';
+} from '../../../store/connectionForm/actions';
 
 const NewConnectionForm = ({
   host,

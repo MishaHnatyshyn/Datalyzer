@@ -13,8 +13,8 @@ import {
   NAME_CONNECTION_VALUE,
   CLOSE_ACTION,
   SHOW_CONNECTION_POPUP,
+  EMPTY_FIELDS_ERROR
 } from './types';
-import { EMPTY_FIELDS_ERROR } from '../login/types';
 import { post } from '../../utils/http';
 import {
   ADMIN_CONNECTIONS_CREATE_ENDPOINT
@@ -50,7 +50,6 @@ export const newConnectionAction = () => async (dispatch, getState) => {
       nameConnection,
     }
   } = getState();
-
   if (!name || !password || !host || !port || !nameDB || !type || !nameConnection) {
     return dispatch(emptyFieldsError());
   }

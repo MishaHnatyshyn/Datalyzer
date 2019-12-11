@@ -7,25 +7,21 @@ import {
   PASSWORD_VALUE,
   TYPE_VALUE,
   SHOW_CONNECTION_POPUP,
+  EMPTY_FIELDS_ERROR
 } from './types';
-import { EMPTY_FIELDS_ERROR } from '../login/types';
 import { EMPTY_FIELDS_ERROR_MESSAGE } from '../login/constants';
 import { CLOSE_ACTION } from '../adminUsers/types';
 
 const initialState = {
-  connections: [],
-  totalConnections: {
-    count: 0,
-    isLoading: true
-  },
-  currentPage: 1,
-  search: '',
-  itemsPerPage: 6,
-  lastLoadedPage: 1,
   error: false,
-  isLoading: false,
-  hasNextPage: true,
   isVisible: true,
+  host: '',
+  port: '',
+  username: '',
+  password: '',
+  type: '',
+  nameConnection: '',
+  nameDB: '',
 };
 
 export default function connectionFormsReducer(state = initialState, action) {

@@ -6,6 +6,7 @@ import CreateButton from '../CreateButton';
 import Search from '../Search';
 import Loader from '../Loader';
 import { showConnectionPopup } from '../../../store/connection/actions';
+import { showCreateUserPopup } from '../../../store/createUser/actions';
 
 const AdminPageHeader = ({
   pageName, buttonText, countData, placeholder, search, searchValue, submitForm, showPopup

@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { preventDefaultHandler } from '../../utils';
 import '../shared/BasePopup/styles.scss';
 import NewConnectionForm from './NewDBConnectionForm';
-import { getVisible } from '../../store/connection/selectors';
-import { newConnectionAction, onCloseAction } from '../../store/connection/actions';
+import { getVisible } from '../../store/connectionForm/selectors';
+import { newConnectionAction, onCloseAction } from '../../store/connectionForm/actions';
 import styles from './newDBConnectionPopup.module.scss';
 import BasePopup from '../shared/BasePopup';
 

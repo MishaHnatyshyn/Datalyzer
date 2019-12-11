@@ -41,11 +41,6 @@ const initialState = {
 
 export default function connectionsReducer(state = initialState, action) {
   switch (action.type) {
-    case SHOW_CONNECTION_POPUP:
-      return {
-        ...state,
-        isVisible: true
-      };
     case FETCH_COUNT_START:
       return {
         ...state,
@@ -116,38 +111,6 @@ export default function connectionsReducer(state = initialState, action) {
       return {
         ...state,
         search: action.payload,
-      };
-    case EMPTY_FIELDS_ERROR:
-      return {
-        ...state,
-        error: true,
-        errorMessage: EMPTY_FIELDS_ERROR_MESSAGE
-      };
-    case HOST_VALUE:
-      return { ...state, host: action.payload, error: false };
-    case PORT_VALUE:
-      return { ...state, port: action.payload, error: false };
-    case NAME_DB_VALUE:
-      return { ...state, nameDB: action.payload, error: false };
-    case NAME_CONNECTION_VALUE:
-      return { ...state, nameConnection: action.payload, error: false };
-    case USERNAME_VALUE:
-      return { ...state, username: action.payload, error: false };
-    case PASSWORD_VALUE:
-      return { ...state, password: action.payload, error: false };
-    case TYPE_VALUE:
-      return { ...state, type: action.payload, error: false };
-    case CLOSE_ACTION:
-      return {
-        ...state,
-        isCreatingInProgress: false,
-        formUsername: '',
-        formPassword: '',
-        formPasswordRepeat: '',
-        formUserType: '',
-        formDescription: '',
-        error: false,
-        isVisible: false,
       };
     default:
       return state;

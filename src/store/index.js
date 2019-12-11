@@ -33,8 +33,8 @@ const rootReducer = combineReducers({
   user: userReducer,
   adminUsers: adminUsersReducer,
   models: modelReducer,
-  connections: connectionsReducer,
   connectionForms: connectionFormsReducer,
+  connections: connectionsReducer,
   createUser: createUserReducer,
 });
 
