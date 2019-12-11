@@ -76,7 +76,7 @@ export default function connectionsReducer(state = initialState, action) {
     case APPEND_CONNECTIONS:
       return {
         ...state,
-        connections: [...state.connections, ...action.payload],
+        connections: [...state.connections, action.payload],
         hasNextPage: action.payload.length > 0,
         error: false,
         isLoading: false,

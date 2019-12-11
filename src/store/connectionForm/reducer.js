@@ -6,10 +6,11 @@ import {
   USERNAME_VALUE,
   PASSWORD_VALUE,
   TYPE_VALUE,
-  EMPTY_FIELDS_ERROR
+  EMPTY_FIELDS_ERROR,
+  APPEND_CONNECTIONS,
+  CREATE_FAILURE,
 } from './types';
 import { EMPTY_FIELDS_ERROR_MESSAGE } from '../login/constants';
-import { CREATE_FAILURE } from '../connection/types';
 
 const initialState = {
   error: false,
@@ -30,6 +31,14 @@ export default function connectionFormsReducer(state = initialState, action) {
         ...state,
         error: true,
         errorMessage: EMPTY_FIELDS_ERROR_MESSAGE
+      };
+    case APPEND_CONNECTIONS:
+      return {
+        ...state,
+        connections: [...state.connections, action.payload],
+        hasNextPage: action.payload.length > 0,
+        error: false,
+        isLoading: false,
       };
     case HOST_VALUE:
       return { ...state, host: action.payload, error: false };

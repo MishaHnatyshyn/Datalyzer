@@ -1,5 +1,4 @@
 import { createAction } from 'redux-actions';
-import { push } from 'connected-react-router';
 import {
   CHANGE_FORM_FIELD,
   FETCH_FAILURE,

@@ -1,4 +1,5 @@
 import { createAction } from 'redux-actions';
+import { push } from 'connected-react-router';
 import {
   SET_USERS,
   CREATE_FAILURE,
@@ -11,16 +12,16 @@ import {
   PASSWORD_LENGTH_ERROR,
   PASSWORD_EQUAL_ERROR,
   EMPTY_FIELDS_ERROR,
-  CLOSE_ACTION,
+  CREATE_SUCCESS,
 } from './types';
 import { post } from '../../utils/http';
 import { ADMIN_USERS_ENDPOINT } from '../../config';
-import { push } from "connected-react-router";
 
 
 export const emptyFieldsError = createAction(EMPTY_FIELDS_ERROR);
 export const createUserFailure = createAction(CREATE_FAILURE);
 export const createUserStart = createAction(CREATE_START);
+export const createUserSuccess = createAction(CREATE_SUCCESS, (user) => user);
 export const setUsers = createAction(SET_USERS, (users) => users);
 export const passwordLengthError = createAction(PASSWORD_LENGTH_ERROR, (value) => value);
 export const passwordEqualError = createAction(PASSWORD_EQUAL_ERROR, (value) => value);
@@ -62,9 +63,10 @@ export const newUser = () => async (dispatch, getState) => {
         description: formDescription,
       }
     });
-    dispatch(setUsers(data));
+    dispatch(createUserSuccess(data));
     dispatch(push('/admin/users'));
   } catch (e) {
+    console.log(e);
     dispatch(createUserFailure());
   }
 };

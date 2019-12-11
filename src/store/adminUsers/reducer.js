@@ -137,7 +137,7 @@ export default function adminUsersReducer(state = initialState, action) {
     case CREATE_SUCCESS:
       return {
         ...state,
-        users: [action.payload, ...state.users],
+        users: [action.payload, state.users],
         isCreatingInProgress: false,
         totalUsers: {
           count: state.totalUsers.count + 1,

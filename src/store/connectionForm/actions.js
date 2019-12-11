@@ -12,13 +12,15 @@ import {
   PASSWORD_VALUE,
   TYPE_VALUE,
   NAME_CONNECTION_VALUE,
-  EMPTY_FIELDS_ERROR
+  EMPTY_FIELDS_ERROR,
+  APPEND_CONNECTIONS,
 } from './types';
 import { post } from '../../utils/http';
 import {
   ADMIN_CONNECTIONS_CREATE_ENDPOINT
 } from '../../config';
 
+export const appendConnections = createAction(APPEND_CONNECTIONS, (connections) => connections);
 export const createConnectionFailure = createAction(CREATE_FAILURE);
 export const createConnectionStart = createAction(CREATE_START);
 export const createConnectionSuccess = createAction(CREATE_SUCCESS, (connection) => connection);
@@ -65,7 +67,9 @@ export const newConnectionAction = () => async (dispatch, getState) => {
         typeId: Number(type),
       }
     });
-    dispatch(setConnections(data));
+    dispatch(onCloseAction());
+    dispatch(appendConnections(data));
+    dispatch(push('/admin/databases'));
   } catch (e) {
     dispatch(createConnectionFailure());
   }

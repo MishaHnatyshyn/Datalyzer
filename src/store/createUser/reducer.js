@@ -11,7 +11,6 @@ import {
   PASSWORD_LENGTH_ERROR,
   PASSWORD_EQUAL_ERROR,
   EMPTY_FIELDS_ERROR,
-  CLOSE_ACTION,
 } from './types';
 import { EMPTY_FIELDS_ERROR_MESSAGE } from '../login/constants';
 import { PASS_LENGTH_ERROR_MESSAGE, PASS_EQUAL_ERROR_MESSAGE } from './constants';
@@ -62,7 +61,11 @@ export default function createUserReducer(state = initialState, action) {
     case CREATE_SUCCESS:
       return {
         ...state,
-        users: [action.payload, ...state.users],
+        users: [action.payload, state.users],
+        totalUsers: {
+          count: state.totalUsers.count + 1,
+          isLoading: false
+        },
         isCreatingInProgress: false,
         formUsername: '',
         formPassword: '',
@@ -98,18 +101,6 @@ export default function createUserReducer(state = initialState, action) {
         ...state,
         error: true,
         errorMessage: EMPTY_FIELDS_ERROR_MESSAGE,
-      };
-    case CLOSE_ACTION:
-      return {
-        ...state,
-        isCreatingInProgress: false,
-        formUsername: '',
-        formPassword: '',
-        formPasswordRepeat: '',
-        formUserType: '',
-        formDescription: '',
-        error: false,
-        isVisible: false,
       };
     default:
       return state;
