@@ -46,7 +46,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onClose: () => { dispatch(onCloseAction()); },
+  onClose: () => {
+    dispatch(onCloseAction());
+  },
   submitForm: () => { dispatch(newUser()); },
 });
 

@@ -15,6 +15,7 @@ import {
 } from './types';
 import { post } from '../../utils/http';
 import { ADMIN_USERS_ENDPOINT } from '../../config';
+import { push } from "connected-react-router";
 
 
 export const emptyFieldsError = createAction(EMPTY_FIELDS_ERROR);
@@ -28,10 +29,10 @@ export const changeUsernameValue = createAction(FORM_USERNAME_INPUT_VALUE, (valu
 export const changePasswordValue = createAction(FORM_PASSWORD_INPUT_VALUE, (value) => value);
 export const changeUserDescriptionValue = createAction(FORM_DESCRIPTION_INPUT_VALUE, (value) => value);
 export const changePasswordRepeatValue = createAction(FORM_PASSWORD_REPEAT_INPUT_VALUE, (value) => value);
-export const onCloseAction = createAction(CLOSE_ACTION);
 
-export const showCreateUserPopup = () => {};
-
+export const onCloseAction = () => async (dispatch) => {
+  dispatch(push('/admin/users'));
+};
 export const newUser = () => async (dispatch, getState) => {
   const {
     createUser: {
@@ -62,6 +63,7 @@ export const newUser = () => async (dispatch, getState) => {
       }
     });
     dispatch(setUsers(data));
+    dispatch(push('/admin/users'));
   } catch (e) {
     dispatch(createUserFailure());
   }

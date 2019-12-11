@@ -14,6 +14,7 @@ import {
   CLOSE_ACTION,
 } from './types';
 import { EMPTY_FIELDS_ERROR_MESSAGE } from '../login/constants';
+import { PASS_LENGTH_ERROR_MESSAGE, PASS_EQUAL_ERROR_MESSAGE } from './constants';
 
 const initialState = {
   totalUsers: {
@@ -84,19 +85,19 @@ export default function createUserReducer(state = initialState, action) {
       return {
         ...state,
         error: true,
-        errorMessage: 'Passwords are not the same'
+        errorMessage: PASS_EQUAL_ERROR_MESSAGE,
       };
     case PASSWORD_LENGTH_ERROR:
       return {
         ...state,
         error: true,
-        errorMessage: 'Password must be 6 or mor characters'
+        errorMessage: PASS_LENGTH_ERROR_MESSAGE,
       };
     case EMPTY_FIELDS_ERROR:
       return {
         ...state,
         error: true,
-        errorMessage: EMPTY_FIELDS_ERROR_MESSAGE
+        errorMessage: EMPTY_FIELDS_ERROR_MESSAGE,
       };
     case CLOSE_ACTION:
       return {

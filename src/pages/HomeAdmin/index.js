@@ -34,7 +34,7 @@ const HomeAdmin = () => (
     <div className={classnames(styles.block, styles.bottomBlock)}>
       <HomeCard
         text="New Database"
-        link="/admin/databases"
+        link="/admin/databases/create"
         icon="/images/plussmall.png"
         image="/images/database_big.png"
         lineClass={styles.lineClass}
@@ -42,7 +42,7 @@ const HomeAdmin = () => (
 
       <HomeCard
         text="New Model"
-        link="/admin/databases"
+        link="/admin/models/create"
         icon="/images/plussmall.png"
         image="/images/157-512.png"
         lineClass={styles.lineClass}
@@ -50,13 +50,12 @@ const HomeAdmin = () => (
 
       <HomeCard
         text="New User"
-        link="/admin/databases"
+        link="/admin/users/create"
         icon="/images/plussmall.png"
         image="/images/users.png"
         lineClass={styles.lineClass}
       />
     </div>
-
   </div>
 );
 

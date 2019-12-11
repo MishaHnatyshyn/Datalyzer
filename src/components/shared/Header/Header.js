@@ -16,7 +16,7 @@ const Header = ({ name, image, logout }) => {
     <div className={styles.container}>
       <div className={styles.block}>
         <img className={styles.logo} src="/images/logo.png" alt="logo" />
-        <p className={styles.siteName}>Datalazer</p>
+        <p className={styles.siteName}>Datalyzer</p>
       </div>
       <div className={styles.block}>
         <p className={styles.userName}>{name}</p>
@@ -25,16 +25,16 @@ const Header = ({ name, image, logout }) => {
         </button>
       </div>
       {displayDropdown && (
-      <DropdownMenu classes={styles.dropdownUser} hideDropdown={toggleDropdown}>
-        <div className={styles.textBlock}>
-          <p className={styles.dropdownText}>Change password</p>
-          <div className={styles.line} />
-        </div>
-        <div className={styles.textBlock} onClick={logout}>
-          <p className={styles.dropdownText}>Sign out</p>
-          <img src="/images/logout.png" alt="sign out" className={styles.signOutIcon} />
-        </div>
-      </DropdownMenu>
+        <DropdownMenu classes={styles.dropdownUser} hideDropdown={toggleDropdown}>
+          <div className={styles.textBlock}>
+            <p className={styles.dropdownText}>Change password</p>
+            <div className={styles.line} />
+          </div>
+          <div className={styles.textBlock} onClick={logout}>
+            <p className={styles.dropdownText}>Sign out</p>
+            <img src="/images/logout.png" alt="sign out" className={styles.signOutIcon} />
+          </div>
+        </DropdownMenu>
       )}
     </div>
   );
@@ -43,7 +43,7 @@ const Header = ({ name, image, logout }) => {
 Header.propTypes = {
   name: PropTypes.string.isRequired,
   image: PropTypes.node.isRequired,
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -52,7 +52,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  logout: () => { dispatch(logout()); }
+  logout: () => {
+    dispatch(logout());
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

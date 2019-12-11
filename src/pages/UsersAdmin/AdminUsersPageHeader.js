@@ -6,12 +6,16 @@ import { changeSearchInput, searchUsers } from '../../store/adminUsers/actions';
 
 const mapStateToProps = (state) => ({
   searchValue: getSearchInputText(state),
-  countData: getUsersCountData(state)
+  countData: getUsersCountData(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  search: (e) => { dispatch(changeSearchInput(e.target.value)); },
-  submitForm: () => { dispatch(searchUsers()); }
+  search: (e) => {
+    dispatch(changeSearchInput(e.target.value));
+  },
+  submitForm: () => {
+    dispatch(searchUsers());
+  },
 });
 
 const AdminUsersPageHeader = (props) => (
@@ -20,6 +24,7 @@ const AdminUsersPageHeader = (props) => (
     buttonText="Create user"
     pageName="Total users"
     placeholder="search by user..."
+    link="/admin/users/create"
   />
 );
 

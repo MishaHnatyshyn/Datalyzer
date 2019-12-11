@@ -1,4 +1,5 @@
 import { createAction } from 'redux-actions';
+import { push } from 'connected-react-router';
 import {
   SET_CONNECTIONS,
   CREATE_FAILURE,
@@ -11,8 +12,6 @@ import {
   PASSWORD_VALUE,
   TYPE_VALUE,
   NAME_CONNECTION_VALUE,
-  CLOSE_ACTION,
-  SHOW_CONNECTION_POPUP,
   EMPTY_FIELDS_ERROR
 } from './types';
 import { post } from '../../utils/http';
@@ -25,7 +24,6 @@ export const createConnectionStart = createAction(CREATE_START);
 export const createConnectionSuccess = createAction(CREATE_SUCCESS, (connection) => connection);
 export const setConnections = createAction(SET_CONNECTIONS, (connections) => connections);
 export const emptyFieldsError = createAction(EMPTY_FIELDS_ERROR);
-export const onCloseAction = createAction(CLOSE_ACTION);
 
 
 export const changeHostValue = createAction(HOST_VALUE, (connection) => connection);
@@ -36,8 +34,9 @@ export const changeUsernameValue = createAction(USERNAME_VALUE, (connection) => 
 export const changePasswordValue = createAction(PASSWORD_VALUE, (connection) => connection);
 export const changeTypeValue = createAction(TYPE_VALUE, (connection) => connection.target.value);
 
-export const showConnectionPopup = createAction(SHOW_CONNECTION_POPUP, (connection) => connection);
-
+export const onCloseAction = () => async (dispatch) => {
+  dispatch(push('/admin/databases'));
+}
 export const newConnectionAction = () => async (dispatch, getState) => {
   const {
     connectionForms: {

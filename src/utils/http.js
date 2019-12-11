@@ -1,23 +1,22 @@
-import {
-  get as rawGet,
-  post as rawPost,
-  patch as rawPatch,
-  del as rawDelete, default as axios,
-} from 'axios';
-import { merge } from 'lodash/fp';
+import axios from 'axios';
 import { LOGIN_URL } from '../config/routing';
 import { LOGIN_ENDPOINT, API_URL } from '../config/endpoints';
 import store, { history } from '../store';
 import { getToken } from '../store/login/selectors';
-import {
-  remove as removeFromLocalStorage
-} from './localStorage';
+import { remove as removeFromLocalStorage } from './localStorage';
 import { LOCAL_STORAGE_USER_KEY } from '../store/login/constants';
+import { clearUserData } from '../store/user/actions';
 
 const handleUnAuthorizedError = (error) => {
-  const { response: { status, config: { url } } } = error;
+  const {
+    response: {
+      status,
+      config: { url },
+    },
+  } = error;
   if (status === 401 && url !== LOGIN_ENDPOINT) {
     removeFromLocalStorage(LOCAL_STORAGE_USER_KEY);
+    store.dispatch(clearUserData());
     return history.push(LOGIN_URL);
   }
   throw error;
@@ -25,8 +24,8 @@ const handleUnAuthorizedError = (error) => {
 
 const createHeaderWithBearerToken = (token) => ({
   headers: {
-    Authorization: `Bearer ${token}`
-  }
+    Authorization: `Bearer ${token}`,
+  },
 });
 
 export const sendWithUserAuthToken = (httpMethod) => (url, config = {}) => {
@@ -36,7 +35,7 @@ export const sendWithUserAuthToken = (httpMethod) => (url, config = {}) => {
     url: `${API_URL}${url}`,
     method: httpMethod,
     ...config,
-    ...authHeader
+    ...authHeader,
   };
   return axios(options)
     .then((res) => res.data)

@@ -13,7 +13,6 @@ import AlertMessage from '../../shared/AlertMessage';
 import { preventDefaultHandler } from '../../../utils';
 import stylesInput from '../../shared/Input/textField.module.scss';
 
-
 const LoginForm = ({
   username,
   password,
@@ -23,14 +22,10 @@ const LoginForm = ({
   isError,
   errorMessage,
 }) => {
-  const formHandler = useMemo(
-    () => preventDefaultHandler(submitForm),
-    [submitForm]
-  );
-  const alertClasses = useMemo(() => [
-    styles.error,
-    isError ? styles.visible : styles.hidden
-  ], [isError]);
+  const formHandler = useMemo(() => preventDefaultHandler(submitForm), [submitForm]);
+  const alertClasses = useMemo(() => [styles.error, isError ? styles.visible : styles.hidden], [
+    isError,
+  ]);
 
   return (
     <div className={styles.loginForm}>
@@ -72,9 +67,15 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changePassword: (value) => { dispatch(changePasswordValue(value)); },
-  changeUsername: (value) => { dispatch(changeUsernameValue(value)); },
-  submitForm: () => { dispatch(login()); },
+  changePassword: (value) => {
+    dispatch(changePasswordValue(value));
+  },
+  changeUsername: (value) => {
+    dispatch(changeUsernameValue(value));
+  },
+  submitForm: () => {
+    dispatch(login());
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

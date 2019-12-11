@@ -54,20 +54,20 @@ const NewConnectionForm = ({
       <NewDBCaption />
       <form>
         <div className={styles.inputFields}>
-          <label className="label" htmlFor="hostField">HOST</label>
+          <label className={styles.label} htmlFor="hostField">HOST</label>
           <Input id="hostField" type="text" name="Host" onChange={changeHost} value={host} />
-          <label className="label" htmlFor="portField">PORT</label>
+          <label className={styles.label} htmlFor="portField">PORT</label>
           <Input id="portField" type="text" name="Port" onChange={changePort} value={port} />
-          <label className="label" htmlFor="nameDBField">DATABASE NAME</label>
+          <label className={styles.label} htmlFor="nameDBField">DATABASE NAME</label>
           <Input id="nameDBField" type="text" name="nameDB" onChange={changeNameDB} value={nameDB} />
-          <label className="label" htmlFor="nameConnectionField">CONNECTION NAME</label>
+          <label className={styles.label} htmlFor="nameConnectionField">CONNECTION NAME</label>
           <Input id="nameConnectionField" type="text" name="nameConnection" onChange={changeNameConnection} value={nameConnection} />
-          <label className="label" htmlFor="usernameField">USERNAME</label>
+          <label className={styles.label} htmlFor="usernameField">USERNAME</label>
           <Input id="usernameField" type="text" name="Username" onChange={changeUsername} value={username} />
-          <label className="label" htmlFor="passwordField">PASSWORD</label>
+          <label className={styles.label} htmlFor="passwordField">PASSWORD</label>
           <Input id="passwordField" type="password" name="password" onChange={changePassword} value={password} />
-          <label className="label" htmlFor="typeField">TYPE</label>
-          <select id="typeField" value={type} onChange={changeType}>
+          <label className={styles.label} htmlFor="typeField">TYPE</label>
+          <select id="typeField" className={styles.select} value={type} onChange={changeType}>
             <option value="">type</option>
             <option value="1">PostgreSQL</option>
           </select>

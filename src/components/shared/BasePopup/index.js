@@ -98,7 +98,7 @@ BasePopup.defaultProps = {
   title: '',
   okButton: false,
   cancelButton: true,
-  isVisible: false,
+  isVisible: true,
   onClose: defaultHandler,
   onSubmit: defaultHandler,
   image: null,

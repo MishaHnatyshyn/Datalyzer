@@ -1,19 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
+import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import AdminUsersPageHeader from './AdminUsersPageHeader';
+import UsersTable from './components/UsersTable/UsersTable';
 import { getUsersCount, searchUsers } from '../../store/adminUsers/actions';
 import NewUserPopup from '../../components/User/newUserPopup';
 
 const UsersAdmin = ({ fetchUsersCount, fetchUsers }) => {
-  useEffect(() => {
-    fetchUsersCount();
+  const fetchUsersData = useMemo(() => async () => {
+    await fetchUsersCount();
     fetchUsers();
   }, []);
+
+  useEffect(() => {
+    fetchUsersData();
+  }, []);
+
   return (
     <div>
       <AdminUsersPageHeader />
-      <NewUserPopup />
+      <Route path="/admin/users/create" component={NewUserPopup} />
+      <UsersTable />
     </div>
   );
 };
@@ -24,8 +32,8 @@ UsersAdmin.propTypes = {
 };
 
 const mapDispatchToPros = (dispatch) => ({
-  fetchUsersCount: () => { dispatch(getUsersCount()); },
-  fetchUsers: () => { dispatch(searchUsers()); },
+  fetchUsersCount: () => dispatch(getUsersCount()),
+  fetchUsers: () => dispatch(searchUsers()),
 });
 
 export default connect(null, mapDispatchToPros)(UsersAdmin);

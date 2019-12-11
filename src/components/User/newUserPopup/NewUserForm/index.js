@@ -52,29 +52,29 @@ const NewUserForm = ({
       <NewUserCaption />
       <form>
         <div className={styles.inputFields}>
-        <label className="label" htmlFor="formUsername">USERNAME</label>
+        <label className={styles.label} htmlFor="formUsername">USERNAME</label>
         <Input id="formUsername" type="text" name="formUsername" onChange={changeUsername} value={formUsername} />
-        <label className="label" htmlFor="formPassword">
+        <label className={styles.label} htmlFor="formPassword">
           PASSWORD
           <AlertMessage classes={alertClassesPassLen}>
             <img src="/images/report.png" alt="error message" />
           </AlertMessage>
         </label>
         <Input id="formPassword" type="password" name="password" onChange={changePassword} value={formPassword} />
-        <label className="label" htmlFor="formPasswordRepeat">
+        <label className={styles.label} htmlFor="formPasswordRepeat">
           REPEAT PASSWORD
           <AlertMessage classes={alertClassesPassRepeat}>
             <img src="/images/report.png" alt="error message" />
           </AlertMessage>
         </label>
         <Input id="formPasswordRepeat" type="password" name="formPasswordRepeat" onChange={changePasswordRepeat} value={formPasswordRepeat} />
-        <label className="label" htmlFor="formUserType">USER TYPE</label>
-        <select id="formUserType" value={formUserType} onChange={changeUserType}>
+        <label className={styles.label} htmlFor="formUserType">USER TYPE</label>
+        <select id="formUserType" className={styles.select} value={formUserType} onChange={changeUserType}>
           <option value="">user type</option>
           <option value="1">admin</option>
           <option value="2">user</option>
         </select>
-        <label className="label" htmlFor="formDescription">DESCRIPTION</label>
+        <label className={styles.label} htmlFor="formDescription">DESCRIPTION</label>
         <Textarea id="formDescription" name="formDescription" onChange={changeUserDescription} value={formDescription} />
         </div>
       <AlertMessage message={errorMessage} classes={alertClasses}>

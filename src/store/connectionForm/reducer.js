@@ -6,11 +6,10 @@ import {
   USERNAME_VALUE,
   PASSWORD_VALUE,
   TYPE_VALUE,
-  SHOW_CONNECTION_POPUP,
   EMPTY_FIELDS_ERROR
 } from './types';
 import { EMPTY_FIELDS_ERROR_MESSAGE } from '../login/constants';
-import { CLOSE_ACTION } from '../adminUsers/types';
+import { CREATE_FAILURE } from '../connection/types';
 
 const initialState = {
   error: false,
@@ -26,11 +25,6 @@ const initialState = {
 
 export default function connectionFormsReducer(state = initialState, action) {
   switch (action.type) {
-    case SHOW_CONNECTION_POPUP:
-      return {
-        ...state,
-        isVisible: true
-      };
     case EMPTY_FIELDS_ERROR:
       return {
         ...state,
@@ -51,17 +45,12 @@ export default function connectionFormsReducer(state = initialState, action) {
       return { ...state, password: action.payload, error: false };
     case TYPE_VALUE:
       return { ...state, type: action.payload, error: false };
-    case CLOSE_ACTION:
+    case CREATE_FAILURE:
       return {
         ...state,
         isCreatingInProgress: false,
-        formUsername: '',
-        formPassword: '',
-        formPasswordRepeat: '',
-        formUserType: '',
-        formDescription: '',
-        error: false,
-        isVisible: false,
+        error: true,
+        errorMessage: 'Creation failed'
       };
     default:
       return state;

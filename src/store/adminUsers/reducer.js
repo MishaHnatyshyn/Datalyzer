@@ -11,19 +11,10 @@ import {
   CREATE_FAILURE,
   SET_TOTAL_USERS,
   CHANGE_SEARCH_INPUT,
-  FORM_USER_TYPE_INPUT_VALUE,
-  FORM_DESCRIPTION_INPUT_VALUE,
-  FORM_USERNAME_INPUT_VALUE,
-  FORM_PASSWORD_INPUT_VALUE,
-  FORM_PASSWORD_REPEAT_INPUT_VALUE,
-  PASSWORD_LENGTH_ERROR,
-  PASSWORD_EQUAL_ERROR,
-  EMPTY_FIELDS_ERROR,
-  CLOSE_ACTION,
   FETCH_COUNT_START,
   FETCH_COUNT_FAILURE,
+  FETCH_END, DELETE_USER, DELETE_USER_SUCCESS,
 } from './types';
-import { EMPTY_FIELDS_ERROR_MESSAGE } from '../login/constants';
 
 const initialState = {
   totalUsers: {
@@ -32,11 +23,11 @@ const initialState = {
   },
   currentPage: 1,
   search: '',
-  itemsPerPage: 4,
+  itemsPerPage: 8,
   lastLoadedPage: 1,
   error: false,
   isLoading: false,
-  hasNextPage: true,
+  hasNextPage: false,
   users: [],
   formUsername: '',
   formPassword: '',
@@ -45,6 +36,7 @@ const initialState = {
   formDescription: '',
   isCreatingInProgress: false,
   isVisible: true,
+  userForDeleting: null,
 };
 
 export default function adminUsersReducer(state = initialState, action) {
@@ -83,30 +75,39 @@ export default function adminUsersReducer(state = initialState, action) {
         error: true,
         isLoading: false
       };
+    case FETCH_END:
+      return {
+        ...state,
+        isLoading: false,
+        lastLoadedPage: action.payload,
+        error: false,
+      };
     case SET_USERS:
       return {
         ...state,
         users: action.payload,
-        error: false,
-        isLoading: false
+        hasNextPage: action.payload.length < state.totalUsers.count,
       };
     case APPEND_USERS:
+      const users = [...state.users, ...action.payload];
       return {
         ...state,
-        users: [...state.users, ...action.payload],
-        hasNextPage: action.payload.length > 0,
-        error: false,
-        isLoading: false
+        users,
+        hasNextPage: users.length < state.totalUsers.count,
       };
     case NEXT_PAGE:
+      const nextPage = state.currentPage + 1;
       return {
         ...state,
-        currentPage: state.currentPage + 1
+        currentPage: nextPage,
+        hasNextPage: nextPage * state.itemsPerPage < state.totalUsers.count,
       };
     case PREV_PAGE:
+      const prevPage = state.currentPage - 1;
       return {
         ...state,
-        currentPage: state.currentPage - 1
+        currentPage: prevPage,
+        hasNextPage: prevPage * state.itemsPerPage < state.totalUsers.count
       };
     case CHANGE_FORM_FIELD:
       return {
@@ -138,52 +139,28 @@ export default function adminUsersReducer(state = initialState, action) {
         ...state,
         users: [action.payload, ...state.users],
         isCreatingInProgress: false,
+        totalUsers: {
+          count: state.totalUsers.count + 1,
+          isLoading: false
+        },
         formUsername: '',
         formPassword: '',
         formPasswordRepeat: '',
         formUserType: '',
         formDescription: '',
-        isError: false,
       };
-    case FORM_USERNAME_INPUT_VALUE:
-      return { ...state, formUsername: action.payload, error: false };
-    case FORM_PASSWORD_INPUT_VALUE:
-      return { ...state, formPassword: action.payload, error: false };
-    case FORM_PASSWORD_REPEAT_INPUT_VALUE:
-      return { ...state, formPasswordRepeat: action.payload, error: false };
-    case FORM_DESCRIPTION_INPUT_VALUE:
-      return { ...state, formDescription: action.payload, error: false };
-    case FORM_USER_TYPE_INPUT_VALUE:
-      return { ...state, formUserType: action.payload, error: false };
-    case PASSWORD_EQUAL_ERROR:
+    case DELETE_USER:
       return {
         ...state,
-        error: true,
-        errorMessage: 'Passwords are not the same'
+        userForDeleting: action.payload,
       };
-    case PASSWORD_LENGTH_ERROR:
+    case DELETE_USER_SUCCESS:
       return {
         ...state,
-        error: true,
-        errorMessage: 'Password must be 6 or mor characters'
-      };
-    case EMPTY_FIELDS_ERROR:
-      return {
-        ...state,
-        error: true,
-        errorMessage: EMPTY_FIELDS_ERROR_MESSAGE
-      };
-    case CLOSE_ACTION:
-      return {
-        ...state,
-        isCreatingInProgress: false,
-        formUsername: '',
-        formPassword: '',
-        formPasswordRepeat: '',
-        formUserType: '',
-        formDescription: '',
-        error: false,
-        isVisible: false,
+        users: state.users.filter(
+          (user) => user.id !== state.userForDeleting,
+        ),
+        userForDeleting: null,
       };
     default:
       return state;
