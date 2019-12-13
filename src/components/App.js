@@ -8,9 +8,10 @@ import {
   ProtectedUserRoute,
 } from './shared/ProtectedRoutes';
 import {
-  LOGIN_URL, ROOT_URL, USER_HOME_URL, ADMIN_BASE_URL
+  LOGIN_URL, ROOT_URL, USER_BASE_URL, ADMIN_BASE_URL
 } from '../config/routing';
 import Admin from '../pages/Admin';
+import User from '../pages/User';
 
 const App = () => (
   <div>
@@ -19,7 +20,7 @@ const App = () => (
       <NotLoggedInRoute exact path={ROOT_URL} component={Login} />
       <NotLoggedInRoute exact path={LOGIN_URL} component={Login} />
       <ProtectedAdminRoute path={ADMIN_BASE_URL} component={Admin} />
-      <ProtectedUserRoute path={USER_HOME_URL} component={() => <div>USER PAGE</div>} />
+      <ProtectedUserRoute path={USER_BASE_URL} component={User} />
     </Switch>
   </div>
 );
