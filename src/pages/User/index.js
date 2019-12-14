@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Layout from '../../components/shared/Layout';
 import CreateReportUser from '../CreateReport';
 import UserDashboard from '../UserDashboard';
+import DashboardsList from '../DashboardsList';
 
 const blocks = [
   {
@@ -28,6 +29,7 @@ const User = () => (
       <Route exact path="/user/home" component={() => <div>USER HOME</div>} />
       <Route exact path="/user/report" component={CreateReportUser} />
       <Route exact path="/user/dashboard/:id" component={UserDashboard} />
+      <Route exact path="/user/home" component={DashboardsList} />
     </Switch>
   </Layout>
 );
