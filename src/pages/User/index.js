@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Layout from '../../components/shared/Layout';
+import CreateReportUser from '../CreateReport';
 
 const blocks = [
   {
@@ -24,6 +25,7 @@ const User = () => (
   <Layout menuItems={blocks}>
     <Switch>
       <Route exact path="/user/home" component={() => <div>USER HOME</div>} />
+      <Route exact path="/user/report" component={CreateReportUser} />
     </Switch>
   </Layout>
 );

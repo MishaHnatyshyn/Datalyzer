@@ -12,6 +12,7 @@ import modelReducer from './model/reducer';
 import connectionsReducer from './connection/reducer';
 import createModelReducer from './createModel/reducer';
 import popupsReducer from './popups/reducer';
+import createReportReducer from './createReport/reducer';
 import connectionFormsReducer from './connectionForm/reducer';
 import createUserReducer from './createUser/reducer';
 
@@ -44,6 +45,7 @@ const rootReducer = combineReducers({
   createUser: createUserReducer,
   createModel: createModelReducer,
   popups: popupsReducer,
+  createReport: createReportReducer
 });
 
 const store = createStore(rootReducer, initialState, enhancer);
