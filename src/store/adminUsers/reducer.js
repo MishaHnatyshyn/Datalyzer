@@ -29,11 +29,6 @@ const initialState = {
   isLoading: false,
   hasNextPage: false,
   users: [],
-  formUsername: '',
-  formPassword: '',
-  formPasswordRepeat: '',
-  formUserType: '',
-  formDescription: '',
   isCreatingInProgress: false,
   isVisible: true,
   userForDeleting: null,
@@ -93,6 +88,10 @@ export default function adminUsersReducer(state = initialState, action) {
       return {
         ...state,
         users,
+        totalUsers: {
+          count: state.totalUsers.count + 1,
+          isLoading: false
+        },
         hasNextPage: users.length < state.totalUsers.count,
       };
     case NEXT_PAGE:
@@ -137,17 +136,12 @@ export default function adminUsersReducer(state = initialState, action) {
     case CREATE_SUCCESS:
       return {
         ...state,
-        users: [action.payload, state.users],
+        users: [action.payload, ...state.users],
         isCreatingInProgress: false,
         totalUsers: {
           count: state.totalUsers.count + 1,
           isLoading: false
         },
-        formUsername: '',
-        formPassword: '',
-        formPasswordRepeat: '',
-        formUserType: '',
-        formDescription: '',
       };
     case DELETE_USER:
       return {

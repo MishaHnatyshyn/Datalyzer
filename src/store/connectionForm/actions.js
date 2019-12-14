@@ -67,10 +67,10 @@ export const newConnectionAction = () => async (dispatch, getState) => {
         typeId: Number(type),
       }
     });
-    dispatch(onCloseAction());
-    dispatch(appendConnections(data));
+    dispatch(createConnectionSuccess(data));
     dispatch(push('/admin/databases'));
   } catch (e) {
+    console.log(e);
     dispatch(createConnectionFailure());
   }
 };

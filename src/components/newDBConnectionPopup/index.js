@@ -6,7 +6,7 @@ import '../shared/BasePopup/styles.scss';
 import NewConnectionForm from './NewDBConnectionForm';
 import { getVisible } from '../../store/connectionForm/selectors';
 import { newConnectionAction, onCloseAction } from '../../store/connectionForm/actions';
-import styles from './newDBConnectionPopup.module.scss';
+import styles from '../User/newUserPopup/newUserPopup.module.scss';
 import BasePopup from '../shared/BasePopup';
 
 const NewConnection = ({
@@ -23,7 +23,7 @@ const NewConnection = ({
       onSubmit={formHandler}
       onClose={onClose}
       isVisible={isVisible}
-      popupClassName={styles.dbconnectionpopup}
+      popupClassName={styles.newUserPopup}
       okButtonType="submit"
       okButton={true}
       body={<NewConnectionForm />}

@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Input from '../../shared/Input';
 import AlertMessage from '../../shared/AlertMessage';
-import styles from '../newDBConnectionPopup.module.scss';
+import styles from '../../User/newUserPopup/newUserPopup.module.scss';
 import '../../shared/BasePopup/styles.scss';
-import NewDBCaption from '../NewDBCaption';
+import Caption from '../../shared/Caption';
 import {
   getType,
   getUsername,
@@ -51,7 +51,7 @@ const NewConnectionForm = ({
   ], [isError]);
   return (
     <div>
-      <NewDBCaption />
+      <Caption classes={styles.newUserCaption}>Add new connection</Caption>
       <form>
         <div className={styles.inputFields}>
           <label className={styles.label} htmlFor="hostField">HOST</label>

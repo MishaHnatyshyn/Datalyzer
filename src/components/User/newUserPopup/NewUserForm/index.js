@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import NewUserCaption from '../NewUserCaption';
 import styles from '../newUserPopup.module.scss';
 import Input from '../../../shared/Input';
 import AlertMessage from '../../../shared/AlertMessage';
 import Textarea from '../../../shared/Textarea';
 import '../../../shared/BasePopup/styles.scss';
+import Caption from '../../../shared/Caption';
 import {
   getUserType,
   getUsername,
@@ -49,7 +49,7 @@ const NewUserForm = ({
   ], [isError]);
   return (
     <div className={styles.maxWidth}>
-      <NewUserCaption />
+      <Caption classes={styles.newUserCaption}> Add new user </Caption>
       <form>
         <div className={styles.inputFields}>
         <label className={styles.label} htmlFor="formUsername">USERNAME</label>

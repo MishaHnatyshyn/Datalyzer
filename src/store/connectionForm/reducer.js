@@ -9,6 +9,7 @@ import {
   EMPTY_FIELDS_ERROR,
   APPEND_CONNECTIONS,
   CREATE_FAILURE,
+  CREATE_SUCCESS
 } from './types';
 import { EMPTY_FIELDS_ERROR_MESSAGE } from '../login/constants';
 
@@ -35,8 +36,6 @@ export default function connectionFormsReducer(state = initialState, action) {
     case APPEND_CONNECTIONS:
       return {
         ...state,
-        connections: [...state.connections, action.payload],
-        hasNextPage: action.payload.length > 0,
         error: false,
         isLoading: false,
       };
@@ -60,6 +59,19 @@ export default function connectionFormsReducer(state = initialState, action) {
         isCreatingInProgress: false,
         error: true,
         errorMessage: 'Creation failed'
+      };
+    case CREATE_SUCCESS:
+      return {
+        ...state,
+        host: '',
+        port: '',
+        username: '',
+        password: '',
+        type: '',
+        nameConnection: '',
+        nameDB: '',
+        error: false,
+        isLoading: false,
       };
     default:
       return state;

@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import styles from './caption.module.scss';
 
 const Caption = ({ classes, children }) => (
-  <p className={classnames(styles.captionCommon, ...classes)}>
+  <p className={classnames(styles.captionCommon, classes)}>
     {children}
   </p>
 );

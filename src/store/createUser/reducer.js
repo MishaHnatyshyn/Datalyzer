@@ -20,21 +20,13 @@ const initialState = {
     count: 0,
     isLoading: true
   },
-  currentPage: 1,
-  search: '',
-  itemsPerPage: 4,
-  lastLoadedPage: 1,
   error: false,
-  isLoading: false,
-  hasNextPage: true,
   users: [],
   formUsername: '',
   formPassword: '',
   formPasswordRepeat: '',
   formUserType: '',
   formDescription: '',
-  isCreatingInProgress: false,
-  isVisible: true,
 };
 
 export default function createUserReducer(state = initialState, action) {
@@ -61,11 +53,6 @@ export default function createUserReducer(state = initialState, action) {
     case CREATE_SUCCESS:
       return {
         ...state,
-        users: [action.payload, state.users],
-        totalUsers: {
-          count: state.totalUsers.count + 1,
-          isLoading: false
-        },
         isCreatingInProgress: false,
         formUsername: '',
         formPassword: '',
