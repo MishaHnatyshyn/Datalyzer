@@ -11,7 +11,6 @@ import {
 import { changePasswordValue, changeUsernameValue, login } from '../../../store/login/actions';
 import AlertMessage from '../../shared/AlertMessage';
 import { preventDefaultHandler } from '../../../utils';
-import stylesInput from '../../shared/Input/textField.module.scss';
 
 const LoginForm = ({
   username,
@@ -33,10 +32,10 @@ const LoginForm = ({
       <div className={styles.line} />
       <form onSubmit={formHandler}>
         <div className={styles.inputFields}>
-          <Input text="Username" type="text" classes={stylesInput.withImage} onChange={changeUsername} value={username}>
+          <Input text="Username" type="text" withImage onChange={changeUsername} value={username}>
             <img src="/images/user.png" alt="user icon" />
           </Input>
-          <Input text="Password" type="password" classes={stylesInput.withImage} onChange={changePassword} value={password}>
+          <Input text="Password" type="password" withImage classes="withImage" onChange={changePassword} value={password}>
             <img src="/images/padlock.png" alt="password icon" />
           </Input>
         </div>

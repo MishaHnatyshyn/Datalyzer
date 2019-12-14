@@ -34,6 +34,10 @@
 .withImage {
   width: 100%;
   padding: 15px 15px 11px 45px;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid #cbcbcb;
+  font: $text-regular;
 }
 
 ::-webkit-input-placeholder { /* Edge */
