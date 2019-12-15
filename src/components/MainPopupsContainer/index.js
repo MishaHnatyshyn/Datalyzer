@@ -18,6 +18,9 @@ import DeleteConnectionErrorPopup from '../ConnectionPopups/DeleteConnectionErro
 import ModelDeletePopup from '../DeleteModelPopups/DeletePopup';
 import DeleteModelSuccessPopup from '../DeleteModelPopups/DeleteModelSuccessPopup';
 import DeleteModelErrorPopup from '../DeleteModelPopups/DeleteModelErrorPopup';
+import DeleteUserSuccessPopup from '../DeleteUserPopup/DeleteUserSuccessPopup';
+import DeleteUserErrorPopup from '../DeleteUserPopup/DeleteUserErrorPopup';
+import DeleteUserPopup from '../DeleteUserPopup/DeleteUserPopup';
 
 const MainPopupsContainer = ({ closePopup, text, currentPopup }) => {
   switch (currentPopup) {
@@ -43,6 +46,12 @@ const MainPopupsContainer = ({ closePopup, text, currentPopup }) => {
       return <DeleteModelSuccessPopup />;
     case PopupTypes.DELETE_MODEL_ERROR:
       return <DeleteModelErrorPopup />;
+    case PopupTypes.DELETE_USER_SUCCESS:
+      return <DeleteUserSuccessPopup />;
+    case PopupTypes.DELETE_USER_ERROR:
+      return <DeleteUserErrorPopup />;
+    case PopupTypes.DELETE_USER:
+      return <DeleteUserPopup />;
     default:
       return null;
   }

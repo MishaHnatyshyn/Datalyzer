@@ -17,14 +17,14 @@ import {
   DELETE_MODEL_ERROR,
   DELETE_MODEL,
 } from './types';
-import {getPaging, getModelsSearchPayload, getModelsCountData, getModelForDeleting} from './selectors';
-import {del, get} from '../../utils/http';
-import { ADMIN_MODELS_ENDPOINT, ADMIN_MODELS_COUNT_ENDPOINT, MODEL_FIELD_VALUES_ENDPOIND } from '../../config';
-import {getConnectionForDeleting} from "../connection/selectors";
-import {createConnectionDeleteRoute, createModelDeleteRoute} from "../../utils/routeCreators";
-import {displayCustomPopup} from "../popups/actions";
-import PopupTypes from "../popups/popupTypes";
-import {deleteConnectionError, deleteConnectionStart, deleteConnectionSuccess} from "../connection/actions";
+import {
+  getPaging, getModelsSearchPayload, getModelsCountData, getModelForDeleting
+} from './selectors';
+import { del, get } from '../../utils/http';
+import { ADMIN_MODELS_ENDPOINT, ADMIN_MODELS_COUNT_ENDPOINT } from '../../config';
+import { createModelDeleteRoute } from '../../utils/routeCreators';
+import { displayCustomPopup } from '../popups/actions';
+import PopupTypes from '../popups/popupTypes';
 
 export const fetchStart = createAction(FETCH_START);
 export const fetchCountStart = createAction(FETCH_COUNT_START);

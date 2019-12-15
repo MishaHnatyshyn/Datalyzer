@@ -1,0 +1,48 @@
+@import "../../assets/variables";
+
+.dataContainer {
+  width: 100%;
+  margin-left: 0;
+  height: 75vh;
+}
+
+.container {
+  width: 60%;
+}
+
+.body {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 94%;
+  box-sizing: border-box;
+  padding: 50px 20px;
+}
+
+.dragAndDropArea {
+  height: 100%;
+}
+
+.text {
+  font: $text-regular;
+  font-size: 16px;
+  color: $middle-light-gray;
+}
+
+.chartTypesContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-bottom: 20px;
+  padding-top: 15px;
+}
+
+.chartType {
+  & > img {
+    transition: transform .4s;
+  }
+
+  &:hover > img {
+    transform: scale(1.2);
+  }
+}

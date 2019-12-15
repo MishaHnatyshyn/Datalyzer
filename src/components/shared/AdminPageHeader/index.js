@@ -6,7 +6,7 @@ import Search from '../Search';
 import Loader from '../Loader';
 
 const AdminPageHeader = ({
-  pageName, buttonText, countData, placeholder, search, searchValue, submitForm, link
+  pageName, buttonText, countData, placeholder, search, searchValue, submitForm, link,
 }) => (
   <div className={styles.container}>
     <div className={styles.leftBlock}>

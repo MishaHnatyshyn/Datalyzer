@@ -6,7 +6,7 @@ import styles from './tableColumnsEditForm.module.scss';
 import Select from '../shared/Select';
 import Checkbox from '../Checkbox';
 
-const options = ['fact', 'dimension'];
+const options = [{ name: 'fact', value: 1 }, { name: 'dimension', value: 2 }];
 
 const TableColumnFormRow = ({
   name,

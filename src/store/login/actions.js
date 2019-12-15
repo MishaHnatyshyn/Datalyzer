@@ -48,6 +48,7 @@ export const login = () => async (dispatch, getState) => {
     dispatch(loginSuccess(access_token));
     dispatch(setUserData({ username, userId: id, userType: user_type.name }));
   } catch (e) {
+    console.log(e)
     dispatch(loginFailure());
   }
 };

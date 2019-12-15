@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Route } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import AdminDatabasesPageHeader from './AdminDatabasesPageHeader';
 import DatabaseDataCard from '../../components/DatabaseDataCard';
@@ -8,6 +9,7 @@ import DataCardGrid from '../../components/shared/DataCardGrid';
 import { getConnectionsCount, searchConnections } from '../../store/connection/actions';
 import { getConnections } from '../../store/connection/selectors';
 import NoResult from '../../components/shared/NoResult';
+import NewDBConnectionPopup from '../../components/newDBConnectionPopup';
 
 const DatabasesAdmin = ({ connections, fetchConnectionsCount, fetchConnections }) => {
   useEffect(() => {
@@ -17,6 +19,7 @@ const DatabasesAdmin = ({ connections, fetchConnectionsCount, fetchConnections }
   return (
     <div>
       <AdminDatabasesPageHeader />
+      <Route path="/admin/databases/create" component={NewDBConnectionPopup} />
       {connections && connections.length ? (
         <DataCardGrid>
           {connections.map((connection) => (

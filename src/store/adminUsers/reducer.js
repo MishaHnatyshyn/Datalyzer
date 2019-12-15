@@ -13,7 +13,7 @@ import {
   CHANGE_SEARCH_INPUT,
   FETCH_COUNT_START,
   FETCH_COUNT_FAILURE,
-  FETCH_END,
+  FETCH_END, DELETE_USER, DELETE_USER_SUCCESS,
 } from './types';
 
 const initialState = {
@@ -29,14 +29,9 @@ const initialState = {
   isLoading: false,
   hasNextPage: false,
   users: [],
-  newUserForm: {
-    formUsername: '',
-    formPassword: '',
-    formPasswordRepeat: '',
-    formUserType: '',
-    formDescription: '',
-    isCreatingInProgress: false,
-  }
+  isCreatingInProgress: false,
+  isVisible: true,
+  userForDeleting: null,
 };
 
 export default function adminUsersReducer(state = initialState, action) {
@@ -93,6 +88,10 @@ export default function adminUsersReducer(state = initialState, action) {
       return {
         ...state,
         users,
+        totalUsers: {
+          count: state.totalUsers.count + 1,
+          isLoading: false
+        },
         hasNextPage: users.length < state.totalUsers.count,
       };
     case NEXT_PAGE:
@@ -127,6 +126,7 @@ export default function adminUsersReducer(state = initialState, action) {
         ...state,
         isCreatingInProgress: false,
         error: true,
+        errorMessage: 'Creation failed'
       };
     case CHANGE_SEARCH_INPUT:
       return {
@@ -138,11 +138,27 @@ export default function adminUsersReducer(state = initialState, action) {
         ...state,
         users: [action.payload, ...state.users],
         isCreatingInProgress: false,
-        formUsername: '',
-        formPassword: '',
-        formPasswordRepeat: '',
-        formUserType: '',
-        formDescription: '',
+        totalUsers: {
+          count: state.totalUsers.count + 1,
+          isLoading: false
+        },
+      };
+    case DELETE_USER:
+      return {
+        ...state,
+        userForDeleting: action.payload,
+      };
+    case DELETE_USER_SUCCESS:
+      return {
+        ...state,
+        totalUsers: {
+          count: state.totalUsers.count - 1,
+          isLoading: false
+        },
+        users: state.users.filter(
+          (user) => user.id !== state.userForDeleting,
+        ),
+        userForDeleting: null,
       };
     default:
       return state;

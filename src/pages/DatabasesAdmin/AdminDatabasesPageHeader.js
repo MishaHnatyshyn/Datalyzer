@@ -24,7 +24,7 @@ const AdminDatabasesPageHeader = (props) => (
     buttonText="Create model"
     pageName="Total connections"
     placeholder="search by name..."
-    link="/admin/create_model"
+    link="/admin/databases/create"
   />
 );
 

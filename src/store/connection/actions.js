@@ -1,4 +1,5 @@
 import { createAction } from 'redux-actions';
+import { push } from 'connected-react-router';
 import {
   FETCH_FAILURE,
   FETCH_START,

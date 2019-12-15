@@ -1,0 +1,50 @@
+@import "../../../assets/variables";
+@import "../../../assets/fonts";
+
+.newUserPopup > div:last-child{
+  max-width: 600px;
+  min-width: 450px;
+  padding: 50px;
+}
+
+.newUserCaption {
+  color: $dark-gray;
+  display: block;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.label {
+  font: $text-regular;
+  display: flex;
+}
+
+.visible {
+  visibility: visible;
+  height: 2em;
+  img {
+    margin-left: 5px;
+  }
+  p {
+    margin: 15px 0;
+  }
+}
+
+.hidden {
+  visibility: hidden;
+  height: 2em;
+}
+
+.select {
+  margin: 10px 0;
+  & > div{
+    height: 35px;
+    font: $text-regular;
+  }
+}
+
+
+
+.maxWidth {
+  width: 90%;
+}

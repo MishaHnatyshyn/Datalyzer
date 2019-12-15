@@ -1,0 +1,19 @@
+.body {
+  padding: 20px 18px;
+  min-height: 275px;
+  height: calc(100% - 43px);
+  box-sizing: border-box;
+}
+
+.container {
+  padding-right: 30px;
+  height: 75vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.arrow {
+  width: 30px;
+  height: 30px;
+}

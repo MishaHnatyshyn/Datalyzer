@@ -11,7 +11,6 @@ import {
   FETCH_COUNT_START,
   FETCH_COUNT_FAILURE, DELETE_MODEL, DELETE_MODEL_SUCCESS,
 } from './types';
-import {DELETE_CONNECTION, DELETE_CONNECTION_SUCCESS} from "../connection/types";
 
 const initialState = {
   models: [],
@@ -109,6 +108,10 @@ export default function modelReducer(state = initialState, action) {
     case DELETE_MODEL_SUCCESS:
       return {
         ...state,
+        totalModels: {
+          count: state.totalModels.count - 1,
+          isLoading: false
+        },
         models: state.models.filter(
           (model) => model.id !== state.modelForDeleting,
         ),

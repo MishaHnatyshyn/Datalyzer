@@ -1,0 +1,58 @@
+.pane {
+  position: absolute;
+  width: 300px;
+  top: 20%;
+  left: 20%;
+  padding: 15px;
+
+  margin: 0;
+  z-index: 99;
+  background: #ffffff;
+
+  border-radius: 5px;
+
+  box-shadow: 3.83px 3.214px 41.5px rgba(119, 119, 119, 0.39);
+}
+
+.title {
+  height: 20px;
+  padding: 5px;
+  background-color: white;
+
+  display: flex;
+  justify-content: center;
+
+  &:hover {
+    .hint {
+      opacity: 1;
+    }
+  }
+}
+
+.hint {
+  width: 20px;
+  height: 20px;
+
+  opacity: 0;
+  transition: opacity .15s linear;
+}
+
+.ghostpane {
+  background: #999;
+  opacity: 0.2;
+
+  width: 300px;
+  top: 20%;
+  left: 20%;
+
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  z-index: 98;
+
+  -webkit-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;
+  -ms-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+}

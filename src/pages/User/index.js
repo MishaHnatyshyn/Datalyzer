@@ -1,24 +1,35 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import ModelsAdmin from '../ModelsAdmin';
-import Header from '../../components/shared/Header/Header';
-import LeftSideMenu from '../../components/shared/LeftSideMenu';
-import UserHome from '../UserHome';
+import Layout from '../../components/shared/Layout';
+import CreateReportUser from '../CreateReport';
+import UserDashboard from '../UserDashboard';
 
-import styles from './user.module.scss';
+const blocks = [
+  {
+    link: '/user/home',
+    image: '/images/leftMenu/user/bars.png',
+    alt: 'dashboards'
+  },
+  {
+    link: '/user/models',
+    image: '/images/leftMenu/user/spreadsheet.png',
+    alt: 'models page'
+  },
+  {
+    link: '/user/report',
+    image: '/images/leftMenu/user/add.png',
+    alt: 'create report'
+  }
+];
 
 const User = () => (
-  <div className={styles.container}>
-    <Header />
-    <div className={styles.page}>
-      <LeftSideMenu />
-      <div className={styles.content}>
-        <Switch>
-          <Route exact path="/user/home" component={UserHome} />
-        </Switch>
-      </div>
-    </div>
-  </div>
+  <Layout menuItems={blocks}>
+    <Switch>
+      <Route exact path="/user/home" component={() => <div>USER HOME</div>} />
+      <Route exact path="/user/report" component={CreateReportUser} />
+      <Route exact path="/user/dashboard/:id" component={UserDashboard} />
+    </Switch>
+  </Layout>
 );
 
 export default User;

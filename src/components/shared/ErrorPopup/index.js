@@ -10,7 +10,7 @@ const ErrorPopup = ({
     onSubmit={onClose}
     okButton
     cancelButton={false}
-    image={<img src="/images/Popup/errrorPopupImage.png" alt="" />}
+    image={<img src="/images/Popup/errorPopupImage.png" alt="" />}
     text={text}
     title={title}
     isVisible={isVisible}

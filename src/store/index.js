@@ -12,7 +12,9 @@ import modelReducer from './model/reducer';
 import connectionsReducer from './connection/reducer';
 import createModelReducer from './createModel/reducer';
 import popupsReducer from './popups/reducer';
-import userDashboardReducer from './userDashboard/reducer';
+import createReportReducer from './createReport/reducer';
+import connectionFormsReducer from './connectionForm/reducer';
+import createUserReducer from './createUser/reducer';
 
 const initialState = {};
 
@@ -38,10 +40,12 @@ const rootReducer = combineReducers({
   user: userReducer,
   adminUsers: adminUsersReducer,
   models: modelReducer,
+  connectionForms: connectionFormsReducer,
   connections: connectionsReducer,
+  createUser: createUserReducer,
   createModel: createModelReducer,
   popups: popupsReducer,
-  userDashboard: userDashboardReducer,
+  createReport: createReportReducer
 });
 
 const store = createStore(rootReducer, initialState, enhancer);

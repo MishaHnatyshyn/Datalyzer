@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import styles from './dragAndDropArea.module.scss';
 
-const DragAndDropArea = ({ onDragOver, onDrop, classes }) => (
+const DragAndDropArea = ({
+  onDragOver, onDrop, classes, text
+}) => (
   <div className={classnames(classes, styles.dragAndDropContainer)}>
     <div
       className={styles.dropContainer}
@@ -11,10 +13,7 @@ const DragAndDropArea = ({ onDragOver, onDrop, classes }) => (
       onDrop={(e) => onDrop(e)}
     >
       <img src="/images/file.png" alt="file" />
-      <p className={styles.dragAndDropText}>
-        `Drag and drop tables
-        you want to include in the model`
-      </p>
+      <p className={styles.dragAndDropText}>{text}</p>
     </div>
   </div>
 );
@@ -26,7 +25,8 @@ DragAndDropArea.defaultProps = {
 DragAndDropArea.propTypes = {
   onDragOver: PropTypes.func.isRequired,
   onDrop: PropTypes.func.isRequired,
-  classes: PropTypes.string
+  classes: PropTypes.string,
+  text: PropTypes.string.isRequired,
 };
 
 export default DragAndDropArea;
