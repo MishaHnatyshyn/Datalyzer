@@ -32,10 +32,10 @@ const LoginForm = ({
       <div className={styles.line} />
       <form onSubmit={formHandler}>
         <div className={styles.inputFields}>
-          <Input text="Username" type="text" onChange={changeUsername} value={username}>
+          <Input text="Username" type="text" withImage onChange={changeUsername} value={username}>
             <img src="/images/user.png" alt="user icon" />
           </Input>
-          <Input text="Password" type="password" onChange={changePassword} value={password}>
+          <Input text="Password" type="password" withImage onChange={changePassword} value={password}>
             <img src="/images/padlock.png" alt="password icon" />
           </Input>
         </div>

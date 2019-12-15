@@ -12,6 +12,8 @@ import modelReducer from './model/reducer';
 import connectionsReducer from './connection/reducer';
 import createModelReducer from './createModel/reducer';
 import popupsReducer from './popups/reducer';
+import connectionFormsReducer from './connectionForm/reducer';
+import createUserReducer from './createUser/reducer';
 
 const initialState = {};
 
@@ -37,7 +39,9 @@ const rootReducer = combineReducers({
   user: userReducer,
   adminUsers: adminUsersReducer,
   models: modelReducer,
+  connectionForms: connectionFormsReducer,
   connections: connectionsReducer,
+  createUser: createUserReducer,
   createModel: createModelReducer,
   popups: popupsReducer,
 });

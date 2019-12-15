@@ -108,6 +108,10 @@ export default function modelReducer(state = initialState, action) {
     case DELETE_MODEL_SUCCESS:
       return {
         ...state,
+        totalModels: {
+          count: state.totalModels.count - 1,
+          isLoading: false
+        },
         models: state.models.filter(
           (model) => model.id !== state.modelForDeleting,
         ),

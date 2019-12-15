@@ -29,14 +29,8 @@ const initialState = {
   isLoading: false,
   hasNextPage: false,
   users: [],
-  newUserForm: {
-    formUsername: '',
-    formPassword: '',
-    formPasswordRepeat: '',
-    formUserType: '',
-    formDescription: '',
-    isCreatingInProgress: false,
-  },
+  isCreatingInProgress: false,
+  isVisible: true,
   userForDeleting: null,
 };
 
@@ -94,6 +88,10 @@ export default function adminUsersReducer(state = initialState, action) {
       return {
         ...state,
         users,
+        totalUsers: {
+          count: state.totalUsers.count + 1,
+          isLoading: false
+        },
         hasNextPage: users.length < state.totalUsers.count,
       };
     case NEXT_PAGE:
@@ -128,6 +126,7 @@ export default function adminUsersReducer(state = initialState, action) {
         ...state,
         isCreatingInProgress: false,
         error: true,
+        errorMessage: 'Creation failed'
       };
     case CHANGE_SEARCH_INPUT:
       return {
@@ -139,11 +138,10 @@ export default function adminUsersReducer(state = initialState, action) {
         ...state,
         users: [action.payload, ...state.users],
         isCreatingInProgress: false,
-        formUsername: '',
-        formPassword: '',
-        formPasswordRepeat: '',
-        formUserType: '',
-        formDescription: '',
+        totalUsers: {
+          count: state.totalUsers.count + 1,
+          isLoading: false
+        },
       };
     case DELETE_USER:
       return {
@@ -153,6 +151,10 @@ export default function adminUsersReducer(state = initialState, action) {
     case DELETE_USER_SUCCESS:
       return {
         ...state,
+        totalUsers: {
+          count: state.totalUsers.count - 1,
+          isLoading: false
+        },
         users: state.users.filter(
           (user) => user.id !== state.userForDeleting,
         ),

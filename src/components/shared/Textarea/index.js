@@ -1,41 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
-import styles from './textField.module.scss';
+import styles from './textarea.module.scss';
 
-const Input = ({
-  text, children, type, onChange, value, withImage, classes,
+const Textarea = ({
+  text, children, onChange, value, classes, name
 }) => {
   function handleChange(event) {
     onChange(event.target.value);
   }
   return (
     <div className={styles.container}>
-      <input
-        className={classnames(styles.input, withImage ? styles.withImage : '', classes)}
+      <textarea
+        className={classes}
         value={value}
-        type={type}
+        name={name}
         placeholder={text}
         onChange={handleChange}
-      />
+      >
+        {text}
+      </textarea>
       {children}
     </div>
   );
 };
 
-Input.defaultProps = {
-  withImage: false,
-  classes: '',
+Textarea.defaultProps = {
+  classes: styles.textarea
 };
 
-Input.propTypes = {
+Textarea.propTypes = {
   text: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
-  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   classes: PropTypes.string,
   value: PropTypes.string.isRequired,
-  withImage: PropTypes.bool,
 };
 
-export default Input;
+export default Textarea;

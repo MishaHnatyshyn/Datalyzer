@@ -24,7 +24,7 @@ const AdminUsersPageHeader = (props) => (
     buttonText="Create user"
     pageName="Total users"
     placeholder="search by user..."
-    link="/admin/create_user"
+    link="/admin/users/create"
   />
 );
 

@@ -4,7 +4,8 @@
   border: none;
   outline: none;
   border-bottom: 2px solid #cbcbcb;
-  padding: 15px 15px 11px 45px;
+  padding: 10px 0;
+  width: 100%;
   font: $text-regular;
 
   &:focus {
@@ -28,6 +29,11 @@
   bottom: 10px;
   transition: opacity .1s;
   opacity: 0.5;
+}
+
+.withImage {
+  width: 250px;
+  padding: 15px 15px 11px 45px;
 }
 
 ::-webkit-input-placeholder { /* Edge */

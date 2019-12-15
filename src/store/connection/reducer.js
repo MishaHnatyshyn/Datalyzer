@@ -12,6 +12,7 @@ import {
   FETCH_COUNT_FAILURE,
   DELETE_CONNECTION,
   DELETE_CONNECTION_SUCCESS,
+  CREATE_SUCCESS,
 } from './types';
 
 const initialState = {
@@ -76,8 +77,19 @@ export default function connectionsReducer(state = initialState, action) {
     case APPEND_CONNECTIONS:
       return {
         ...state,
-        connections: [...state.connections, ...action.payload],
+        connections: [action.payload, ...state.connections],
         hasNextPage: action.payload.length > 0,
+        error: false,
+        isLoading: false,
+      };
+    case CREATE_SUCCESS:
+      return {
+        ...state,
+        connections: [action.payload, ...state.connections],
+        totalConnections: {
+          count: state.totalConnections.count + 1,
+          isLoading: false
+        },
         error: false,
         isLoading: false,
       };
@@ -110,6 +122,10 @@ export default function connectionsReducer(state = initialState, action) {
     case DELETE_CONNECTION_SUCCESS:
       return {
         ...state,
+        totalConnections: {
+          count: state.totalConnections.count - 1,
+          isLoading: false
+        },
         connections: state.connections.filter(
           (connection) => connection.id !== state.connectionForDeleting,
         ),

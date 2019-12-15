@@ -10,3 +10,4 @@ export const ADMIN_MODELS_ENDPOINT = '/models';
 export const ADMIN_USERS_COUNT_ENDPOINT = '/users/count';
 export const ADMIN_MODELS_COUNT_ENDPOINT = '/models/count';
 export const ADMIN_CONNECTIONS_COUNT_ENDPOINT = '/connections/count';
+export const ADMIN_CONNECTIONS_CREATE_ENDPOINT = '/connections';

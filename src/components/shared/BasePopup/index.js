@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import { CSSTransition } from 'react-transition-group';
 import PopupButtons from './components/PopupButtons';
 import styles from './base.popup.module.scss';
@@ -33,9 +34,9 @@ const BasePopup = ({
       classNames="alert"
       unmountOnExit
     >
-      <div className={styles.popupWrapper}>
+      <div className={classnames(styles.popupWrapper, popupClassName)}>
         <div className={styles.blur} onClick={backgroundHandler} />
-        <div className={`${styles.popup} ${popupClassName}`}>
+        <div className={styles.popup}>
           <div className={styles.header}>
             <div className={styles.cross} onClick={onClose}>
               <img src="/images/Popup/cross.png" alt="" />
@@ -97,7 +98,7 @@ BasePopup.defaultProps = {
   title: '',
   okButton: false,
   cancelButton: true,
-  isVisible: false,
+  isVisible: true,
   onClose: defaultHandler,
   onSubmit: defaultHandler,
   image: null,
