@@ -1,10 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './buildReport.module.scss';
 import ReportDataSection from '../ReportDataSection';
 
 const BuildReport = () => (
-  <div>
+  <div className={styles.container}>
     <ReportDataSection />
   </div>
 );

@@ -27,7 +27,8 @@ const ReportDataSection = ({
             <Scrollbars>
               {models.map((model) => (
                 <ModelMenuLink
-                  onClick={selectModel.bind(null, model)}
+                  onClick={selectModel}
+                  model={model}
                 >
                   {model.name}
                 </ModelMenuLink>

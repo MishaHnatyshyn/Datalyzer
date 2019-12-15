@@ -16,7 +16,7 @@ import {
 import DraggableTableCard from '../shared/DraggableTableCard';
 import ModelTableEditForm from '../shared/ModelTableEditForm';
 
-const DragAndDropPhrase =`Drag and drop tables
+const DragAndDropPhrase = `Drag and drop tables
         you want to include in the model`;
 
 const TablesSelection = ({
