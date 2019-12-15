@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Input from '../../shared/Input';
 import AlertMessage from '../../shared/AlertMessage';
 import styles from '../../User/newUserPopup/newUserPopup.module.scss';
-import '../../shared/BasePopup/styles.scss';
+
 import Caption from '../../shared/Caption';
 import {
   getType,
@@ -26,6 +26,7 @@ import {
   changeTypeValue,
   changeNameConnectionValue,
 } from '../../../store/connectionForm/actions';
+import Select from '../../shared/Select';
 
 const NewConnectionForm = ({
   host,
@@ -67,10 +68,7 @@ const NewConnectionForm = ({
           <label className={styles.label} htmlFor="passwordField">PASSWORD</label>
           <Input id="passwordField" type="password" name="password" onChange={changePassword} value={password} />
           <label className={styles.label} htmlFor="typeField">TYPE</label>
-          <select id="typeField" className={styles.select} value={type} onChange={changeType}>
-            <option value="">type</option>
-            <option value="1">PostgreSQL</option>
-          </select>
+          <Select options={[{ name: 'PostgreSQL', value: '1' }]} classes={styles.select} value={type} onChange={changeType} />
         </div>
         <AlertMessage message={errorMessage} classes={alertClasses}>
           <img src="/images/report.png" alt="error message" />

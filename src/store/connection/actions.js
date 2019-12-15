@@ -55,7 +55,6 @@ export const searchConnections = () => async (dispatch, getState) => {
   try {
     const data = await get(ADMIN_CONNECTIONS_ENDPOINT, { params });
     dispatch(setConnections(data));
-    dispatch(push('/admin/databases'));
   } catch (e) {
     dispatch(fetchFailure());
   }

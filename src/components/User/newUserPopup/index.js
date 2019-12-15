@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { preventDefaultHandler } from '../../../utils';
-import '../../shared/BasePopup/styles.scss';
 import BasePopup from '../../shared/BasePopup';
 import NewUserForm from './NewUserForm';
 import { getVisible } from '../../../store/createUser/selectors';

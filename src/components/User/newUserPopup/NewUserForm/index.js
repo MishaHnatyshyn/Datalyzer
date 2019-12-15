@@ -5,7 +5,6 @@ import styles from '../newUserPopup.module.scss';
 import Input from '../../../shared/Input';
 import AlertMessage from '../../../shared/AlertMessage';
 import Textarea from '../../../shared/Textarea';
-import '../../../shared/BasePopup/styles.scss';
 import Caption from '../../../shared/Caption';
 import {
   getUserType,
@@ -23,6 +22,7 @@ import {
   changePasswordRepeatValue,
   changeUserDescriptionValue,
 } from '../../../../store/createUser/actions';
+import Select from '../../../shared/Select';
 
 const NewUserForm = ({
   formUsername,
@@ -69,11 +69,7 @@ const NewUserForm = ({
         </label>
         <Input id="formPasswordRepeat" type="password" name="formPasswordRepeat" onChange={changePasswordRepeat} value={formPasswordRepeat} />
         <label className={styles.label} htmlFor="formUserType">USER TYPE</label>
-        <select id="formUserType" className={styles.select} value={formUserType} onChange={changeUserType}>
-          <option value="">user type</option>
-          <option value="1">admin</option>
-          <option value="2">user</option>
-        </select>
+        <Select options={[{ name: 'admin', value: '1' }, { name: 'user', value: '2' }]} classes={styles.select} value={formUserType} onChange={changeUserType} />
         <label className={styles.label} htmlFor="formDescription">DESCRIPTION</label>
         <Textarea id="formDescription" name="formDescription" onChange={changeUserDescription} value={formDescription} />
         </div>

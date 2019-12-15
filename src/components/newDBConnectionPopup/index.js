@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { preventDefaultHandler } from '../../utils';
-import '../shared/BasePopup/styles.scss';
 import NewConnectionForm from './NewDBConnectionForm';
 import { getVisible } from '../../store/connectionForm/selectors';
 import { newConnectionAction, onCloseAction } from '../../store/connectionForm/actions';
