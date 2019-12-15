@@ -35,7 +35,7 @@ const LoginForm = ({
           <Input text="Username" type="text" withImage onChange={changeUsername} value={username}>
             <img src="/images/user.png" alt="user icon" />
           </Input>
-          <Input text="Password" type="password" withImage classes="withImage" onChange={changePassword} value={password}>
+          <Input text="Password" type="password" withImage onChange={changePassword} value={password}>
             <img src="/images/padlock.png" alt="password icon" />
           </Input>
         </div>
