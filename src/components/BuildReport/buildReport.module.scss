@@ -1,8 +1,10 @@
 .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.stepsButton {
-  position: absolute;
-  right: 5%;
-  top: 90%;
+.arrow {
+  width: 30px;
+  height: 30px;
 }
