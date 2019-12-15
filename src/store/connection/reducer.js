@@ -122,6 +122,10 @@ export default function connectionsReducer(state = initialState, action) {
     case DELETE_CONNECTION_SUCCESS:
       return {
         ...state,
+        totalConnections: {
+          count: state.totalConnections.count - 1,
+          isLoading: false
+        },
         connections: state.connections.filter(
           (connection) => connection.id !== state.connectionForDeleting,
         ),

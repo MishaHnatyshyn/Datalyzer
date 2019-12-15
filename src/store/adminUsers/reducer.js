@@ -151,6 +151,10 @@ export default function adminUsersReducer(state = initialState, action) {
     case DELETE_USER_SUCCESS:
       return {
         ...state,
+        totalUsers: {
+          count: state.totalUsers.count - 1,
+          isLoading: false
+        },
         users: state.users.filter(
           (user) => user.id !== state.userForDeleting,
         ),
