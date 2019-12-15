@@ -23,6 +23,10 @@ import {
   changeUserDescriptionValue,
 } from '../../../../store/createUser/actions';
 import Select from '../../../shared/Select';
+import {
+  PASS_EQUAL_ERROR_MESSAGE,
+  PASS_LENGTH_ERROR_MESSAGE
+} from '../../../../store/createUser/constants';
 
 const NewUserForm = ({
   formUsername,
@@ -39,10 +43,10 @@ const NewUserForm = ({
   isError,
 }) => {
   const alertClassesPassLen = useMemo(() => [
-    errorMessage === 'Password must be 6 or mor characters' ? styles.visible : styles.hidden,
+    errorMessage === PASS_LENGTH_ERROR_MESSAGE ? styles.visible : styles.hidden,
   ], [isError]);
   const alertClassesPassRepeat = useMemo(() => [
-    errorMessage === 'Passwords are not the same' ? styles.visible : styles.hidden,
+    errorMessage === PASS_EQUAL_ERROR_MESSAGE ? styles.visible : styles.hidden,
   ], [isError]);
   const alertClasses = useMemo(() => [
     isError ? styles.visible : styles.hidden,

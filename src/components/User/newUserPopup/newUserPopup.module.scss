@@ -35,11 +35,15 @@
   height: 2em;
 }
 
-.select > div{
-  margin: 5px 0;
-  height: 35px;
-  font: $text-regular;
+.select {
+  margin-top: 10px;
+  & > div{
+    height: 35px;
+    font: $text-regular;
+  }
 }
+
+
 
 .maxWidth {
   width: 90%;
