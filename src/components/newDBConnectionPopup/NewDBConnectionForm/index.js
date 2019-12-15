@@ -28,6 +28,8 @@ import {
 } from '../../../store/connectionForm/actions';
 import Select from '../../shared/Select';
 
+const options = [{ name: 'PostgreSQL', value: '1' }];
+
 const NewConnectionForm = ({
   host,
   port,
@@ -68,7 +70,7 @@ const NewConnectionForm = ({
           <label className={styles.label} htmlFor="passwordField">PASSWORD</label>
           <Input id="passwordField" type="password" name="password" onChange={changePassword} value={password} />
           <label className={styles.label} htmlFor="typeField">TYPE</label>
-          <Select options={[{ name: 'PostgreSQL', value: '1' }]} classes={styles.select} value={type} onChange={changeType} />
+          <Select options={options} classes={styles.select} value={type} onChange={changeType} />
         </div>
         <AlertMessage message={errorMessage} classes={alertClasses}>
           <img src="/images/report.png" alt="error message" />
@@ -110,6 +112,7 @@ const mapStateToProps = (state) => ({
   type: getType(state),
   isError: isError(state),
   errorMessage: getErrorMessage(state),
+  options,
 });
 const mapDispatchToProps = (dispatch) => ({
   changeHost: (value) => { dispatch(changeHostValue(value)); },

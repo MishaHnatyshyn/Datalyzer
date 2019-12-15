@@ -28,6 +28,8 @@ import {
   PASS_LENGTH_ERROR_MESSAGE
 } from '../../../../store/createUser/constants';
 
+const options = [{ name: 'admin', value: '1' }, { name: 'user', value: '2' }];
+
 const NewUserForm = ({
   formUsername,
   formPassword,
@@ -73,7 +75,7 @@ const NewUserForm = ({
         </label>
         <Input id="formPasswordRepeat" type="password" name="formPasswordRepeat" onChange={changePasswordRepeat} value={formPasswordRepeat} />
         <label className={styles.label} htmlFor="formUserType">USER TYPE</label>
-        <Select options={[{ name: 'admin', value: '1' }, { name: 'user', value: '2' }]} classes={styles.select} value={formUserType} onChange={changeUserType} />
+        <Select options={options} classes={styles.select} value={formUserType} onChange={changeUserType} />
         <label className={styles.label} htmlFor="formDescription">DESCRIPTION</label>
         <Textarea id="formDescription" name="formDescription" onChange={changeUserDescription} value={formDescription} />
         </div>
@@ -113,6 +115,7 @@ const mapStateToProps = (state) => ({
   formDescription: getUserDescription(state),
   isError: isError(state),
   errorMessage: getErrorMessage(state),
+  options,
 });
 const mapDispatchToProps = (dispatch) => ({
   changePassword: (value) => { dispatch(changePasswordValue(value)); },
