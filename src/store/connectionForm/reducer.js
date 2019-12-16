@@ -9,7 +9,8 @@ import {
   EMPTY_FIELDS_ERROR,
   APPEND_CONNECTIONS,
   CREATE_FAILURE,
-  CREATE_SUCCESS
+  CREATE_SUCCESS,
+  ONCLOSE_ACTION,
 } from './types';
 import { EMPTY_FIELDS_ERROR_MESSAGE } from '../login/constants';
 
@@ -61,6 +62,19 @@ export default function connectionFormsReducer(state = initialState, action) {
         errorMessage: 'Creation failed'
       };
     case CREATE_SUCCESS:
+      return {
+        ...state,
+        host: '',
+        port: '',
+        username: '',
+        password: '',
+        type: '',
+        nameConnection: '',
+        nameDB: '',
+        error: false,
+        isLoading: false,
+      };
+    case ONCLOSE_ACTION:
       return {
         ...state,
         host: '',

@@ -10,7 +10,7 @@ import {
   FORM_PASSWORD_REPEAT_INPUT_VALUE,
   PASSWORD_LENGTH_ERROR,
   PASSWORD_EQUAL_ERROR,
-  EMPTY_FIELDS_ERROR,
+  EMPTY_FIELDS_ERROR, ONCLOSE_ACTION,
 } from './types';
 import { EMPTY_FIELDS_ERROR_MESSAGE } from '../login/constants';
 import { PASS_LENGTH_ERROR_MESSAGE, PASS_EQUAL_ERROR_MESSAGE } from './constants';
@@ -62,15 +62,15 @@ export default function createUserReducer(state = initialState, action) {
         isError: false,
       };
     case FORM_USERNAME_INPUT_VALUE:
-      return { ...state, formUsername: action.payload, error: false };
+      return { ...state, formUsername: action.payload, errorMessage: '', error: false };
     case FORM_PASSWORD_INPUT_VALUE:
-      return { ...state, formPassword: action.payload, error: false };
+      return { ...state, formPassword: action.payload, errorMessage: '', error: false };
     case FORM_PASSWORD_REPEAT_INPUT_VALUE:
-      return { ...state, formPasswordRepeat: action.payload, error: false };
+      return { ...state, formPasswordRepeat: action.payload, errorMessage: '', error: false };
     case FORM_DESCRIPTION_INPUT_VALUE:
-      return { ...state, formDescription: action.payload, error: false };
+      return { ...state, formDescription: action.payload, errorMessage: '', error: false };
     case FORM_USER_TYPE_INPUT_VALUE:
-      return { ...state, formUserType: action.payload, error: false };
+      return { ...state, formUserType: action.payload, errorMessage: '', error: false };
     case PASSWORD_EQUAL_ERROR:
       return {
         ...state,
@@ -88,6 +88,17 @@ export default function createUserReducer(state = initialState, action) {
         ...state,
         error: true,
         errorMessage: EMPTY_FIELDS_ERROR_MESSAGE,
+      };
+    case ONCLOSE_ACTION:
+      return {
+        ...state,
+        isCreatingInProgress: false,
+        formUsername: '',
+        formPassword: '',
+        formPasswordRepeat: '',
+        formUserType: '',
+        formDescription: '',
+        isError: false,
       };
     default:
       return state;
