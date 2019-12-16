@@ -14,6 +14,7 @@ import {
   NAME_CONNECTION_VALUE,
   EMPTY_FIELDS_ERROR,
   APPEND_CONNECTIONS,
+  ONCLOSE_ACTION,
 } from './types';
 import { post } from '../../utils/http';
 import {
@@ -35,9 +36,11 @@ export const changeNameConnectionValue = createAction(NAME_CONNECTION_VALUE, (co
 export const changeUsernameValue = createAction(USERNAME_VALUE, (connection) => connection);
 export const changePasswordValue = createAction(PASSWORD_VALUE, (connection) => connection);
 export const changeTypeValue = createAction(TYPE_VALUE, (connection) => connection.target.value);
+export const onClose = createAction(ONCLOSE_ACTION);
 
 export const onCloseAction = () => async (dispatch) => {
   dispatch(push('/admin/databases'));
+  dispatch(onClose());
 }
 export const newConnectionAction = () => async (dispatch, getState) => {
   const {

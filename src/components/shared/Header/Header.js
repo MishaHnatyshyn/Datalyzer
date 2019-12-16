@@ -1,12 +1,20 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import styles from './header.module.scss';
 import DropdownMenu from '../DropdownMenu';
 import { getUsername } from '../../../store/user/selectors';
 import { logout } from '../../../store/login/actions';
+import ChangePassPopup from '../../ChangePassPopup';
+import { showPopup } from '../../../store/user/actions';
 
-const Header = ({ name, image, logout }) => {
+const Header = ({
+  name,
+  image,
+  logout,
+  changePassPopupShow,
+}) => {
   const [displayDropdown, changeDropdownState] = useState(false);
   const toggleDropdown = useCallback(() => {
     changeDropdownState(!displayDropdown);
@@ -26,8 +34,9 @@ const Header = ({ name, image, logout }) => {
       </div>
       {displayDropdown && (
         <DropdownMenu classes={styles.dropdownUser} hideDropdown={toggleDropdown}>
-          <div className={styles.textBlock}>
+          <div className={styles.textBlock} onClick={changePassPopupShow}>
             <p className={styles.dropdownText}>Change password</p>
+            <Route path="/admin/changepass" component={ChangePassPopup} />
             <div className={styles.line} />
           </div>
           <div className={styles.textBlock} onClick={logout}>
@@ -44,6 +53,7 @@ Header.propTypes = {
   name: PropTypes.string.isRequired,
   image: PropTypes.node.isRequired,
   logout: PropTypes.func.isRequired,
+  changePassPopupShow: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -54,6 +64,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   logout: () => {
     dispatch(logout());
+  },
+  changePassPopupShow: () => {
+    dispatch(showPopup());
   },
 });
 
