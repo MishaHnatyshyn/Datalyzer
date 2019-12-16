@@ -36,7 +36,6 @@ const Header = ({
         <DropdownMenu classes={styles.dropdownUser} hideDropdown={toggleDropdown}>
           <div className={styles.textBlock} onClick={changePassPopupShow}>
             <p className={styles.dropdownText}>Change password</p>
-            <Route path="/admin/changepass" component={ChangePassPopup} />
             <div className={styles.line} />
           </div>
           <div className={styles.textBlock} onClick={logout}>

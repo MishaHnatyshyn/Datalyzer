@@ -21,6 +21,7 @@ import {
   PASS_EQUAL_ERROR_MESSAGE,
   PASS_LENGTH_ERROR_MESSAGE
 } from '../../../store/createUser/constants';
+import { createStructuredSelector } from 'reselect';
 
 const NewUserForm = ({
   oldPassword,
@@ -85,12 +86,12 @@ NewUserForm.propTypes = {
   changeOldPassword: PropTypes.func.isRequired,
   changePasswordRepeat: PropTypes.func.isRequired,
 };
-const mapStateToProps = (state) => ({
-  oldPassword: getOldPassword(state),
-  password: getPassword(state),
-  passwordRepeat: getPasswordRepeat(state),
-  isError: isError(state),
-  errorMessage: getErrorMessage(state),
+const mapStateToProps = createStructuredSelector({
+  oldPassword: getOldPassword,
+  password: getPassword,
+  passwordRepeat: getPasswordRepeat,
+  isError,
+  errorMessage: getErrorMessage,
 });
 const mapDispatchToProps = (dispatch) => ({
   changePassword: (value) => { dispatch(changePasswordValue(value)); },

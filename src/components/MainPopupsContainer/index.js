@@ -59,7 +59,7 @@ const MainPopupsContainer = ({ closePopup, text, currentPopup }) => {
     case PopupTypes.CHANGE_PASSWORD_SUCCESS:
       return <InformationPopup onClose={closePopup} text={CHANGE_PASSWORD_SUCCESS_MESSAGE} isVisible />;
     case PopupTypes.CHANGE_PASSWORD_FAILURE:
-      return <InformationPopup onClose={closePopup} text={CHANGE_PASSWORD_FAILURE_MESSAGE} isVisible />;
+      return <ErrorPopup onClose={closePopup} text={CHANGE_PASSWORD_FAILURE_MESSAGE} isVisible />;
     default:
       return null;
   }
