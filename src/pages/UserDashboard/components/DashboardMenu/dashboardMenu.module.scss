@@ -15,10 +15,19 @@
   font-weight: bold;
 }
 
+.link {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
 .item {
+  margin-bottom: 15px;
+  width: 250px;
+
   font-size: 14px;
   font-weight: bold;
-  margin-bottom: 15px;
+  color: $black;
 
   text-overflow: ellipsis;
   overflow: hidden;
@@ -36,4 +45,12 @@
   background-color: $gray;
 
   opacity: .5;
+}
+
+.arrow {
+  margin-left: auto;
+  width: 15px;
+  height: 15px;
+
+  margin-bottom: 15px;
 }

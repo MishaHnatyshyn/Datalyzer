@@ -23,8 +23,11 @@ const DashboardMenu = ({ dashboardName, dashboards }) => {
       <div>
         {
           dashboards.map(({ name, id }) => (
-            <Link to={id} key={id}>
-              {name}
+            <Link to={id} key={id} className={styles.link}>
+              <span className={styles.item}>
+                {name}
+              </span>
+              <img src="/public/images/dashboard/arrow-right.svg" alt="" className={styles.arrow} />
             </Link>
           ))
         }
@@ -39,7 +42,7 @@ DashboardMenu.propTypes = {
 };
 
 DashboardMenu.defaultProps = {
-  dashboards: [],
+  dashboards: [{name: 'kek', id: 1}],
   dashboardName: 'Dashboard name'
 };
 
