@@ -6,15 +6,29 @@ import { createSelector } from 'reselect';
 const root = (state) => state.createReport;
 
 export const getSelectedModel = compose(prop('selectedModel'), root);
+export const getSelectedDashboard = compose(prop('selectedDashboard'), root);
+export const getCurrentStep = compose(prop('step'), root);
 export const getSelectedFact = compose(prop('selectedFact'), root);
 export const getSelectedDimension = compose(prop('selectedDimension'), root);
 export const getReportModels = compose(prop('models'), root);
+export const getModelsCount = compose(prop('length'), getReportModels);
+export const getModelsCountData = compose(
+  (count) => ({ count, isLoading: false }),
+  getModelsCount
+);
+
+// export const getSelectedModelById
+
+export const isChartSelected = createSelector([
+  getSelectedFact, getSelectedDimension
+], (fact, dimension) => fact && dimension);
+
 export const getNewDashboardName = compose(prop('newDashboardName'), root);
 
 export const getSelectedModelFields = compose(
   flatten,
   map((item) => item.fields.map((field) => ({
-    ...field, name: `${item.name}: ${field.name}`, modelItemId: item.id, relations: item.relations
+    ...field, name: `${item.name}: ${field.name}`, modelItemId: item.id, relations: item.relations, originalName: field.name
   }))),
   prop('items'),
   getSelectedModel
@@ -74,3 +88,7 @@ export const getDimensionsForDisplay = createSelector([
     active: isSelected
   };
 }));
+
+export const getChartData = compose(prop('reportData'), root);
+export const getChartType = compose(prop('selectedChartType'), root);
+export const isChartDataLoading = compose(prop('reportDataLoading'), root);

@@ -32,11 +32,17 @@ export default function userReducer(state = initialState, action) {
         ...action.payload
       };
     case PASSWORD_VALUE:
-      return { ...state, password: action.payload, errorMessage: '', error: false };
+      return {
+        ...state, password: action.payload, errorMessage: '', error: false
+      };
     case PASSWORD_REPEAT_VALUE:
-      return { ...state, passwordRepeat: action.payload, errorMessage: '', error: false };
+      return {
+        ...state, passwordRepeat: action.payload, errorMessage: '', error: false
+      };
     case OLD_PASSWORD_VALUE:
-      return { ...state, oldPassword: action.payload, errorMessage: '', error: false };
+      return {
+        ...state, oldPassword: action.payload, errorMessage: '', error: false
+      };
     case PASSWORD_EQUAL_ERROR:
       return {
         ...state,

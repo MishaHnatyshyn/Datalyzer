@@ -22,6 +22,10 @@
     "react/jsx-props-no-spreading": "off",
     "camelcase": "off",
     "no-case-declarations": "off",
-    "max-len": "error"
+    "jsx-a11y/label-has-associated-control": "off",
+    "import/prefer-default-export": "off",
+    "max-len": "error",
+    "no-plusplus": "off",
+    "no-nested-ternary": "off"
   }
 }

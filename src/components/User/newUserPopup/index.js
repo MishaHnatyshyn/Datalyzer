@@ -25,7 +25,7 @@ const NewUserPopup = ({
       isVisible={isVisible}
       popupClassName={styles.newUserPopup}
       okButtonType="submit"
-      okButton={true}
+      okButton
       body={<NewUserForm />}
     />
   );
@@ -33,7 +33,7 @@ const NewUserPopup = ({
 
 NewUserPopup.defaultProps = {
   onClose: () => {}
-}
+};
 
 NewUserPopup.propTypes = {
   onClose: PropTypes.func,

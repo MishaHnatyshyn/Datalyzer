@@ -7,8 +7,13 @@ import DashboardCard from '../shared/DashboardCard';
 import { getDashboards } from '../../store/dashboard/selectors';
 import { fetchDashboards } from '../../store/dashboard/actions';
 import NewDashboardCard from '../shared/DashboardCard/NewDashboardCard';
+import styles from './reportDashboardPage.module.scss';
+import { selectDashboard } from '../../store/createReport/actions';
+import { getSelectedDashboard } from '../../store/createReport/selectors';
 
-const ReportDashboardPage = ({ dashboards, fetchDashboards }) => {
+const ReportDashboardPage = ({
+  dashboards, fetchDashboards, selectDashboard, selectedDashboard
+}) => {
   useEffect(() => {
     fetchDashboards();
   }, []);
@@ -16,10 +21,14 @@ const ReportDashboardPage = ({ dashboards, fetchDashboards }) => {
   return (
     <ConnectionCardGrid>
       {dashboards
-        && dashboards.map(
-          (dashboard) => <DashboardCard onClick={() => {}} name={dashboard.name} />
-        )}
-      <NewDashboardCard onClick={() => {}} />
+        && dashboards.map((dashboard) => (
+          <DashboardCard
+            onClick={() => selectDashboard(dashboard.id)}
+            name={dashboard.name}
+            selected={selectedDashboard === dashboard.id ? styles.selected : ''}
+          />
+        ))}
+      <NewDashboardCard onClick={() => selectDashboard(null)} />
     </ConnectionCardGrid>
   );
 };
@@ -35,15 +44,21 @@ ReportDashboardPage.propTypes = {
     }),
   ).isRequired,
   fetchDashboards: PropTypes.func.isRequired,
+  selectDashboard: PropTypes.func.isRequired,
+  selectedDashboard: PropTypes.number.isRequired
 };
 
 const mapStateToProps = createStructuredSelector({
   dashboards: getDashboards,
+  selectedDashboard: getSelectedDashboard
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchDashboards: () => {
     dispatch(fetchDashboards());
+  },
+  selectDashboard: (id) => {
+    dispatch(selectDashboard(id));
   },
 });
 

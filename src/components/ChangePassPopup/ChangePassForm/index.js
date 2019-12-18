@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { createStructuredSelector } from 'reselect';
 import styles from '../../User/newUserPopup/newUserPopup.module.scss';
 import Input from '../../shared/Input';
 import AlertMessage from '../../shared/AlertMessage';
@@ -21,7 +22,6 @@ import {
   PASS_EQUAL_ERROR_MESSAGE,
   PASS_LENGTH_ERROR_MESSAGE
 } from '../../../store/createUser/constants';
-import { createStructuredSelector } from 'reselect';
 
 const NewUserForm = ({
   oldPassword,

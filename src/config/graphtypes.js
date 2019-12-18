@@ -5,4 +5,4 @@ export default {
   4: 'Pie',
   5: 'Doughnut',
   6: 'Radar',
-}
+};

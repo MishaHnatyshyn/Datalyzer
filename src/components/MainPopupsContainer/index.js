@@ -22,7 +22,12 @@ import DeleteUserSuccessPopup from '../DeleteUserPopup/DeleteUserSuccessPopup';
 import DeleteUserErrorPopup from '../DeleteUserPopup/DeleteUserErrorPopup';
 import DeleteUserPopup from '../DeleteUserPopup/DeleteUserPopup';
 import ChangePassPopup from '../ChangePassPopup';
-import { CHANGE_PASSWORD_SUCCESS_MESSAGE, CHANGE_PASSWORD_FAILURE_MESSAGE } from '../../store/user/constants';
+import {
+  CHANGE_PASSWORD_SUCCESS_MESSAGE,
+  CHANGE_PASSWORD_FAILURE_MESSAGE,
+} from '../../store/user/constants';
+import DeleteDashboardConfirmPopup from '../DeleteDashboardPopup/ConfirmPopup';
+import DeleteDashboardSuccessPopup from '../DeleteDashboardPopup/DeleteDashboardSuccess';
 
 const MainPopupsContainer = ({ closePopup, text, currentPopup }) => {
   switch (currentPopup) {
@@ -57,9 +62,15 @@ const MainPopupsContainer = ({ closePopup, text, currentPopup }) => {
     case PopupTypes.CHANGE_PASSWORD:
       return <ChangePassPopup />;
     case PopupTypes.CHANGE_PASSWORD_SUCCESS:
-      return <InformationPopup onClose={closePopup} text={CHANGE_PASSWORD_SUCCESS_MESSAGE} isVisible />;
+      return (
+        <InformationPopup onClose={closePopup} text={CHANGE_PASSWORD_SUCCESS_MESSAGE} isVisible />
+      );
     case PopupTypes.CHANGE_PASSWORD_FAILURE:
       return <ErrorPopup onClose={closePopup} text={CHANGE_PASSWORD_FAILURE_MESSAGE} isVisible />;
+    case PopupTypes.DELETE_DASHBOARD:
+      return <DeleteDashboardConfirmPopup />;
+    case PopupTypes.DELETE_SUCCESS:
+      return <DeleteDashboardSuccessPopup />;
     default:
       return null;
   }
