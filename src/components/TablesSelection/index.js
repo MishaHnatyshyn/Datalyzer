@@ -20,14 +20,14 @@ const DragAndDropPhrase = `Drag and drop tables
         you want to include in the model`;
 
 const TablesSelection = ({
-  tables,
-  setSelectedTable,
-  selectedTable,
-  modelItems,
-  editModelItem,
-  removeTableFromModel,
-  fetchConnectionTablesData,
-}) => {
+                           tables,
+                           setSelectedTable,
+                           selectedTable,
+                           modelItems,
+                           editModelItem,
+                           removeTableFromModel,
+                           fetchConnectionTablesData,
+                         }) => {
   function onDragOver(e) {
     e.preventDefault();
   }
@@ -58,7 +58,11 @@ const TablesSelection = ({
         <div className={styles.body}>
           <Scrollbars>
             {tables.map((table) => (
-              <DraggableTableCard table_name={table.tableName} key={table.tableName} />
+              <DraggableTableCard
+                displayName={table.tableName}
+                data={[{ dataKey: 'table_name', value: table.tableName }]}
+                key={table.tableName}
+              />
             ))}
           </Scrollbars>
         </div>
@@ -82,8 +86,8 @@ const TablesSelection = ({
           <Scrollbars>
             {modelItems.map((table) => (
               <DraggableTableCard
-                table_name={table.name}
-                key={table.name}
+                displayName={table.name}
+                data={[{ dataKey: 'table_name', value: table.tableName }]}
                 onDelete={removeItem(table.name)}
               />
             ))}

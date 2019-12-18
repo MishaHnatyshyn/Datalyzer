@@ -1,0 +1,36 @@
+@import '../../../assets/variables';
+
+.button {
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 31px;
+  border-radius: 16px;
+  font: $text-button-bold-small;
+  background: none;
+}
+
+.prevButton {
+  background-color: $light-gray;
+  margin-right: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.prevButton:hover {
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.1);
+}
+
+.prevButton:hover .prevIcon {
+  transition: filter .1s;
+  filter: invert(50%);
+}
+
+.button:disabled {
+  background-color: $gray;
+  cursor: default;
+}
+
+.button:disabled:hover {
+  box-shadow: none;
+}
+

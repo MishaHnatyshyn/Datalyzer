@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import styles from './draggable.module.scss';
 
 const Draggable = ({
-  children, value, dataKey, draggable
+  children, draggable, data
 }) => {
   function drag(e) {
-    e.dataTransfer.setData(dataKey, value);
+    data.forEach(({ dataKey, value }) => {
+      e.dataTransfer.setData(dataKey, value);
+    });
   }
 
   function noAllowDrop(e) {
@@ -26,13 +28,16 @@ const Draggable = ({
 };
 
 Draggable.defaultProps = {
-  draggable: true
+  draggable: true,
+  data: []
 };
 
 Draggable.propTypes = {
   children: PropTypes.node.isRequired,
-  value: PropTypes.string.isRequired,
-  dataKey: PropTypes.string.isRequired,
+  data: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string.isRequired,
+    dataKey: PropTypes.string.isRequired,
+  })),
   draggable: PropTypes.bool
 };
 

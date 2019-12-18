@@ -4,7 +4,6 @@ import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import styles from './stepMenuButtons.module.scss';
-import Button from '../Button';
 import { createModel, nextStep, prevStep } from '../../../store/createModel/actions';
 import {
   getModelItemsCount,
@@ -12,6 +11,8 @@ import {
   getSelectedConnection,
   getStep,
 } from '../../../store/createModel/selectors';
+import NextButton from '../NextButton';
+import PrevButton from '../PrevButton';
 
 const StepMenuButtons = ({
   classes,
@@ -31,35 +32,16 @@ const StepMenuButtons = ({
   const disabledCreateModelButton = useMemo(() => modelName.length === 0, [modelName]);
   return (
     <div className={classnames(styles.buttonsContainer, classes)}>
-      {activeStep > 1 && (
-        <Button classes={[styles.button, styles.prevButton]} type="button" onclick={setPrevStep}>
-          <img className={styles.prevIcon} src="/images/left-arrow-gray.png" alt="arrow next" />
-        </Button>
-      )}
+      {activeStep > 1 && <PrevButton setPrevStep={setPrevStep} />}
       {activeStep < 3 && (
-        <Button
-          classes={[styles.button, styles.nextButton]}
-          type="button"
-          onclick={setNextStep}
-          disabled={disableNextButton}
-        >
-          <div className={styles.nextContainer}>
-            <p>Next</p>
-            <img src="/images/right-arrow.png" alt="arrow next" className={styles.nextIcon} />
-          </div>
-        </Button>
+        <NextButton text="Next" disableNextButton={disableNextButton} setNextStep={setNextStep} />
       )}
       {activeStep === 3 && (
-        <Button
-          classes={[styles.button, styles.nextButton]}
-          type="button"
-          onclick={handleCreateModelButton}
-          disabled={disabledCreateModelButton}
-        >
-          <div className={styles.nextContainer}>
-            <p>Create model</p>
-          </div>
-        </Button>
+        <NextButton
+          disableNextButton={disabledCreateModelButton}
+          setNextStep={handleCreateModelButton}
+          text="Create model"
+        />
       )}
     </div>
   );

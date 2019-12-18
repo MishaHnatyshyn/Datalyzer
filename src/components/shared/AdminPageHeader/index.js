@@ -6,7 +6,7 @@ import Search from '../Search';
 import Loader from '../Loader';
 
 const AdminPageHeader = ({
-  pageName, buttonText, countData, placeholder, search, searchValue, submitForm, link,
+  pageName, buttonText, countData, placeholder, search, searchValue, submitForm, link, button
 }) => (
   <div className={styles.container}>
     <div className={styles.leftBlock}>
@@ -23,15 +23,25 @@ const AdminPageHeader = ({
         submitForm={submitForm}
       />
     </div>
-    <CreateButton onclick={() => {}} type="button" link={link}>
-      {buttonText}
-    </CreateButton>
+    {
+      button && (
+      <CreateButton onclick={() => {}} type="button" link={link}>
+        {buttonText}
+      </CreateButton>
+      )
+    }
   </div>
 );
 
+AdminPageHeader.defaultProps = {
+  button: true,
+  link: '',
+  buttonText: '',
+};
+
 AdminPageHeader.propTypes = {
   pageName: PropTypes.string.isRequired,
-  buttonText: PropTypes.string.isRequired,
+  button: PropTypes.bool,
   countData: PropTypes.shape({
     isLoading: PropTypes.bool.isRequired,
     count: PropTypes.number.isRequired,
@@ -40,7 +50,8 @@ AdminPageHeader.propTypes = {
   search: PropTypes.func.isRequired,
   searchValue: PropTypes.string.isRequired,
   submitForm: PropTypes.func.isRequired,
-  link: PropTypes.string.isRequired
+  link: PropTypes.string,
+  buttonText: PropTypes.string
 };
 
 export default AdminPageHeader;

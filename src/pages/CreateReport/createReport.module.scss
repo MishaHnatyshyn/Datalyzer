@@ -8,12 +8,10 @@
 .container {
   padding-right: 30px;
   height: 75vh;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
-.arrow {
-  width: 30px;
-  height: 30px;
+.stepsButton {
+  position: absolute;
+  right: 5%;
+  top: 90%;
 }
