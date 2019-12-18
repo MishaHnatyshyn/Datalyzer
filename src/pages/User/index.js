@@ -26,7 +26,6 @@ const blocks = [
 const User = () => (
   <Layout menuItems={blocks}>
     <Switch>
-      <Route exact path="/user/home" component={() => <div>USER HOME</div>} />
       <Route exact path="/user/report" component={CreateReportUser} />
       <Route exact path="/user/dashboard/:id" component={UserDashboard} />
       <Route exact path="/user/home" component={DashboardsList} />
