@@ -1,18 +1,29 @@
-import { SET_VALUES } from './types';
+import { SET_USER_DASHBOARD, SET_USER_REPORTS, SET_VALUES } from './types';
 
 const initialState = {
-  values: {}
+  dashboard: {},
+  reports: [],
 };
 
-export default function userReducer(state = initialState, action) {
-  switch (action.type) {
+export default function userDashboard(state = initialState, { type, payload }) {
+  switch (type) {
     case SET_VALUES:
       return {
         ...state,
         values: {
           ...state.values,
-          [action.payload.id]: action.payload.data
+          [payload.id]: payload.data
         }
+      };
+    case SET_USER_DASHBOARD:
+      return {
+        ...state,
+        dashboard: payload
+      };
+    case SET_USER_REPORTS:
+      return {
+        ...state,
+        reports: payload
       };
     default:
       return state;

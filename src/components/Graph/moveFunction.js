@@ -23,6 +23,7 @@ class Movement {
       y;
 
     let redraw = false;
+    let timeout;
 
     this.addEventListeners = () => {
       pane.addEventListener('mousedown', onMouseDown);
@@ -45,10 +46,14 @@ class Movement {
     };
 
     function triggerOnUpdate() {
-      setTimeout(() => {
+      if (timeout) {
+        clearTimeout(timeout)
+      }
+
+      timeout = setTimeout(() => {
         const { style } = pane;
-        onUpdate(style.width, style.left, style.top)
-      }, 0);
+        onUpdate({width: style.width, left: style.left, top: style.top})
+      }, 100);
     }
 
     function setBounds(element, x, y, w, h) {

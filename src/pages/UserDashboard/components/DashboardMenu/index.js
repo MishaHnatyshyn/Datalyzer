@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
+import { connect } from 'react-redux'
 import styles from './dashboardMenu.module.scss';
+import { createStructuredSelector } from 'reselect';
+import { getDashboardName } from '../../../../store/userDashboard/selectors';
+import { getDashboards } from '../../../../store/dashboard/selectors';
+import { fetchDashboards } from '../../../../store/dashboard/actions';
 
-const DashboardMenu = ({ dashboardName, dashboards }) => {
+const DashboardMenu = ({ dashboardName, dashboards, fetchDashboards }) => {
+  useEffect(() => {
+    if (dashboards.length) {
+      return
+    }
+
+    fetchDashboards();
+  }, []);
   return (
     <div className={styles.menu}>
       <div className={styles.title}>
@@ -46,4 +57,17 @@ DashboardMenu.defaultProps = {
   dashboardName: 'Dashboard name'
 };
 
-export default DashboardMenu;
+const mapStateToProps = createStructuredSelector(
+  {
+    dashboardName: getDashboardName,
+    dashboards: getDashboards
+  }
+);
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchDashboards: () => {dispatch(fetchDashboards())}
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardMenu);
