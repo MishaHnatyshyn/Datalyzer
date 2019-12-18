@@ -1,9 +1,10 @@
-import React, { createRef, useEffect, useMemo } from 'react';
+import React, { createRef, useEffect } from 'react';
+
 import { Doughnut, Pie, Line, Bar, Radar, HorizontalBar } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import styles from './graph.module.scss';
 
-import applyMove from './moveFunction';
+import Movement from './moveFunction';
 
 const graphTypes = {
   Doughnut,
@@ -35,22 +36,42 @@ const data = {
   }]
 };
 
-const Graph = ({ type }) => {
+const Graph = ({ type, disableMoveAndScale, startLeftPosition, startTopPosition, startWidth }) => {
   const paneRef = createRef();
   const ghostpaneRef = createRef();
 
+  const onUpdate = (width, left, top) => {console.log(width, left, top)};
+
   useEffect(() => {
-    applyMove(paneRef.current, ghostpaneRef.current);
+    const pane = paneRef.current;
+
+    pane.style.width = startWidth;
+    pane.style.left = startLeftPosition;
+    pane.style.top = startTopPosition;
   }, []);
+
+  useEffect(() => {
+    const pane = paneRef.current;
+    const move = new Movement(pane, ghostpaneRef.current, onUpdate);
+    if (disableMoveAndScale) {
+      return move.removeEventListeners()
+    }
+
+    move.addEventListeners();
+  }, [disableMoveAndScale]);
 
   const GraphToBuild = graphTypes[type];
 
   return (
     <>
       <div className={styles.pane} ref={paneRef}>
-        <div className={styles.title}>
-          <img src="/public/images/dashboard/move.svg" className={styles.hint}/>
-        </div>
+        {
+          !disableMoveAndScale && (
+            <div className={styles.title}>
+              <img src="/public/images/dashboard/move.svg" className={styles.hint}/>
+            </div>
+          )
+        }
         <GraphToBuild data={data}/>
       </div>
       <div className={styles.ghostpane} ref={ghostpaneRef}>
@@ -60,7 +81,18 @@ const Graph = ({ type }) => {
 };
 
 Graph.propTypes = {
-  type: PropTypes.oneOf(['Doughnut', 'Pie', 'Line', 'Bar', 'Radar', 'HorizontalBar']).isRequired
+  type: PropTypes.oneOf(['Doughnut', 'Pie', 'Line', 'Bar', 'Radar', 'HorizontalBar']).isRequired,
+  disableMoveAndScale: PropTypes.bool,
+  startLeftPosition: PropTypes.number,
+  startTopPosition: PropTypes.number,
+  startWidth: PropTypes.number
+};
+
+Graph.defaultProps = {
+  disableMoveAndScale: false,
+  startLeftPosition: 0,
+  startTopPosition: 0,
+  startWidth: 300,
 };
 
 export default Graph;
