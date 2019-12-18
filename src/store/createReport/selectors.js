@@ -9,6 +9,7 @@ export const getSelectedModel = compose(prop('selectedModel'), root);
 export const getSelectedFact = compose(prop('selectedFact'), root);
 export const getSelectedDimension = compose(prop('selectedDimension'), root);
 export const getReportModels = compose(prop('models'), root);
+export const getNewDashboardName = compose(prop('newDashboardName'), root);
 
 export const getSelectedModelFields = compose(
   flatten,
@@ -47,9 +48,8 @@ export const getFactsForDisplay = createSelector([
   const isFromSameModel = selectedDimension && fact.modelItemId === selectedDimension.modelItemId;
   const areRelated = selectedDimension && fact.relations
     .filter((factRelation) => selectedDimension.relations.includes(factRelation)).length > 0;
-  const isSelected = selectedFact === fact.id
+  const isSelected = selectedFact === fact.id;
   const areConnected = isFromSameModel || areRelated;
-  const nothingSelected = !selectedDimension && !selectedFact
 
   return {
     ...fact,
@@ -68,7 +68,6 @@ export const getDimensionsForDisplay = createSelector([
     .filter((dimensionRelation) => selectedFact.relations.includes(dimensionRelation)).length > 0;
   const isSelected = selectedDimension === dimension.id;
   const areConnected = isFromSameModel || areRelated;
-  const nothingSelected = !selectedDimension && !selectedFact
   return {
     ...dimension,
     enabled: !selectedDimension && ((selectedFact && areConnected) || !selectedFact),

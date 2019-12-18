@@ -1,4 +1,5 @@
 import {
+  CHANGE_NEW_DASHBOARD_NAME,
   CLEAR_STATE,
   DELETE_DIMENSION,
   DELETE_FACT,
@@ -19,6 +20,7 @@ const initialState = {
   selectedDimension: null,
   selectedFact: null,
   selectedChartType: 1,
+  newDashboardName: ''
 };
 
 export default function createReportReducer(state = initialState, action) {
@@ -45,6 +47,8 @@ export default function createReportReducer(state = initialState, action) {
       return { ...state, selectedDimension: null };
     case DELETE_FACT:
       return { ...state, selectedFact: null };
+    case CHANGE_NEW_DASHBOARD_NAME:
+      return { ...state, newDashboardName: action.payload };
     default:
       return state;
   }

@@ -1,13 +1,14 @@
 import React from 'react';
 import styles from './createReport.module.scss';
 import BuildReport from '../../components/BuildReport';
-import ReportSection from '../../components/ReportSection';
+import NewReportButtonsContainer from '../../components/NewReportButtonsContainer';
+import ReportDashboardPage from '../../components/ReportDashboardPage';
 
 const CreateReport = () => (
   <div className={styles.container}>
-    <BuildReport />
-    <img src="/images/import.png" alt="next" className={styles.arrow} />
-    <ReportSection />
+    {/* <BuildReport /> */}
+    <ReportDashboardPage />
+    <NewReportButtonsContainer classes={styles.stepsButton} />
   </div>
 );
 

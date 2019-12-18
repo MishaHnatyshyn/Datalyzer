@@ -1,5 +1,6 @@
 import { createAction } from 'redux-actions';
 import {
+  CHANGE_NEW_DASHBOARD_NAME,
   CLEAR_STATE,
   DELETE_DIMENSION,
   DELETE_FACT,
@@ -24,6 +25,7 @@ export const deleteFact = createAction(DELETE_FACT);
 export const selectDimension = createAction(SELECT_DIMENSION, (dimension) => dimension);
 export const deleteDimension = createAction(DELETE_DIMENSION);
 export const selectChartType = createAction(SELECT_CHART_TYPE, (type) => type);
+export const changeNewDashboardName = createAction(CHANGE_NEW_DASHBOARD_NAME, (value) => value);
 export const clearState = createAction(CLEAR_STATE);
 
 export const fetchModelsForReport = () => async (dispatch, getState) => {
