@@ -46,3 +46,4 @@ export const get = sendWithUserAuthToken('get');
 export const post = sendWithUserAuthToken('post');
 export const patch = sendWithUserAuthToken('patch');
 export const del = sendWithUserAuthToken('delete');
+export const put = sendWithUserAuthToken('put');

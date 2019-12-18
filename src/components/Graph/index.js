@@ -1,4 +1,5 @@
 import React, { createRef, useEffect } from 'react';
+
 import { Doughnut, Pie, Line, Bar, Radar, HorizontalBar } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import styles from './graph.module.scss';

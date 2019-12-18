@@ -21,6 +21,8 @@ import DeleteModelErrorPopup from '../DeleteModelPopups/DeleteModelErrorPopup';
 import DeleteUserSuccessPopup from '../DeleteUserPopup/DeleteUserSuccessPopup';
 import DeleteUserErrorPopup from '../DeleteUserPopup/DeleteUserErrorPopup';
 import DeleteUserPopup from '../DeleteUserPopup/DeleteUserPopup';
+import ChangePassPopup from '../ChangePassPopup';
+import { CHANGE_PASSWORD_SUCCESS_MESSAGE, CHANGE_PASSWORD_FAILURE_MESSAGE } from '../../store/user/constants';
 
 const MainPopupsContainer = ({ closePopup, text, currentPopup }) => {
   switch (currentPopup) {
@@ -52,6 +54,12 @@ const MainPopupsContainer = ({ closePopup, text, currentPopup }) => {
       return <DeleteUserErrorPopup />;
     case PopupTypes.DELETE_USER:
       return <DeleteUserPopup />;
+    case PopupTypes.CHANGE_PASSWORD:
+      return <ChangePassPopup />;
+    case PopupTypes.CHANGE_PASSWORD_SUCCESS:
+      return <InformationPopup onClose={closePopup} text={CHANGE_PASSWORD_SUCCESS_MESSAGE} isVisible />;
+    case PopupTypes.CHANGE_PASSWORD_FAILURE:
+      return <ErrorPopup onClose={closePopup} text={CHANGE_PASSWORD_FAILURE_MESSAGE} isVisible />;
     default:
       return null;
   }
