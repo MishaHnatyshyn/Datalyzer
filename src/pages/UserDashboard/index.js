@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, createRef } from 'react';
 import DashboardMenu from './components/DashboardMenu';
 import styles from './dashboard.module.scss';
 import { useParams } from 'react-router-dom'
@@ -9,7 +9,7 @@ import Graph from '../../components/Graph';
 import { getDashboard, getReports } from '../../store/userDashboard/selectors';
 import { getUserDashboard } from '../../store/userDashboard/actions';
 
-const Graphs = ({ reports }) => {
+const Graphs = ({ reports, viewPortRef }) => {
   return (
     <>
       {
@@ -25,6 +25,7 @@ const Graphs = ({ reports }) => {
               startLeftPosition={report.position_x}
               startTopPosition={report.position_y}
               startWidth={report.width}
+              viewPortRef={viewPortRef}
             />
           )
         })
@@ -39,6 +40,7 @@ Graphs.defaultProps = {
 
 const UsersDashboard = ({ getDashboard, reports }) => {
   const { id } = useParams();
+  const viewPortRef = createRef();
 
   useEffect(() => {
     getDashboard(id);
@@ -46,8 +48,8 @@ const UsersDashboard = ({ getDashboard, reports }) => {
 
   return (
     <div className={styles.layout}>
-    <div className={styles.dashboardLayout}>
-      <Graphs reports={reports} />
+    <div className={styles.dashboardLayout} ref={viewPortRef}>
+      <Graphs reports={reports} viewPortRef={viewPortRef} />
     </div>
 
       <DashboardMenu />

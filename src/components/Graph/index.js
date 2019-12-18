@@ -1,5 +1,5 @@
-import React, { createRef, useEffect, useCallback } from 'react';
-
+import React, { createRef, useEffect, useCallback, useState } from 'react';
+import classNames from 'classnames';
 import { Doughnut, Pie, Line, Bar, Radar, HorizontalBar } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import styles from './graph.module.scss';
@@ -22,7 +22,7 @@ const defaultOptions = {
   },
   tooltips: {
     callbacks: {
-      label: function(tooltipItem) {
+      label: function (tooltipItem) {
         return tooltipItem.yLabel;
       }
     }
@@ -38,7 +38,12 @@ const getRandomColor = () => {
   return color;
 };
 
-const Graph = ({ type, disableMoveAndScale, startLeftPosition, startTopPosition, startWidth, items, facts, dimensions, updateReport, id }) => {
+const Graph = (props) => {
+  const {
+    type, disableMoveAndScale, startLeftPosition, startTopPosition, startWidth, items,
+    facts, dimensions, updateReport, id, viewPortRef, className
+  } = props;
+
   const paneRef = createRef();
   const ghostpaneRef = createRef();
   const dimension = dimensions[0];
@@ -57,23 +62,21 @@ const Graph = ({ type, disableMoveAndScale, startLeftPosition, startTopPosition,
     }
   };
 
-  useEffect(() => {
-    const pane = paneRef.current;
-
-    pane.style.width = startWidth;
-    pane.style.left = startLeftPosition;
-    pane.style.top = startTopPosition;
-  }, []);
+  const [defaultStyles, setStyles] = useState({
+    width: startWidth,
+    left: startLeftPosition,
+    top: startTopPosition,
+  });
 
   const onUpdate = useCallback((data) => {
-    updateReport(id, data)
+    updateReport(id, data);
   }, [id, updateReport]);
 
   useEffect(() => {
     const pane = paneRef.current;
-    const move = new Movement(pane, ghostpaneRef.current, onUpdate);
+    const move = new Movement(pane, ghostpaneRef.current, viewPortRef.current, onUpdate);
     if (disableMoveAndScale) {
-      return move.removeEventListeners()
+      return move.removeEventListeners();
     }
 
     move.addEventListeners();
@@ -83,7 +86,7 @@ const Graph = ({ type, disableMoveAndScale, startLeftPosition, startTopPosition,
 
   return (
     <>
-      <div className={styles.pane} ref={paneRef}>
+      <div className={classNames(styles.pane, className)} ref={paneRef} style={defaultStyles}>
         {
           !disableMoveAndScale && (
             <div className={styles.title}>
@@ -91,7 +94,7 @@ const Graph = ({ type, disableMoveAndScale, startLeftPosition, startTopPosition,
             </div>
           )
         }
-        <GraphToBuild data={data} options={defaultOptions} />
+        <GraphToBuild data={data} options={defaultOptions}/>
       </div>
       <div className={styles.ghostpane} ref={ghostpaneRef}>
       </div>
@@ -112,12 +115,16 @@ Graph.defaultProps = {
   startLeftPosition: 0,
   startTopPosition: 0,
   startWidth: 300,
+  facts: [],
+  dimensions: []
 };
 
 const mapDispatchToProps = (disatch) => {
   return {
-    updateReport: (id, data) => {disatch(updateReport(id, data))}
-  }
+    updateReport: (id, data) => {
+      disatch(updateReport(id, data));
+    }
+  };
 };
 
 export default connect(null, mapDispatchToProps)(Graph);

@@ -31,10 +31,12 @@ export const getUserDashboard = (id) => {
 export const updateReport = (id, data) => {
   return async () => {
     try {
-      const payload = {
-        position_x: parseInt(data.left),
-        position_y: parseInt(data.top)
-      };
+
+      const position_x = parseInt(data.left);
+      const position_y = parseInt(data.top);
+
+
+      const payload = position_x && position_y ? {position_x, position_y} : {};
 
       if (data.width) {
         payload.width = parseInt(data.width);
