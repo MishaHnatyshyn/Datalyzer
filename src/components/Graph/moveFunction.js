@@ -1,6 +1,6 @@
 const defaultHander = () => {};
 class Movement {
-  constructor(pane, ghostpane, onUpdate = defaultHander) {
+  constructor(pane, ghostpane, window, onUpdate = defaultHander) {
     let minWidth = 60;
     let minHeight = 40;
 
@@ -124,8 +124,8 @@ class Movement {
       onRightEdge = x >= b.width - MARGINS;
       onBottomEdge = y >= b.height - MARGINS;
 
-      rightScreenEdge = window.innerWidth - MARGINS;
-      bottomScreenEdge = window.innerHeight - MARGINS;
+      rightScreenEdge = window.offsetWidth - MARGINS;
+      bottomScreenEdge = window.offsetHeight - MARGINS;
     }
 
     let e;
@@ -162,25 +162,25 @@ class Movement {
 
       if (clicked && clicked.isMoving) {
 
-        if (b.top < FULLSCREEN_MARGINS || b.left < FULLSCREEN_MARGINS || b.right > window.innerWidth - FULLSCREEN_MARGINS || b.bottom > window.innerHeight - FULLSCREEN_MARGINS) {
+        if (b.top < FULLSCREEN_MARGINS || b.left < FULLSCREEN_MARGINS || b.right > window.offsetWidth - FULLSCREEN_MARGINS || b.bottom > window.offsetHeight - FULLSCREEN_MARGINS) {
           // hintFull();
-          setBounds(ghostpane, 0, 0, window.innerWidth, window.innerHeight);
+          setBounds(ghostpane, 0, 0, window.offsetWidth, window.offsetHeight);
           ghostpane.style.opacity = 0.2;
         } else if (b.top < MARGINS) {
           // hintTop();
-          setBounds(ghostpane, 0, 0, window.innerWidth, window.innerHeight / 2);
+          setBounds(ghostpane, 0, 0, window.offsetWidth, window.offsetHeight / 2);
           ghostpane.style.opacity = 0.2;
         } else if (b.left < MARGINS) {
           // hintLeft();
-          setBounds(ghostpane, 0, 0, window.innerWidth / 2, window.innerHeight);
+          setBounds(ghostpane, 0, 0, window.offsetWidth / 2, window.offsetHeight);
           ghostpane.style.opacity = 0.2;
         } else if (b.right > rightScreenEdge) {
           // hintRight();
-          setBounds(ghostpane, window.innerWidth / 2, 0, window.innerWidth / 2, window.innerHeight);
+          setBounds(ghostpane, window.offsetWidth / 2, 0, window.offsetWidth / 2, window.offsetHeight);
           ghostpane.style.opacity = 0.2;
         } else if (b.bottom > bottomScreenEdge) {
           // hintBottom();
-          setBounds(ghostpane, 0, window.innerHeight / 2, window.innerWidth, window.innerWidth / 2);
+          setBounds(ghostpane, 0, window.offsetHeight / 2, window.offsetWidth, window.offsetWidth / 2);
           ghostpane.style.opacity = 0.2;
         } else {
           hintHide();
@@ -228,25 +228,25 @@ class Movement {
           height: b.height
         };
 
-        if (b.top < FULLSCREEN_MARGINS || b.left < FULLSCREEN_MARGINS || b.right > window.innerWidth - FULLSCREEN_MARGINS || b.bottom > window.innerHeight - FULLSCREEN_MARGINS) {
+        if (b.top < FULLSCREEN_MARGINS || b.left < FULLSCREEN_MARGINS || b.right > window.offsetWidth - FULLSCREEN_MARGINS || b.bottom > window.offsetHeight - FULLSCREEN_MARGINS) {
           // hintFull();
-          setBounds(pane, 0, 0, window.innerWidth, window.innerHeight);
+          setBounds(pane, 0, 0, window.offsetWidth, window.offsetHeight);
           preSnapped = snapped;
         } else if (b.top < MARGINS) {
           // hintTop();
-          setBounds(pane, 0, 0, window.innerWidth, window.innerHeight / 2);
+          setBounds(pane, 0, 0, window.offsetWidth, window.offsetHeight / 2);
           preSnapped = snapped;
         } else if (b.left < MARGINS) {
           // hintLeft();
-          setBounds(pane, 0, 0, window.innerWidth / 2, window.innerHeight);
+          setBounds(pane, 0, 0, window.offsetWidth / 2, window.offsetHeight);
           preSnapped = snapped;
         } else if (b.right > rightScreenEdge) {
           // hintRight();
-          setBounds(pane, window.innerWidth / 2, 0, window.innerWidth / 2, window.innerHeight);
+          setBounds(pane, window.offsetWidth / 2, 0, window.offsetWidth / 2, window.offsetHeight);
           preSnapped = snapped;
         } else if (b.bottom > bottomScreenEdge) {
           // hintBottom();
-          setBounds(pane, 0, window.innerHeight / 2, window.innerWidth, window.innerWidth / 2);
+          setBounds(pane, 0, window.offsetHeight / 2, window.offsetWidth, window.offsetWidth / 2);
           preSnapped = snapped;
         } else {
           preSnapped = null;
