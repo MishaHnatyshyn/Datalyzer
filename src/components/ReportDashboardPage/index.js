@@ -10,7 +10,6 @@ import NewDashboardCard from '../shared/DashboardCard/NewDashboardCard';
 
 const ReportDashboardPage = ({ dashboards, fetchDashboards }) => {
   useEffect(() => {
-    console.log('kakashka');
     fetchDashboards();
   }, []);
 

@@ -14,3 +14,4 @@ export const ADMIN_CONNECTIONS_COUNT_ENDPOINT = '/connections/count';
 export const USER_REPORT_MODELS_ENDPOINT = '/models/report';
 export const ADMIN_CONNECTIONS_CREATE_ENDPOINT = '/connections';
 export const USER_DASHBOARDS_ENDPOINT = '/dashboards';
+export const USER_REPORTS_ENDPOINT = '/reports';

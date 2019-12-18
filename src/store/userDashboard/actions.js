@@ -1,16 +1,48 @@
 import { createAction } from 'redux-actions';
-import { SET_VALUES } from './types';
-import { get } from '../../utils/http';
-import { MODEL_FIELD_VALUES_ENDPOIND, USER_DATA_ENDPOINT } from '../../config';
+import { SET_USER_DASHBOARD, SET_VALUES, SET_USER_REPORTS } from './types';
+import { get, put } from '../../utils/http';
+import {
+  USER_DASHBOARDS_ENDPOINT,
+  USER_REPORTS_ENDPOINT
+} from '../../config';
 
-export const setUserData = createAction(SET_VALUES, (data) => data);
+export const setUserDashboard = createAction(SET_USER_DASHBOARD, (data) => data);
+export const setReports = createAction(SET_USER_REPORTS, (data) => data);
 
-export const getModelItemFieldItems = (id) => {
+export const getUserDashboard = (id) => {
   return async (dispatch) => {
     try {
-      const params = {connectionId: 14, modelItemFieldId: 62};
-      const data = await get(MODEL_FIELD_VALUES_ENDPOIND, { params });
-      dispatch(setUserData({ id: 62, data }))
+      const data = await get(`${USER_DASHBOARDS_ENDPOINT}/${id}`);
+      dispatch(setUserDashboard(data));
+      const reports = data.reports.map(async (report) => {
+        return {
+          ...(await get(`${USER_REPORTS_ENDPOINT}/${report.id}`))
+        }
+      });
+
+      const reportsData = await Promise.all(reports);
+      dispatch(setReports(reportsData));
+    } catch (e) {
+      console.log(e)
+    }
+  }
+};
+
+export const updateReport = (id, data) => {
+  return async () => {
+    try {
+      const payload = {
+        position_x: parseInt(data.left),
+        position_y: parseInt(data.top)
+      };
+
+      if (data.width) {
+        payload.width = parseInt(data.width);
+      }
+
+      await put(`${USER_REPORTS_ENDPOINT}/${id}`, {
+        data: payload
+      })
     } catch (e) {
 
     }
