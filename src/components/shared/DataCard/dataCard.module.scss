@@ -1,0 +1,33 @@
+@import "../../../assets/variables";
+
+.bottomBlock {
+  padding: 20px 29px;
+}
+
+.dataBlock {
+  position: relative;
+  min-height: 218px;
+  padding-bottom: 10px;
+}
+
+.line {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: $light-gray;
+  bottom: 0;
+  left: 0;
+}
+
+.iconsBlock {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 11px;
+}
+
+.icon {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}

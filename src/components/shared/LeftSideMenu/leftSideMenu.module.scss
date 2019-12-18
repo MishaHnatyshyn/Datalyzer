@@ -1,0 +1,45 @@
+@import "../../../assets/variables";
+
+.container {
+  width: 60px;
+  min-height: 100%;
+  border: 2px solid $blue;
+  border-top: none;
+}
+
+.block {
+  position: relative;
+
+  &::after {
+    content: " ";
+    position: absolute;
+    top: 0;
+    right: -20px;
+    width: 70px;
+    height: 100%;
+    z-index: -1;
+    background-image: linear-gradient(to right, $blue , transparent);
+    display: none;
+  }
+
+  &:hover {
+    &::after {
+      display: block;
+    }
+  }
+}
+
+
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 60px;
+  border-bottom: 2px solid $blue;
+  background-color: white;
+  z-index: 3;
+}
+
+

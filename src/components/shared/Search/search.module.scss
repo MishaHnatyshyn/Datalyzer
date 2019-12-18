@@ -1,0 +1,48 @@
+@import "../../../assets/variables";
+
+.input {
+  width: 195px;
+  border: none;
+  background-color: $light-gray;
+  border-radius: 45px;
+  font: $text-light;
+  font-size: 18px;
+  line-height: 30px;
+  color: black;
+  padding: 7px 45px 7px 15px;
+  outline: none;
+  transition: width .4s;
+}
+
+.container {
+  position: relative;
+  width: max-content;
+}
+
+.icon {
+  width: 17px;
+  opacity: 0.5;
+}
+
+.input:focus {
+  width: 250px;
+}
+
+.search {
+  background: none;
+  border: none;
+  outline: none;
+  position: absolute;
+  transform: translateY(-50%);
+  top: 50%;
+  right: 15px;
+  cursor: pointer;
+}
+
+.input:focus + .icon {
+  opacity: 1;
+}
+
+.input::placeholder {
+  color: $dark-gray;
+}

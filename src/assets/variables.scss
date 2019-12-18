@@ -3,6 +3,9 @@
 //fonts
 $text-regular: normal 18px "Montserrat";
 $text-bold: 700 36px "Montserrat";
+$text-light: 400 18px "Montserrat";
+$text-semibold: 600 16px "Montserrat";
+$text-semibold-small: 600 12px "Montserrat";
 $text-error-message-semibold: 600 14px "Montserrat";
 $text-error-message-title-bold: 600 25px "Montserrat";
 $text-button-bold: 700 18px "Montserrat";
@@ -12,11 +15,22 @@ $text-button-bold-small: 700 14px "Montserrat";
 $blue: #007eff;
 $gray: #cbcbcb;
 $light-gray: #e8e8e8;
+$middle-gray: #aeaeae;
+$darker-gray: #b7b7b7;
 $dark-gray: #5b5b5b;
+$middle-light-gray: #999999;
+$almost-light-grey: #f7f7f7;
 $white: #ffffff;
 $black: #333333;
+$almost-black: #010101;
+$mint: #cce5ff;
+$red: red;
+
+//z-index
+$z-index-99: 99;
 
 //viewports
+$desktop-width: 1270px;
 $tablet-width: 1100px;
 $mobile-width: 750px;
 $small-mobile-width: 380px;

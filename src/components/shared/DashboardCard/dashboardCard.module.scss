@@ -1,0 +1,115 @@
+@import "../../../assets/variables";
+
+.container {
+  box-sizing: border-box;
+  width: 320px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font: $text-button-bold;
+  color: white;
+  border-radius: 30px;
+  box-shadow: 4px 3px 12.22px 0.78px rgba(0, 0, 0, 0.15);
+  background-color: $blue;
+  cursor: pointer;
+}
+
+.container:hover {
+  transition: .5s;
+  background-color: #ffffff;
+  color: black;
+}
+
+.block {
+  position: relative;
+}
+
+.newDashboard {
+  background-color: #ffffff;
+  color: $gray;
+}
+
+.newDashboard:hover {
+  color: $gray;
+}
+
+.container:hover .icon {
+  filter: invert(100%);
+}
+
+.name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+}
+
+.popupContainer {
+  position: absolute;
+  top: calc(100% + 29px);
+  left: 0;
+  padding: 18px 20px 30px;
+  box-sizing: border-box;
+  border: 2px solid $light-gray;
+  width: 100%;
+  background: $almost-light-grey;
+  border-radius: 30px;
+  box-shadow: 4px 3px 12.22px 0.78px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+
+  &:before {
+    @extend .popupArrow;
+    left: 31px;
+    border-left: 16px solid transparent;
+    border-right: 16px solid transparent;
+    border-bottom: 30px solid $light-gray;
+  }
+
+  &:after {
+    @extend .popupArrow;
+    left: 35px;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 28px solid $almost-light-grey;
+  }
+}
+
+.popupArrow {
+  content: '';
+  width: 0;
+  height: 0;
+  bottom: 100%;
+  position: absolute;
+}
+
+.newText {
+  font: $text-error-message-semibold;
+  color: $gray;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.input {
+  font: $text-error-message-semibold;
+  border: none;
+  outline: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  box-shadow: 4px 3px 12.22px 0.78px rgba(0, 0, 0, 0.15);
+  color: black;
+}
+
+.input::placeholder {
+  font: $text-error-message-semibold;
+
+  color: $gray;
+}
+
+.buttonContainer {
+  position: absolute;
+  bottom: -20px;
+  transform: translateX(-50%);
+  left: 50%;
+}

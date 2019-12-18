@@ -1,0 +1,35 @@
+@import "../../../assets/variables";
+
+.container {
+  margin: 40px;
+  width: 400px;
+  min-height: 335px;
+  height: 100%;
+  border-radius: 6px;
+  box-shadow: 3.83px 3.214px 41.5px rgba(119,119,119,0.39);
+}
+
+.topBlock {
+  box-sizing: border-box;
+  display: flex;
+  padding-left: 10px;
+  padding-right: 10px;
+  justify-content: center;
+  align-items: center;
+  background-color: $blue;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  height: 43px;
+  width: 100%;
+}
+
+.caption {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  font: $text-bold;
+  font-size: 24px;
+  line-height: 30px;
+  color: black;
+  text-align: center;
+}

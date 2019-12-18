@@ -5,35 +5,41 @@ import styles from './loginForm.module.scss';
 import LoginCaption from './LoginCaption';
 import LoginButton from './LoginButton';
 import Input from '../../shared/Input';
-import { getPassword, getUsername } from '../../../store/Login/selectors';
-import { changePasswordValue, changeUsernameValue, formSubmit } from '../../../store/Login/actions';
+import {
+  getPassword, getUsername, getErrorMessage, isError
+} from '../../../store/login/selectors';
+import { changePasswordValue, changeUsernameValue, login } from '../../../store/login/actions';
 import AlertMessage from '../../shared/AlertMessage';
 import { preventDefaultHandler } from '../../../utils';
 
-const ERROR_MESSAGE = 'Wrong username or password. Please, try again';
-
 const LoginForm = ({
-  username, password, changePassword, changeUsername, submitForm
+  username,
+  password,
+  changePassword,
+  changeUsername,
+  submitForm,
+  isError,
+  errorMessage,
 }) => {
-  const formHandler = useMemo(
-    () => preventDefaultHandler(submitForm),
-    [submitForm]
-  );
+  const formHandler = useMemo(() => preventDefaultHandler(submitForm), [submitForm]);
+  const alertClasses = useMemo(() => [styles.error, isError ? styles.visible : styles.hidden], [
+    isError,
+  ]);
+
   return (
     <div className={styles.loginForm}>
       <LoginCaption />
       <div className={styles.line} />
       <form onSubmit={formHandler}>
         <div className={styles.inputFields}>
-          <Input text="Username" type="text" onChange={changeUsername} value={username}>
+          <Input text="Username" type="text" withImage onChange={changeUsername} value={username}>
             <img src="/images/user.png" alt="user icon" />
           </Input>
-          <Input text="Password" type="password" onChange={changePassword} value={password}>
+          <Input text="Password" type="password" withImage onChange={changePassword} value={password}>
             <img src="/images/padlock.png" alt="password icon" />
           </Input>
         </div>
-
-        <AlertMessage message={ERROR_MESSAGE} classes={styles.error}>
+        <AlertMessage message={errorMessage} classes={alertClasses}>
           <img src="/images/report.png" alt="error message" />
         </AlertMessage>
         <LoginButton />
@@ -48,17 +54,27 @@ LoginForm.propTypes = {
   changePassword: PropTypes.func.isRequired,
   changeUsername: PropTypes.func.isRequired,
   submitForm: PropTypes.func.isRequired,
+  isError: PropTypes.bool.isRequired,
+  errorMessage: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   username: getUsername(state),
-  password: getPassword(state)
+  password: getPassword(state),
+  isError: isError(state),
+  errorMessage: getErrorMessage(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changePassword: (value) => { dispatch(changePasswordValue(value)); },
-  changeUsername: (value) => { dispatch(changeUsernameValue(value)); },
-  submitForm: () => { dispatch(formSubmit()); }
+  changePassword: (value) => {
+    dispatch(changePasswordValue(value));
+  },
+  changeUsername: (value) => {
+    dispatch(changeUsernameValue(value));
+  },
+  submitForm: () => {
+    dispatch(login());
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

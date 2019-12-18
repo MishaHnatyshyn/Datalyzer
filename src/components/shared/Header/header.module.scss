@@ -1,0 +1,84 @@
+@import "../../../assets/variables";
+$text-site-name: 600 14px 'Raleway';
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  background-color: $blue;
+  color: black;
+  padding: 8px 23px 8px 15px;
+}
+
+.logo {
+  width: 46px;
+}
+
+.block {
+  display: flex;
+  align-items: center;
+}
+
+
+.siteName {
+  letter-spacing: 1px;
+  line-height: 90px;
+  color: black;
+  font: $text-site-name;
+  margin-left: 15px;
+  text-transform: uppercase;
+}
+
+.userName {
+  line-height: 24px;
+  color: $white;
+  font: $text-light;
+  margin-right: 17px;
+}
+
+.dropdownUser {
+  right: 0;
+  top: 100%;
+  z-index: 5;
+}
+
+.dropdownText {
+  font: $text-light;
+  font-size: 14px;
+  line-height: 24px;
+  color: $blue;
+}
+
+.signOutIcon {
+  width: 18px;
+  position: absolute;
+  right: 0;
+  transform: translateY(-50%);
+  top: 50%;
+}
+
+.textBlock {
+  position: relative;
+  padding: 13px;
+  cursor: pointer;
+}
+
+.changePasswordBlock, .signOutBlock {
+  padding: 13px;
+}
+
+.line {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  left: 0;
+  background-color: $mint;
+}
+
+.userPhoto {
+  width: 49px;
+  height: 49px;
+  border-radius: 50%;
+}

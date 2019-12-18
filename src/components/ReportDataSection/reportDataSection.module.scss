@@ -1,0 +1,88 @@
+@import "../../assets/variables";
+
+.container {
+  height: 75vh;
+}
+
+.leftPart {
+  width: 50%;
+  padding-right: 18px;
+  box-sizing: border-box;
+}
+
+.body {
+  padding: 20px 18px;
+  min-height: 275px;
+  height: calc(100% - 43px);
+  box-sizing: border-box;
+  width: 200%;
+  transition: transform .5s ease-in-out;
+  display: flex;
+}
+
+.dataContainer {
+  overflow: hidden;
+  width: 350px;
+  margin-top: 0;
+}
+
+.rightPart {
+  padding-left: 18px;
+  box-sizing: border-box;
+  position: relative;
+  width: 50%;
+}
+
+.displayRightPart {
+  transform: translateX(-50%);
+}
+
+.arrowBack {
+  width: 25px;
+  filter: invert(60%)
+}
+
+.arrowBackButton {
+  position: absolute;
+  left: 25px;
+  top: 0;
+}
+
+.caption {
+  color: $black;
+  font: $text-error-message-semibold;
+  font-size: 18px;
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.noFoundText {
+  color: $black;
+  font: $text-error-message-semibold;
+  padding-top: 120px;
+  padding-bottom: 120px;
+  text-align: center;
+}
+
+.activeCard {
+  background-color: $blue;
+  color: white;
+}
+
+.disabledCard {
+  cursor: default;
+  &:hover {
+    box-shadow: none;
+  }
+  &:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: $light-gray;
+    opacity: 0.7;
+    border-radius: 5px;
+    left: 0;
+  }
+}

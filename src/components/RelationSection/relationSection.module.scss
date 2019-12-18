@@ -1,0 +1,28 @@
+@import "../../assets/variables";
+
+.container {
+  height: 100%;
+}
+
+.tableRow {
+  width: 100%;
+  display: inline-grid;
+  grid-template-columns: 10% 20% 20% 20% 20% 10%
+}
+
+.tableCell {
+  padding: 10px;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+}
+
+.caption {
+  font: $text-button-bold;
+}
+
+.text {
+  font: $text-error-message-semibold;
+}

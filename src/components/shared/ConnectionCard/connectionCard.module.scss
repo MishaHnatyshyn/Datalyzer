@@ -1,0 +1,36 @@
+@import "../../../assets/variables";
+
+.container {
+  box-sizing: border-box;
+  width: 320px;
+  height: 65px;
+  padding: 20px 23px;
+  display: flex;
+  align-items: center;
+  font: $text-button-bold;
+  color: black;
+  border-radius: 10px;
+  box-shadow: 4px 3px 12.22px 0.78px rgba(0, 0, 0, 0.15);
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.container:hover {
+  transition: background-color .7s;
+  background-color: $blue;
+  color: white;
+}
+
+.container:hover .icon {
+  filter: invert(100%);
+}
+
+.name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+}
+
+.icon {
+  margin-right: 10px;
+}

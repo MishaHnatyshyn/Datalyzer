@@ -1,0 +1,35 @@
+@import "../../../assets/variables";
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pagesResult {
+  line-height: 30px;
+  color: black;
+  font: $text-bold;
+  font-size: 24px;
+  margin-right: 35px;
+  position: relative;
+}
+
+.pagesCountBlock {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 15px;
+}
+
+.leftBlock {
+  display: flex;
+  align-items: center;
+}
+
+.spinner {
+  position: absolute;
+  img {
+    width: 35px;
+  }
+}

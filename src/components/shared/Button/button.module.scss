@@ -1,10 +1,8 @@
 @import "./../../../assets/variables";
 
 .buttonCommon {
-  outline: none;
   height: 65px;
   border-radius: 32px;
-  cursor: pointer;
 }
 
 @media all and (max-width: $small-mobile-width){

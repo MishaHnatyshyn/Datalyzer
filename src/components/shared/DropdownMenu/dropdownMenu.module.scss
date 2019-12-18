@@ -1,0 +1,11 @@
+@import "../../../assets/variables";
+
+.container {
+  position: absolute;
+  background-color: white;
+  border-bottom-left-radius: 5px;
+  border-left: 2px solid $blue;
+  border-bottom: 2px solid $blue;
+  width: 220px;
+  padding: 10px;
+}

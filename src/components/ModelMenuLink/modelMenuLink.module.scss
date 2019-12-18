@@ -1,0 +1,30 @@
+@import "../../assets/variables";
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $light-gray;
+  border-radius: 5px;
+  margin-bottom: 13px;
+  padding: 9px 8px;
+  width: 100%;
+  box-sizing: border-box;
+  font: $text-error-message-semibold;
+  color: $almost-black;
+  position: relative;
+  cursor: pointer;
+  p {
+    max-width: 95%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+
+.container:hover {
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
