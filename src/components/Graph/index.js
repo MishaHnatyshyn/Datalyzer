@@ -45,7 +45,6 @@ const Graph = (props) => {
   } = props;
 
   const paneRef = createRef();
-  const ghostpaneRef = createRef();
   const dimension = dimensions[0];
   const fact = facts[0];
   const data = {
@@ -74,7 +73,7 @@ const Graph = (props) => {
 
   useEffect(() => {
     const pane = paneRef.current;
-    const move = new Movement(pane, ghostpaneRef.current, viewPortRef.current, onUpdate);
+    const move = new Movement(pane, viewPortRef.current, onUpdate);
     if (disableMoveAndScale) {
       return move.removeEventListeners();
     }
@@ -85,20 +84,16 @@ const Graph = (props) => {
   const GraphToBuild = graphTypes[type];
 
   return (
-    <>
-      <div className={classNames(styles.pane, className)} ref={paneRef} style={defaultStyles}>
-        {
-          !disableMoveAndScale && (
-            <div className={styles.title}>
-              <img src="/public/images/dashboard/move.svg" className={styles.hint}/>
-            </div>
-          )
-        }
-        <GraphToBuild data={data} options={defaultOptions}/>
-      </div>
-      <div className={styles.ghostpane} ref={ghostpaneRef}>
-      </div>
-    </>
+    <div className={classNames(styles.pane, className)} ref={paneRef} style={defaultStyles}>
+      {
+        !disableMoveAndScale && (
+          <div className={styles.title}>
+            <img src="/public/images/dashboard/move.svg" className={styles.hint} />
+          </div>
+        )
+      }
+      <GraphToBuild data={data} options={defaultOptions} />
+    </div>
   );
 };
 
