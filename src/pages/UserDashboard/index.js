@@ -9,7 +9,7 @@ const UsersDashboard = () => {
     <div className={styles.layout}>
     <div className={styles.dashboardLayout}>
       <Graph type={'Doughnut'} />
-      <Graph type={'Pie'}/>
+      <Graph type={'Pie'} disableMoveAndScale />
     </div>
 
       <DashboardMenu />
