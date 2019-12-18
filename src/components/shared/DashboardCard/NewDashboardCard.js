@@ -7,6 +7,7 @@ import styles from './dashboardCard.module.scss';
 import NewModeInput from '../NewModeInput';
 import { getNewDashboardName } from '../../../store/createReport/selectors';
 import { changeNewDashboardName } from '../../../store/createReport/actions';
+import NextButton from "../NextButton";
 
 const NewDashboardCard = ({ selected, onClick, changeNewDashboardName, newDashboardName }) => {
   const [isOpened, setOpened] = useState(false);
@@ -46,6 +47,9 @@ const NewDashboardCard = ({ selected, onClick, changeNewDashboardName, newDashbo
             classes={styles.input}
             placeholder="New dashboard name"
           />
+          <div className={styles.buttonContainer}>
+            <NextButton disableNextButton={false} setNextStep={() => {}} text="Create report" />
+          </div>
         </div>
       )}
     </div>

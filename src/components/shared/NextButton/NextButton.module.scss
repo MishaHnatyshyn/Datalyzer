@@ -1,0 +1,45 @@
+@import '../../../assets/variables';
+
+.button {
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 31px;
+  border-radius: 16px;
+  font: $text-button-bold-small;
+  background: none;
+}
+
+.buttonsContainer {
+  display: flex;
+}
+
+.nextButton {
+  transition: background-color .6s;
+  background-color: $blue;
+  color: $white;
+  border: none;
+}
+
+.nextButton:hover {
+  box-shadow: 2px 2px 15.36px 0.64px rgba(29, 112, 197, 0.43);
+}
+
+.nextIcon {
+  margin-left: 10px;
+}
+
+.nextContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button:disabled {
+  background-color: $gray;
+  cursor: default;
+}
+
+.button:disabled:hover {
+  box-shadow: none;
+}
+

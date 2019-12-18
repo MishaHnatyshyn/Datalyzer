@@ -1,24 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import styles from '../shared/StepsMenuButtons/stepMenuButtons.module.scss';
-import Button from '../shared/Button';
+import styles from './newReportButtonsContainer.module.scss';
 import CancelButton from '../shared/CancelButton';
+import NextButton from '../shared/NextButton';
 
 const NewReportButtonsContainer = ({ classes }) => (
   <div className={classnames(styles.buttonsContainer, classes)}>
     <CancelButton onClick={() => {}}> Cancel </CancelButton>
-    <Button
-      classes={[styles.button, styles.nextButton]}
-      type="button"
-      onclick={() => {}}
-      disabled={false}
-    >
-      <div className={styles.nextContainer}>
-        <p>Select dashboard</p>
-        <img src="/images/right-arrow.png" alt="arrow next" className={styles.nextIcon} />
-      </div>
-    </Button>
+    <NextButton disableNextButton={false} setNextStep={() => {}} text="Select dashboard" />
   </div>
 );
 
@@ -27,7 +17,7 @@ NewReportButtonsContainer.defaultProps = {
 };
 
 NewReportButtonsContainer.propTypes = {
-  classes: PropTypes.string
+  classes: PropTypes.string,
 };
 
 export default NewReportButtonsContainer;
