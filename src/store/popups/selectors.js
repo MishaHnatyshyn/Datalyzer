@@ -4,3 +4,4 @@ const root = (state) => state.popups;
 
 export const getCurrentPopupType = compose(prop('currentPopup'), root);
 export const getCurrentPopupText = compose(prop('text'), root);
+export const getOnSubmit = compose(prop('onSubmit'), root);

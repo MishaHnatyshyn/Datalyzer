@@ -1,4 +1,4 @@
-import {CHANGE_SEARCH_INPUT, FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from './types';
+import {CHANGE_SEARCH_INPUT, FETCH_ERROR, FETCH_START, FETCH_SUCCESS, REMOVE_DASHBOARD} from './types';
 
 const initialState = {
   dashboards: [],
@@ -17,6 +17,8 @@ export default function dashboardReducer(state = initialState, action) {
       return { ...state, isLoading: false };
     case FETCH_SUCCESS:
       return { ...state, dashboards: action.payload, isLoading: false };
+    case REMOVE_DASHBOARD:
+      return { ...state, dashboards: state.dashboards.filter((id) => id !== action.payload) };
     default:
       return state;
   }

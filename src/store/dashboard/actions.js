@@ -6,6 +6,7 @@ import { USER_DASHBOARDS_ENDPOINT} from '../../config';
 
 export const fetchStart = createAction(FETCH_START);
 export const fetchError = createAction(FETCH_ERROR);
+export const onRemoveDashboard = createAction(FETCH_ERROR, (value) => value);
 export const fetchSuccess = createAction(FETCH_SUCCESS, (value) => value);
 export const changeSearchInput = createAction(CHANGE_SEARCH_INPUT, (value) => value);
 
