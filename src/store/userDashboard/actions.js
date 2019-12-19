@@ -1,10 +1,12 @@
 import { createAction } from 'redux-actions';
 import { SET_USER_DASHBOARD, SET_VALUES, SET_USER_REPORTS } from './types';
-import { get, put } from '../../utils/http';
+import { del, get, put } from '../../utils/http';
+import { history } from '../../store/index';
 import {
-  USER_DASHBOARDS_ENDPOINT,
+  USER_DASHBOARDS_ENDPOINT, USER_HOME_URL,
   USER_REPORTS_ENDPOINT
 } from '../../config';
+import { onRemoveDashboard } from '../dashboard/actions';
 
 export const setUserDashboard = createAction(SET_USER_DASHBOARD, (data) => data);
 export const setReports = createAction(SET_USER_REPORTS, (data) => data);
@@ -45,6 +47,18 @@ export const updateReport = (id, data) => {
       await put(`${USER_REPORTS_ENDPOINT}/${id}`, {
         data: payload
       })
+    } catch (e) {
+
+    }
+  }
+};
+
+export const removeCurrentDashboar = (id) => {
+  return async (dispatch) => {
+    try {
+      // await del(`${USER_DASHBOARDS_ENDPOINT}/${id + 2}`);
+      dispatch(onRemoveDashboard(id));
+      return history.push(USER_HOME_URL);
     } catch (e) {
 
     }

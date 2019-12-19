@@ -5,8 +5,13 @@ import PropTypes from 'prop-types';
 import PopupTypes from '../../store/popups/popupTypes';
 import ErrorPopup from '../shared/ErrorPopup';
 import InformationPopup from '../shared/InformationPopup';
+import ConfirmPopup from '../shared/ConfirmPopup';
 import { closePopup } from '../../store/popups/actions';
-import { getCurrentPopupText, getCurrentPopupType } from '../../store/popups/selectors';
+import {
+  getCurrentPopupText,
+  getCurrentPopupType,
+  getOnSubmit
+} from '../../store/popups/selectors';
 import {
   CreateModelCancelPopup,
   CreateModelSuccessPopup,
@@ -24,12 +29,14 @@ import DeleteUserPopup from '../DeleteUserPopup/DeleteUserPopup';
 import ChangePassPopup from '../ChangePassPopup';
 import { CHANGE_PASSWORD_SUCCESS_MESSAGE, CHANGE_PASSWORD_FAILURE_MESSAGE } from '../../store/user/constants';
 
-const MainPopupsContainer = ({ closePopup, text, currentPopup }) => {
+const MainPopupsContainer = ({ closePopup, text, currentPopup, onSubmit }) => {
   switch (currentPopup) {
     case PopupTypes.ERROR:
       return <ErrorPopup onClose={closePopup} text={text} isVisible />;
     case PopupTypes.INFO:
       return <InformationPopup onClose={closePopup} text={text} isVisible />;
+    case PopupTypes.CONFIRM:
+      return <ConfirmPopup onClose={closePopup} onSubmit={onSubmit} text={text} isVisible />;
     case PopupTypes.CREATE_MODEL_CANCEL_CONFIRM:
       return <CreateModelCancelPopup />;
     case PopupTypes.CREATE_MODEL_SUCCESS:
@@ -74,6 +81,7 @@ MainPopupsContainer.propTypes = {
 const mapStateToProps = createStructuredSelector({
   currentPopup: getCurrentPopupType,
   text: getCurrentPopupText,
+  onSubmit: getOnSubmit,
 });
 
 const mapDispatchToProps = (dispatch) => ({
