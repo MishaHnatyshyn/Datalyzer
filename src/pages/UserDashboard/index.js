@@ -48,9 +48,10 @@ const UsersDashboard = ({ getDashboard, reports }) => {
 
   return (
     <div className={styles.layout}>
-    <div className={styles.dashboardLayout} ref={viewPortRef}>
+    <div className={styles.dashboardLayout} ref={viewPortRef} id={'dashboard-layout'}>
       <Graphs reports={reports} viewPortRef={viewPortRef} />
     </div>
+      <div id={'editor'}/>
 
       <DashboardMenu />
     </div>

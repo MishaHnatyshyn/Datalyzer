@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
@@ -7,6 +7,7 @@ import { createStructuredSelector } from 'reselect';
 import { getDashboardName } from '../../../../store/userDashboard/selectors';
 import { getDashboards } from '../../../../store/dashboard/selectors';
 import { fetchDashboards } from '../../../../store/dashboard/actions';
+import jsPDF from 'jspdf';
 
 const DashboardMenu = ({ dashboardName, dashboards, fetchDashboards }) => {
   useEffect(() => {
@@ -16,13 +17,34 @@ const DashboardMenu = ({ dashboardName, dashboards, fetchDashboards }) => {
 
     fetchDashboards();
   }, []);
+
+  const onExport = useCallback(() => {
+    const pdf = new jsPDF();
+    const pdfWidth =  pdf.internal.pageSize.getWidth();
+
+    const layout = document.getElementById('dashboard-layout');
+    layout.childNodes.forEach((node, i) => {
+      if (node.lastChild) {
+        const canvas = node.lastChild;
+        const img = canvas.toDataURL("image/png");
+        if (i !== 0) {
+          pdf.addPage()
+        }
+
+        pdf.addImage(img, 'PNG', 0, 0, pdfWidth, ((canvas.height - canvas.width) / 3.779528) + pdfWidth);
+      }
+    });
+
+    pdf.save('export.pdf')
+  });
+
   return (
     <div className={styles.menu}>
       <div className={styles.title}>
         {dashboardName}
       </div>
       <div className={styles.item}>Change name</div>
-      <div className={styles.item}>Export as PDF</div>
+      <div className={styles.item} onClick={onExport}>Export as PDF</div>
       <div className={styles.item}>Delete</div>
 
       <div className={styles.separator}/>
