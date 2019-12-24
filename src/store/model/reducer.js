@@ -9,8 +9,18 @@ import {
   FETCH_START,
   NEXT_PAGE,
   FETCH_COUNT_START,
-  FETCH_COUNT_FAILURE, DELETE_MODEL, DELETE_MODEL_SUCCESS,
+  FETCH_COUNT_FAILURE,
+  DELETE_MODEL,
+  DELETE_MODEL_SUCCESS,
+  EMPTY_FIELDS_ERROR,
+  CHANGE_NAME,
+  CHANGE_NAME_START,
+  CHANGE_NAME_SUCCESS,
+  CHANGE_NAME_FAILURE,
+  ONCLOSE_ACTION,
+  RENAME_MODEL,
 } from './types';
+import { EMPTY_FIELDS_ERROR_MESSAGE } from '../login/constants';
 
 const initialState = {
   models: [],
@@ -20,12 +30,14 @@ const initialState = {
   },
   currentPage: 1,
   search: '',
+  name: '',
   itemsPerPage: 20,
   lastLoadedPage: 1,
   error: false,
   isLoading: false,
   hasNextPage: true,
   modelForDeleting: null,
+  modelForRenaming: null,
 };
 
 export default function modelReducer(state = initialState, action) {
@@ -116,6 +128,58 @@ export default function modelReducer(state = initialState, action) {
           (model) => model.id !== state.modelForDeleting,
         ),
         modelForDeleting: null,
+      };
+    case EMPTY_FIELDS_ERROR:
+      return {
+        ...state,
+        error: true,
+        isLoading: false,
+        errorMessage: EMPTY_FIELDS_ERROR_MESSAGE,
+      };
+    case CHANGE_NAME:
+      return {
+        ...state,
+        name: action.payload,
+      };
+    case CHANGE_NAME_START:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case CHANGE_NAME_SUCCESS:
+      return {
+        ...state,
+        error: false,
+        isLoading: false,
+        models: state.models.map(
+          (model) => {
+            if (model.id === state.modelForRenaming) {
+              model.name = state.name;
+            }
+            return model;
+          }
+        ),
+        name: '',
+        modelForRenaming: null,
+      };
+    case CHANGE_NAME_FAILURE:
+      return {
+        ...state,
+        error: true,
+        isLoading: false,
+      };
+    case ONCLOSE_ACTION:
+      return {
+        ...state,
+        error: false,
+        isLoading: false,
+        name: '',
+        modelForRenaming: null,
+      };
+    case RENAME_MODEL:
+      return {
+        ...state,
+        modelForRenaming: action.payload,
       };
     default:
       return state;
