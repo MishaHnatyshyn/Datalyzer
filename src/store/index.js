@@ -15,8 +15,8 @@ import popupsReducer from './popups/reducer';
 import createReportReducer from './createReport/reducer';
 import connectionFormsReducer from './connectionForm/reducer';
 import createUserReducer from './createUser/reducer';
-import dashboardReducer from "./dashboard/reducer";
-import userDashboardReducer from "./userDashboard/reducer";
+import dashboardReducer from './dashboard/reducer';
+import userDashboardReducer from './userDashboard/reducer';
 
 const initialState = {};
 

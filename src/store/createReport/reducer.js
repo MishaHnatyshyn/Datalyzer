@@ -9,22 +9,36 @@ import {
   SELECT_CHART_TYPE,
   SELECT_DIMENSION,
   SELECT_FACT,
-  SELECT_MODEL
+  SELECT_MODEL,
+  FETCH_REPORT_DATA_SUCCESS,
+  FETCH_REPORT_DATA_ERROR,
+  FETCH_REPORT_DATA_START,
+  GO_TO_SECOND_STEP,
+  RETURN_TO_FIRST_STEP,
+  SELECT_DASHBOARD,
 } from './types';
 import { fetchModelForReportStart } from './actions';
 
 const initialState = {
+  step: 1,
   selectedModel: null,
   models: [],
   isLoading: false,
   selectedDimension: null,
   selectedFact: null,
   selectedChartType: 1,
-  newDashboardName: ''
+  newDashboardName: '',
+  reportData: [],
+  reportDataLoading: false,
+  selectedDashboard: null,
 };
 
 export default function createReportReducer(state = initialState, action) {
   switch (action.type) {
+    case GO_TO_SECOND_STEP:
+      return { ...state, step: 2 };
+    case RETURN_TO_FIRST_STEP:
+      return { ...state, step: 1 };
     case SELECT_MODEL:
       return { ...state, selectedModel: action.payload };
     case DESELECT_MODEL:
@@ -49,6 +63,14 @@ export default function createReportReducer(state = initialState, action) {
       return { ...state, selectedFact: null };
     case CHANGE_NEW_DASHBOARD_NAME:
       return { ...state, newDashboardName: action.payload };
+    case FETCH_REPORT_DATA_ERROR:
+      return { ...state, reportDataLoading: false };
+    case FETCH_REPORT_DATA_START:
+      return { ...state, reportDataLoading: true };
+    case FETCH_REPORT_DATA_SUCCESS:
+      return { ...state, reportData: action.payload, reportDataLoading: false };
+    case SELECT_DASHBOARD:
+      return { ...state, selectedDashboard: action.payload };
     default:
       return state;
   }

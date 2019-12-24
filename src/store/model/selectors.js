@@ -13,6 +13,12 @@ export const isLoading = compose(prop('isLoading'), root);
 export const hasNextPage = compose(prop('hasNextPage'), root);
 export const getModelForDeleting = compose(prop('modelForDeleting'), root);
 
+export const getUserModelsCount = compose(prop('length'), getModels);
+export const getUserModelCountData = compose(
+  (count) => ({ count, isLoading: false }),
+  getUserModelsCount
+);
+
 export const getPaging = createSelector(
   [getCurrentPage, getLastLoadedPage],
   (currentPage, lastLoadedPage) => ({ currentPage, lastLoadedPage }),

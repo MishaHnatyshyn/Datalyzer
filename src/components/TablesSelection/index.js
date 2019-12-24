@@ -20,14 +20,14 @@ const DragAndDropPhrase = `Drag and drop tables
         you want to include in the model`;
 
 const TablesSelection = ({
-                           tables,
-                           setSelectedTable,
-                           selectedTable,
-                           modelItems,
-                           editModelItem,
-                           removeTableFromModel,
-                           fetchConnectionTablesData,
-                         }) => {
+  tables,
+  setSelectedTable,
+  selectedTable,
+  modelItems,
+  editModelItem,
+  removeTableFromModel,
+  fetchConnectionTablesData,
+}) => {
   function onDragOver(e) {
     e.preventDefault();
   }

@@ -1,12 +1,10 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import styles from './header.module.scss';
 import DropdownMenu from '../DropdownMenu';
 import { getUsername } from '../../../store/user/selectors';
 import { logout } from '../../../store/login/actions';
-import ChangePassPopup from '../../ChangePassPopup';
 import { showPopup } from '../../../store/user/actions';
 
 const Header = ({

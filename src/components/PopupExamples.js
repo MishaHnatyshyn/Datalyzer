@@ -17,7 +17,7 @@ const PopupBody = () => (
 );
 
 const popups = [
-  <ConfirmPopup text={'Are you sure?'} isVisible onSubmit={() => {}} onClose={() => {}} />,
+  <ConfirmPopup text="Are you sure?" isVisible onSubmit={() => {}} onClose={() => {}} />,
   <ErrorPopup
     onClose={() => {}}
     onSubmit={() => {}}
@@ -25,17 +25,16 @@ const popups = [
     title="Ah shit, here we go again. Ah shit, here we go again. Ah shit, here we go again."
     isVisible
   />,
-  <InformationPopup text={'This is information popup'} isVisible onClose={() => {}} />,
-  <BasePopup body={<PopupBody />} isVisible okButton okButtonType="submit" />
-
+  <InformationPopup text="This is information popup" isVisible onClose={() => {}} />,
+  <BasePopup body={<PopupBody />} isVisible okButton okButtonType="submit" />,
 ];
 
 const PopupExamples = () => {
   const [popupNumber, changePopupNumber] = useState(0);
-  setTimeout(() => {changePopupNumber(popupNumber >= popups.length - 1 ? 0 : popupNumber + 1)}, 3000);
-  return (
-    <>{popups[popupNumber]}</>
-  );
+  setTimeout(() => {
+    changePopupNumber(popupNumber >= popups.length - 1 ? 0 : popupNumber + 1);
+  }, 3000);
+  return <>{popups[popupNumber]}</>;
 };
 
 export default PopupExamples;

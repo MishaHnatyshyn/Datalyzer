@@ -62,15 +62,25 @@ export default function createUserReducer(state = initialState, action) {
         isError: false,
       };
     case FORM_USERNAME_INPUT_VALUE:
-      return { ...state, formUsername: action.payload, errorMessage: '', error: false };
+      return {
+        ...state, formUsername: action.payload, errorMessage: '', error: false
+      };
     case FORM_PASSWORD_INPUT_VALUE:
-      return { ...state, formPassword: action.payload, errorMessage: '', error: false };
+      return {
+        ...state, formPassword: action.payload, errorMessage: '', error: false
+      };
     case FORM_PASSWORD_REPEAT_INPUT_VALUE:
-      return { ...state, formPasswordRepeat: action.payload, errorMessage: '', error: false };
+      return {
+        ...state, formPasswordRepeat: action.payload, errorMessage: '', error: false
+      };
     case FORM_DESCRIPTION_INPUT_VALUE:
-      return { ...state, formDescription: action.payload, errorMessage: '', error: false };
+      return {
+        ...state, formDescription: action.payload, errorMessage: '', error: false
+      };
     case FORM_USER_TYPE_INPUT_VALUE:
-      return { ...state, formUserType: action.payload, errorMessage: '', error: false };
+      return {
+        ...state, formUserType: action.payload, errorMessage: '', error: false
+      };
     case PASSWORD_EQUAL_ERROR:
       return {
         ...state,
