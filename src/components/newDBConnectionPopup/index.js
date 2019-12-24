@@ -24,7 +24,7 @@ const NewConnection = ({
       isVisible={isVisible}
       popupClassName={styles.newUserPopup}
       okButtonType="submit"
-      okButton={true}
+      okButton
       body={<NewConnectionForm />}
     />
   );

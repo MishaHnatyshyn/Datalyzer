@@ -8,8 +8,8 @@ import DataContainer from '../shared/DataContainer';
 import ModelMenuLink from '../ModelMenuLink';
 import styles from './reportDataSection.module.scss';
 import {
-  getDimensions, getDimensionsForDisplay,
-  getFacts, getFactsForDisplay,
+  getDimensionsForDisplay,
+  getFactsForDisplay,
   getReportModels,
   getSelectedDimension,
   getSelectedFact,
@@ -25,18 +25,18 @@ import {
 import ReportDataFieldsList from './ReportDataFieldsList';
 
 const ReportDataSection = ({
-                             selectedModel,
-                             selectModel,
-                             deselectModel,
-                             fetchModels,
-                             models,
-                             facts,
-                             dimensions,
-                             selectedDimension,
-                             selectedFact,
-                             deleteFact,
-                             deleteDimension,
-                           }) => {
+  selectedModel,
+  selectModel,
+  deselectModel,
+  fetchModels,
+  models,
+  facts,
+  dimensions,
+  selectedDimension,
+  selectedFact,
+  deleteFact,
+  deleteDimension,
+}) => {
   useEffect(() => {
     fetchModels();
   }, []);

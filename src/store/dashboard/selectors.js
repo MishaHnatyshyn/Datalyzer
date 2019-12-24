@@ -8,3 +8,4 @@ export const getDashboardsCountData = compose(
   getDashboardsCount
 );
 export const getSearchInputText = compose(prop('search'), root);
+export const getDashboardForDelete = compose(prop('dashboardForDelete'), root);

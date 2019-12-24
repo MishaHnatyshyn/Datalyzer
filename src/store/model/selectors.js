@@ -17,6 +17,12 @@ export const getName = compose(prop('name'), root);
 export const getErrorMessage = compose(prop('errorMessage'), root);
 export const getModelForRenaming = compose(prop('modelForRenaming'), root);
 
+export const getUserModelsCount = compose(prop('length'), getModels);
+export const getUserModelCountData = compose(
+  (count) => ({ count, isLoading: false }),
+  getUserModelsCount
+);
+
 export const getPaging = createSelector(
   [getCurrentPage, getLastLoadedPage],
   (currentPage, lastLoadedPage) => ({ currentPage, lastLoadedPage }),

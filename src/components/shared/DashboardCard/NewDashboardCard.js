@@ -1,4 +1,6 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, {
+  useState, useRef, useCallback, useEffect
+} from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { createStructuredSelector } from 'reselect';
@@ -6,10 +8,12 @@ import { connect } from 'react-redux';
 import styles from './dashboardCard.module.scss';
 import NewModeInput from '../NewModeInput';
 import { getNewDashboardName } from '../../../store/createReport/selectors';
-import { changeNewDashboardName } from '../../../store/createReport/actions';
-import NextButton from "../NextButton";
+import { changeNewDashboardName, createReport } from '../../../store/createReport/actions';
+import NextButton from '../NextButton';
 
-const NewDashboardCard = ({ selected, onClick, changeNewDashboardName, newDashboardName }) => {
+const NewDashboardCard = ({
+  selected, onClick, changeNewDashboardName, newDashboardName, createReport
+}) => {
   const [isOpened, setOpened] = useState(false);
   const popupRef = useRef(null);
   const buttonRef = useRef(null);
@@ -33,7 +37,10 @@ const NewDashboardCard = ({ selected, onClick, changeNewDashboardName, newDashbo
       <button
         ref={buttonRef}
         className={classnames(styles.container, styles.newDashboard, selected)}
-        onClick={() => setOpened(!isOpened)}
+        onClick={() => {
+          onClick();
+          setOpened(!isOpened);
+        }}
       >
         <img src="/images/newDashboard.png" alt="dashboard" />
         <p className={styles.name}>New dashboard</p>
@@ -48,7 +55,7 @@ const NewDashboardCard = ({ selected, onClick, changeNewDashboardName, newDashbo
             placeholder="New dashboard name"
           />
           <div className={styles.buttonContainer}>
-            <NextButton disableNextButton={false} setNextStep={() => {}} text="Create report" />
+            <NextButton disableNextButton={!newDashboardName} setNextStep={createReport} text="Create report" />
           </div>
         </div>
       )}
@@ -65,6 +72,7 @@ NewDashboardCard.propTypes = {
   newDashboardName: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   selected: PropTypes.string,
+  createReport: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -73,6 +81,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch) => ({
   changeNewDashboardName: (e) => dispatch(changeNewDashboardName(e.target.value)),
+  createReport: () => dispatch(createReport())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewDashboardCard);
