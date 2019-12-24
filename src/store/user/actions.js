@@ -34,9 +34,9 @@ export const createStart = createAction(CREATE_START);
 
 export const showPopup = () => async (dispatch) => {
   dispatch(displayCustomPopup(PopupTypes.CHANGE_PASSWORD));
+  dispatch(onCloseAction());
 };
 export const onClose = () => async (dispatch) => {
-  dispatch(onCloseAction());
   dispatch(closePopup());
 };
 export const getUserData = () => async (dispatch) => {

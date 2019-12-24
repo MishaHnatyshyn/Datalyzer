@@ -6,7 +6,7 @@ import DataCard from '../shared/DataCard';
 import AdminCardDataItem from '../shared/AdminCardDataItem';
 import { displayCustomPopup } from '../../store/popups/actions';
 import PopupTypes from '../../store/popups/popupTypes';
-import { setModelForDeleting, setModelForRenaming } from '../../store/model/actions';
+import { setModelForDeleting } from '../../store/model/actions';
 
 const getStatusName = (isActive) => (isActive ? 'active' : 'disabled');
 
@@ -28,15 +28,12 @@ const ModelsDataCard = ({
   const onDelete = useCallback(() => {
     deleteModel(id);
   }, [id, deleteModel]);
-  const onUpdate = useCallback(() => {
-    updateModel(id);
-  }, [id, updateModel]);
   return (
     <DataCard
       caption={name}
       secondIcon="/images/controls.png"
       thirdIcon="/images/cross.png"
-      onSecondButtonClick={onUpdate}
+      onSecondButtonClick={updateModel}
       onThirdButtonClick={onDelete}
     >
       <AdminCardDataItem name="Connection name" value={connection} />
@@ -65,10 +62,7 @@ ModelsDataCard.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  updateModel: (id) => {
-    dispatch(setModelForRenaming(id));
-    dispatch(displayCustomPopup(PopupTypes.RENAME_MODEL));
-  },
+  updateModel: () => {},
   deleteModel: (id) => {
     dispatch(setModelForDeleting(id));
     dispatch(displayCustomPopup(PopupTypes.DELETE_MODEL));
