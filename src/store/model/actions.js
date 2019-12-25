@@ -25,7 +25,12 @@ import {
   RENAME_MODEL,
 } from './types';
 import {
-  getPaging, getModelsSearchPayload, getModelsCountData, getModelForDeleting, getModelForRenaming
+  getPaging,
+  getModelsSearchPayload,
+  getModelsCountData,
+  getModelForDeleting,
+  getModelForRenaming,
+  getName
 } from './selectors';
 import { del, get, put } from '../../utils/http';
 import {
@@ -126,34 +131,24 @@ export const deleteModel = () => async (dispatch, getState) => {
 };
 
 export const renameModel = () => async (dispatch, getState) => {
+  const name = getName(getState());
+  const modelId = getModelForRenaming(getState());
+  if (!name) {
+    return dispatch(emptyFieldsError());
+  }
+  dispatch(changeNameStart());
   try {
-    const {
-      models: {
+    const data = await put(createModelRenameRoute(modelId), {
+      data: {
         name,
       }
-    } = getState();
-    const modelId = getModelForRenaming(getState());
-    if (!name) {
-      return dispatch(emptyFieldsError());
-    }
-    dispatch(changeNameStart());
-    try {
-      console.log(modelId);
-      console.log('====================================')
-      const data = await put(createModelRenameRoute(modelId), {
-        data: {
-          name,
-        }
-      });
-      dispatch(changeNameSuccess(data));
-      dispatch(onClose());
-      dispatch(displayCustomPopup(PopupTypes.RENAME_MODEL_SUCCESS));
-    } catch (e) {
-      console.log(e);
-      dispatch(changeNameFailure());
-      dispatch(displayCustomPopup(PopupTypes.RENAME_MODEL_FAILURE));
-    }
+    });
+    dispatch(changeNameSuccess(data));
+    dispatch(onClose());
+    dispatch(displayCustomPopup(PopupTypes.RENAME_MODEL_SUCCESS));
   } catch (e) {
-    console.error(e);
+    console.log(e);
+    dispatch(changeNameFailure());
+    dispatch(displayCustomPopup(PopupTypes.RENAME_MODEL_FAILURE));
   }
 };
