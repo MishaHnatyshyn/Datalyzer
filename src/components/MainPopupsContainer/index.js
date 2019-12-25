@@ -22,6 +22,8 @@ import DeleteUserSuccessPopup from '../DeleteUserPopup/DeleteUserSuccessPopup';
 import DeleteUserErrorPopup from '../DeleteUserPopup/DeleteUserErrorPopup';
 import DeleteUserPopup from '../DeleteUserPopup/DeleteUserPopup';
 import ChangePassPopup from '../ChangePassPopup';
+import { RENAME_MODEL_SUCCESS_MESSAGE, RENAME_MODEL_FAILURE_MESSAGE } from '../../store/model/constants';
+import RenameModelPopup from '../RenameModelPopup/renameModelPopup';
 import {
   CHANGE_PASSWORD_SUCCESS_MESSAGE,
   CHANGE_PASSWORD_FAILURE_MESSAGE,
@@ -67,6 +69,14 @@ const MainPopupsContainer = ({ closePopup, text, currentPopup }) => {
       );
     case PopupTypes.CHANGE_PASSWORD_FAILURE:
       return <ErrorPopup onClose={closePopup} text={CHANGE_PASSWORD_FAILURE_MESSAGE} isVisible />;
+    case PopupTypes.RENAME_MODEL:
+      return <RenameModelPopup />;
+    case PopupTypes.RENAME_MODEL_FAILURE:
+      return <ErrorPopup onClose={closePopup} text={RENAME_MODEL_FAILURE_MESSAGE} isVisible />;
+    case PopupTypes.RENAME_MODEL_SUCCESS:
+      return (
+        <InformationPopup onClose={closePopup} text={RENAME_MODEL_SUCCESS_MESSAGE} isVisible />
+      );
     case PopupTypes.DELETE_DASHBOARD:
       return <DeleteDashboardConfirmPopup />;
     case PopupTypes.DELETE_SUCCESS:
