@@ -1,16 +1,18 @@
 import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { createStructuredSelector } from 'reselect';
 import styles from './loginForm.module.scss';
 import LoginCaption from './LoginCaption';
 import LoginButton from './LoginButton';
 import Input from '../../shared/Input';
 import {
-  getPassword, getUsername, getErrorMessage, isError
+  getPassword, getUsername, getErrorMessage, isError, isLoading
 } from '../../../store/login/selectors';
 import { changePasswordValue, changeUsernameValue, login } from '../../../store/login/actions';
 import AlertMessage from '../../shared/AlertMessage';
 import { preventDefaultHandler } from '../../../utils';
+import Loader from '../../shared/Loader';
 
 const LoginForm = ({
   username,
@@ -20,6 +22,7 @@ const LoginForm = ({
   submitForm,
   isError,
   errorMessage,
+  isLoading
 }) => {
   const formHandler = useMemo(() => preventDefaultHandler(submitForm), [submitForm]);
   const alertClasses = useMemo(() => [styles.error, isError ? styles.visible : styles.hidden], [
@@ -42,7 +45,10 @@ const LoginForm = ({
         <AlertMessage message={errorMessage} classes={alertClasses}>
           <img src="/images/report.png" alt="error message" />
         </AlertMessage>
-        <LoginButton />
+        <div className={styles.loginButtonContainer}>
+          { isLoading && <Loader classes={styles.spinner} /> }
+          <LoginButton />
+        </div>
       </form>
     </div>
   );
@@ -55,14 +61,16 @@ LoginForm.propTypes = {
   changeUsername: PropTypes.func.isRequired,
   submitForm: PropTypes.func.isRequired,
   isError: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  username: getUsername(state),
-  password: getPassword(state),
-  isError: isError(state),
-  errorMessage: getErrorMessage(state),
+const mapStateToProps = createStructuredSelector({
+  username: getUsername,
+  password: getPassword,
+  isError,
+  errorMessage: getErrorMessage,
+  isLoading
 });
 
 const mapDispatchToProps = (dispatch) => ({
