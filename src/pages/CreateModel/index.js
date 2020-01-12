@@ -14,8 +14,14 @@ import RelationSection from '../../components/RelationSection';
 import { displayCustomPopup } from '../../store/popups/actions';
 import PopupTypes from '../../store/popups/popupTypes';
 import { changeModelName, resetCreateModelState } from '../../store/createModel/actions';
+import UsersAccessToModel from '../UsersAccessToModel';
 
-const StepsHeaders = ['Select Database Connection', 'Add tables to model', 'Add relations'];
+const StepsHeaders = [
+  'Select Database Connection',
+  'Add tables to the model',
+  'Add relations',
+  'Add access to the model',
+];
 
 const modelNameErrorClasses = classnames(styles.nameInput, styles.nameInputError);
 
@@ -24,7 +30,7 @@ const CreateModel = ({
 }) => {
   useEffect(() => reset, []);
   const nameInputClasses = useMemo(
-    () => (activeStep === 3 && modelName.length === 0 ? modelNameErrorClasses : styles.nameInput),
+    () => (activeStep === 4 && modelName.length === 0 ? modelNameErrorClasses : styles.nameInput),
     [activeStep, modelName],
   );
   const headerText = useMemo(() => StepsHeaders[activeStep - 1], [activeStep]);
@@ -38,7 +44,7 @@ const CreateModel = ({
           placeholder="Type model name..."
           value={modelName}
         />
-        <StepsMenu stepsAmount={3} />
+        <StepsMenu stepsAmount={4} />
         <div className={styles.buttonContainer}>
           <CancelButton onClick={cancel}>cancel</CancelButton>
         </div>
@@ -48,6 +54,7 @@ const CreateModel = ({
         {activeStep === 1 && <ConnectionCardList />}
         {activeStep === 2 && <TablesSelection />}
         {activeStep === 3 && <RelationSection />}
+        {activeStep === 4 && <UsersAccessToModel />}
       </div>
 
       <StepMenuButtons classes={styles.stepsButton} />

@@ -33,10 +33,10 @@ const StepMenuButtons = ({
   return (
     <div className={classnames(styles.buttonsContainer, classes)}>
       {activeStep > 1 && <PrevButton setPrevStep={setPrevStep} />}
-      {activeStep < 3 && (
+      {activeStep < 4 && (
         <NextButton text="Next" disableNextButton={disableNextButton} setNextStep={setNextStep} />
       )}
-      {activeStep === 3 && (
+      {activeStep === 4 && (
         <NextButton
           disableNextButton={disabledCreateModelButton}
           setNextStep={handleCreateModelButton}

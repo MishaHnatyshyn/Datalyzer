@@ -13,6 +13,7 @@ export const getTables = compose(prop('tables'), root);
 export const getModelItems = compose(prop('modelItems'), root);
 export const getRelations = compose(prop('relations'), root);
 export const getModelName = compose(prop('name'), root);
+export const getUsersWithAccess = compose(prop('usersWithAccess'), root);
 export const getModelItemsCount = compose(prop('length'), getModelItems);
 
 export const getSelectedRelations = compose(getFormattedRelations, getRelations);
@@ -24,10 +25,12 @@ export const getDataForCreatingModel = createSelector(
   getFormattedModelItems,
   getSelectedConnection,
   getModelName,
-  (relations, items, connectionId, name) => ({
+  getUsersWithAccess,
+  (relations, items, connectionId, name, users) => ({
     relations,
     items,
     connectionId,
     name,
+    users
   }),
 );
