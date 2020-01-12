@@ -33,6 +33,16 @@
   visibility: visible;
 }
 
+.spinner {
+  width: 100%;
+  opacity: .7;
+  position: absolute;
+}
+
+.loginButtonContainer {
+  position: relative;
+}
+
 @media all and (max-width: $tablet-width) {
   .loginForm {
     width: 70%;

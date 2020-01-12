@@ -7,6 +7,7 @@ import {
   LOGIN_SUCCESS,
   EMPTY_FIELDS_ERROR,
   REMOVE_TOKEN,
+  LOGIN_START,
 } from './types';
 import { post } from '../../utils/http';
 import { LOGIN_ENDPOINT, LOGIN_URL } from '../../config';
@@ -22,6 +23,7 @@ export const changeUsernameValue = createAction(USERNAME_INPUT_VALUE, (value) =>
 export const changePasswordValue = createAction(PASSWORD_INPUT_VALUE, (value) => value);
 export const loginSuccess = createAction(LOGIN_SUCCESS, (data) => data);
 export const loginFailure = createAction(LOGIN_FAILURE);
+export const loginStart = createAction(LOGIN_START);
 export const emptyFieldsError = createAction(EMPTY_FIELDS_ERROR);
 export const removeToken = createAction(REMOVE_TOKEN);
 
@@ -34,6 +36,7 @@ export const login = () => async (dispatch, getState) => {
     return dispatch(emptyFieldsError());
   }
 
+  dispatch(loginStart());
   try {
     const data = await post(LOGIN_ENDPOINT, { data: { username: name, password } });
     const {
