@@ -64,7 +64,7 @@ const DashboardMenu = ({
       <div>
         {
           dashboards.map(({ name, id }) => (
-            <Link to={`${id}`} key={id} className={styles.link}>
+            <Link to={id} key={id} className={styles.link}>
               <span className={styles.item}>
                 {name}
               </span>
