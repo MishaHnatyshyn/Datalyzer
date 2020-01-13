@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { createStructuredSelector } from 'reselect';
 import DataCardGrid from '../../components/shared/DataCardGrid';
 import NoResult from '../../components/shared/NoResult';
 import DashboardDataCard from '../../components/DashboardDataCard';
 import { fetchDashboards } from '../../store/dashboard/actions';
 import DashboardsPageHeader from './DashboardsPageHeader';
-import { createStructuredSelector } from 'reselect';
 import { getDashboards } from '../../store/dashboard/selectors';
 
 const DashboardsList = ({ dashboards, fetchDashboards }) => {

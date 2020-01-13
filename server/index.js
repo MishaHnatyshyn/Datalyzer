@@ -1,8 +1,7 @@
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
 
-const index = fs.readFileSync(path.join(__dirname, '../dist/index.html'));
+const index = path.join(__dirname, '../dist/index.html');
 const app = express();
 const port = process.env.PORT || 8080;
 

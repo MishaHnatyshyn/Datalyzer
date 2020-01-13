@@ -5,7 +5,7 @@ import DraggableTableCard from '../shared/DraggableTableCard';
 import styles from './reportDataSection.module.scss';
 
 const ReportDataFieldsList = ({
-  data, type, selectedValue, onDelete
+  data, type, onDelete
 }) => (
   <div>
     {
@@ -13,20 +13,20 @@ const ReportDataFieldsList = ({
         ? (
           <Scrollbars autoHeight={240} autoHeightMin={240}>
             {data.map(
-              ({ name, id, active, enabled }) => {
-                return (
-                  <DraggableTableCard
-                    displayName={name}
-                    data={[
-                      { dataKey: 'id', value: id },
-                      { dataKey: 'type', value: type },
-                    ]}
-                    draggable={enabled && !active}
-                    classes={active ? styles.activeCard : !enabled ? styles.disabledCard : ''}
-                    onDelete={active ? onDelete : null}
-                  />
-                );
-              }
+              ({
+                name, id, active, enabled
+              }) => (
+                <DraggableTableCard
+                  displayName={name}
+                  data={[
+                    { dataKey: 'id', value: id },
+                    { dataKey: 'type', value: type },
+                  ]}
+                  draggable={enabled && !active}
+                  classes={active ? styles.activeCard : !enabled ? styles.disabledCard : ''}
+                  onDelete={active ? onDelete : null}
+                />
+              )
             )}
           </Scrollbars>
         )
@@ -47,7 +47,6 @@ ReportDataFieldsList.propTypes = {
   })), null]).isRequired,
   type: PropTypes.string.isRequired,
   onDelete: PropTypes.func.isRequired,
-  selectedValue: PropTypes.oneOf([null, PropTypes.number]).isRequired
 };
 
 export default ReportDataFieldsList;

@@ -2,7 +2,9 @@ import {
   USERNAME_INPUT_VALUE,
   PASSWORD_INPUT_VALUE,
   LOGIN_SUCCESS,
-  LOGIN_FAILURE, EMPTY_FIELDS_ERROR
+  LOGIN_FAILURE,
+  EMPTY_FIELDS_ERROR,
+  LOGIN_START,
 } from './types';
 import { EMPTY_FIELDS_ERROR_MESSAGE, LOGIN_ERROR_MESSAGE } from './constants';
 
@@ -10,6 +12,7 @@ const initialState = {
   password: '',
   username: '',
   token: '',
+  isLoading: false,
   error: false,
   errorMessage: ''
 };
@@ -26,6 +29,13 @@ export default function loginReducer(state = initialState, action) {
         token: action.payload,
         username: '',
         password: '',
+        error: false,
+        isLoading: false,
+      };
+    case LOGIN_START:
+      return {
+        ...state,
+        isLoading: true,
         error: false
       };
     case LOGIN_FAILURE:
@@ -33,6 +43,7 @@ export default function loginReducer(state = initialState, action) {
         ...state,
         password: '',
         error: true,
+        isLoading: false,
         errorMessage: LOGIN_ERROR_MESSAGE
       };
     case EMPTY_FIELDS_ERROR:

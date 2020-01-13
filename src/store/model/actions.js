@@ -16,14 +16,29 @@ import {
   DELETE_MODEL_SUCCESS,
   DELETE_MODEL_ERROR,
   DELETE_MODEL,
+  EMPTY_FIELDS_ERROR,
+  CHANGE_NAME,
+  CHANGE_NAME_START,
+  CHANGE_NAME_SUCCESS,
+  CHANGE_NAME_FAILURE,
+  ONCLOSE_ACTION,
+  RENAME_MODEL,
 } from './types';
 import {
-  getPaging, getModelsSearchPayload, getModelsCountData, getModelForDeleting
+  getPaging,
+  getModelsSearchPayload,
+  getModelsCountData,
+  getModelForDeleting,
+  getModelForRenaming,
+  getName
 } from './selectors';
-import { del, get } from '../../utils/http';
-import { ADMIN_MODELS_ENDPOINT, ADMIN_MODELS_COUNT_ENDPOINT } from '../../config';
-import { createModelDeleteRoute } from '../../utils/routeCreators';
-import { displayCustomPopup } from '../popups/actions';
+import { del, get, put } from '../../utils/http';
+import {
+  ADMIN_MODELS_ENDPOINT,
+  ADMIN_MODELS_COUNT_ENDPOINT,
+} from '../../config';
+import { createModelDeleteRoute, createModelRenameRoute } from '../../utils/routeCreators';
+import { displayCustomPopup, closePopup } from '../popups/actions';
 import PopupTypes from '../popups/popupTypes';
 
 export const fetchStart = createAction(FETCH_START);
@@ -43,6 +58,18 @@ export const deleteModelStart = createAction(DELETE_MODEL_START);
 export const deleteModelSuccess = createAction(DELETE_MODEL_SUCCESS);
 export const deleteModelError = createAction(DELETE_MODEL_ERROR);
 
+export const emptyFieldsError = createAction(EMPTY_FIELDS_ERROR);
+export const changeNameValue = createAction(CHANGE_NAME, (value) => value);
+export const onCloseAction = createAction(ONCLOSE_ACTION);
+export const changeNameSuccess = createAction(CHANGE_NAME_SUCCESS);
+export const changeNameFailure = createAction(CHANGE_NAME_FAILURE);
+export const changeNameStart = createAction(CHANGE_NAME_START);
+export const setModelForRenaming = createAction(RENAME_MODEL, (value) => value);
+
+export const onClose = () => async (dispatch) => {
+  dispatch(closePopup());
+  dispatch(onCloseAction());
+};
 export const searchModels = () => async (dispatch, getState) => {
   const { itemsPerPage, search } = getModelsSearchPayload(getState());
   const params = { page: 1, itemsPerPage };
@@ -100,5 +127,28 @@ export const deleteModel = () => async (dispatch, getState) => {
   } catch (e) {
     dispatch(deleteModelError());
     dispatch(displayCustomPopup(PopupTypes.DELETE_MODEL_ERROR));
+  }
+};
+
+export const renameModel = () => async (dispatch, getState) => {
+  const name = getName(getState());
+  const modelId = getModelForRenaming(getState());
+  if (!name) {
+    return dispatch(emptyFieldsError());
+  }
+  dispatch(changeNameStart());
+  try {
+    const data = await put(createModelRenameRoute(modelId), {
+      data: {
+        name,
+      }
+    });
+    dispatch(changeNameSuccess(data));
+    dispatch(onClose());
+    dispatch(displayCustomPopup(PopupTypes.RENAME_MODEL_SUCCESS));
+  } catch (e) {
+    console.log(e);
+    dispatch(changeNameFailure());
+    dispatch(displayCustomPopup(PopupTypes.RENAME_MODEL_FAILURE));
   }
 };

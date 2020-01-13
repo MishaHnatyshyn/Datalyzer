@@ -18,13 +18,13 @@ const Select = ({
   );
   const selectedValue = useMemo(() => {
     if (options[0] && options[0].name) {
-      const selectedOption = options.find(_ => _.value === value);
+      const selectedOption = options.find((_) => _.value === value);
       if (selectedOption) {
         return selectedOption.name;
       }
     }
     return value;
-  }, [value])
+  }, [value]);
   return (
     <div className={classnames(styles.container, classes)}>
       <div className={styles.selectedValue} onClick={() => handleDropDown(!openedDropDown)}>
@@ -46,7 +46,7 @@ const Select = ({
 
 Select.defaultProps = {
   classes: '',
-}
+};
 
 Select.propTypes = {
   options: PropTypes.arrayOf(PropTypes.oneOf([

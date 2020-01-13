@@ -1,11 +1,13 @@
-const defaultHander = () => {};
-class Movement {
-  constructor(pane, ghostpane, window, onUpdate = defaultHander) {
-    let minWidth = 60;
-    let minHeight = 40;
+/* eslint-disable */
 
-    let FULLSCREEN_MARGINS = -10;
-    let MARGINS = 4;
+const defaultHandler = () => {};
+
+class Movement {
+  constructor(pane, window, onUpdate = defaultHandler) {
+    const minWidth = 60;
+
+    const FULLSCREEN_MARGINS = -10;
+    const MARGINS = 4;
 
     let clicked = null;
     let onRightEdge,
@@ -15,8 +17,6 @@ class Movement {
 
     let rightScreenEdge,
       bottomScreenEdge;
-
-    let preSnapped;
 
     let b,
       x,
@@ -47,27 +47,28 @@ class Movement {
 
     function triggerOnUpdate() {
       if (timeout) {
-        clearTimeout(timeout)
+        clearTimeout(timeout);
       }
 
       timeout = setTimeout(() => {
         const { style } = pane;
-        onUpdate({width: style.width, left: style.left, top: style.top})
+        onUpdate({
+          width: style.width,
+          left: style.left,
+          top: style.top
+        });
       }, 100);
     }
 
-    function setBounds(element, x, y, w, h) {
+    function setBounds(props) {
+      const { element } = props;
+      let { x = element.style.left, y = element.style.top, w = element.style.width } = props;
+
       element.style.left = x + 'px';
       element.style.top = y + 'px';
       element.style.width = w + 'px';
-      element.style.height = h + 'px';
 
-      triggerOnUpdate()
-    }
-
-    function hintHide() {
-      setBounds(ghostpane, b.left, b.top, b.width, b.height);
-      ghostpane.style.opacity = 0;
+      triggerOnUpdate();
     }
 
     function onTouchDown(e) {
@@ -110,8 +111,7 @@ class Movement {
     }
 
     function canMove() {
-      return x > 0 && x < b.width && y > 0 && y < b.height
-        && y < 30;
+      return x > 0 && x < b.width && y > 0 && y < b.height && y < 30;
     }
 
     function calc(e) {
@@ -132,11 +132,8 @@ class Movement {
 
     function onMove(ee) {
       calc(ee);
-
       e = ee;
-
       redraw = true;
-
     }
 
     function animate() {
@@ -148,65 +145,34 @@ class Movement {
       redraw = false;
 
       if (clicked && clicked.isResizing) {
-
+        b = pane.getBoundingClientRect();
         if (
           (clicked.onRightEdge && clicked.onBottomEdge)) {
-          pane.style.width = Math.max(x, minWidth) + 'px';
-          triggerOnUpdate();
-        }
+          let newWidth = Math.max(x, minWidth);
 
-        hintHide();
+          if (b.left + newWidth > rightScreenEdge) {
+            newWidth -= Math.abs(((b.left + newWidth) - rightScreenEdge));
+          }
+
+          setBounds({
+            element: pane,
+            w: newWidth
+          });
+        }
 
         return;
       }
 
       if (clicked && clicked.isMoving) {
-
-        if (b.top < FULLSCREEN_MARGINS || b.left < FULLSCREEN_MARGINS || b.right > window.offsetWidth - FULLSCREEN_MARGINS || b.bottom > window.offsetHeight - FULLSCREEN_MARGINS) {
-          // hintFull();
-          setBounds(ghostpane, 0, 0, window.offsetWidth, window.offsetHeight);
-          ghostpane.style.opacity = 0.2;
-        } else if (b.top < MARGINS) {
-          // hintTop();
-          setBounds(ghostpane, 0, 0, window.offsetWidth, window.offsetHeight / 2);
-          ghostpane.style.opacity = 0.2;
-        } else if (b.left < MARGINS) {
-          // hintLeft();
-          setBounds(ghostpane, 0, 0, window.offsetWidth / 2, window.offsetHeight);
-          ghostpane.style.opacity = 0.2;
-        } else if (b.right > rightScreenEdge) {
-          // hintRight();
-          setBounds(ghostpane, window.offsetWidth / 2, 0, window.offsetWidth / 2, window.offsetHeight);
-          ghostpane.style.opacity = 0.2;
-        } else if (b.bottom > bottomScreenEdge) {
-          // hintBottom();
-          setBounds(ghostpane, 0, window.offsetHeight / 2, window.offsetWidth, window.offsetWidth / 2);
-          ghostpane.style.opacity = 0.2;
-        } else {
-          hintHide();
-        }
-
-        if (preSnapped) {
-          setBounds(pane,
-            e.clientX - preSnapped.width / 2,
-            e.clientY - Math.min(clicked.y, preSnapped.height),
-            preSnapped.width,
-            preSnapped.height
-          );
-          return;
-        }
-
         // moving
-        pane.style.top = (e.clientY - clicked.y) + 'px';
-        pane.style.left = (e.clientX - clicked.x) + 'px';
-        triggerOnUpdate();
-
+        setBounds({
+          element: pane,
+          x: e.clientX - clicked.x,
+          y: e.clientY - clicked.y,
+        });
         return;
       }
 
-      // This code executes when mouse moves without clicking
-
-      // style cursor
       if (onRightEdge && onBottomEdge) {
         pane.style.cursor = 'nwse-resize';
       } else if (canMove()) {
@@ -222,37 +188,22 @@ class Movement {
       calc(e);
 
       if (clicked && clicked.isMoving) {
-        // Snap
-        let snapped = {
-          width: b.width,
-          height: b.height
-        };
+        let x = e.clientX - clicked.x;
+        let y = e.clientY - clicked.y;
 
-        if (b.top < FULLSCREEN_MARGINS || b.left < FULLSCREEN_MARGINS || b.right > window.offsetWidth - FULLSCREEN_MARGINS || b.bottom > window.offsetHeight - FULLSCREEN_MARGINS) {
-          // hintFull();
-          setBounds(pane, 0, 0, window.offsetWidth, window.offsetHeight);
-          preSnapped = snapped;
-        } else if (b.top < MARGINS) {
-          // hintTop();
-          setBounds(pane, 0, 0, window.offsetWidth, window.offsetHeight / 2);
-          preSnapped = snapped;
-        } else if (b.left < MARGINS) {
-          // hintLeft();
-          setBounds(pane, 0, 0, window.offsetWidth / 2, window.offsetHeight);
-          preSnapped = snapped;
-        } else if (b.right > rightScreenEdge) {
-          // hintRight();
-          setBounds(pane, window.offsetWidth / 2, 0, window.offsetWidth / 2, window.offsetHeight);
-          preSnapped = snapped;
-        } else if (b.bottom > bottomScreenEdge) {
-          // hintBottom();
-          setBounds(pane, 0, window.offsetHeight / 2, window.offsetWidth, window.offsetWidth / 2);
-          preSnapped = snapped;
-        } else {
-          preSnapped = null;
-        }
+          if (x < FULLSCREEN_MARGINS) {
+            x = 0;
+          } else if (x + pane.offsetWidth > rightScreenEdge) {
+            x = x - Math.abs((pane.offsetWidth + x - rightScreenEdge));
+          }
 
-        hintHide();
+          if (y < FULLSCREEN_MARGINS) {
+            y = 0;
+          } else if (y + pane.offsetHeight > bottomScreenEdge) {
+            y = y - Math.abs((pane.offsetHeight + y - bottomScreenEdge));
+          }
+
+        setBounds({element: pane, x, y});
       }
 
       clicked = null;

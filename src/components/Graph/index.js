@@ -1,9 +1,13 @@
-import React, { createRef, useEffect, useCallback, useState } from 'react';
+import React, {
+  createRef, useEffect, useCallback, useState
+} from 'react';
 import classNames from 'classnames';
-import { Doughnut, Pie, Line, Bar, Radar, HorizontalBar } from 'react-chartjs-2';
+import {
+  Doughnut, Pie, Line, Bar, Radar, HorizontalBar
+} from 'react-chartjs-2';
 import PropTypes from 'prop-types';
-import styles from './graph.module.scss';
 import { connect } from 'react-redux';
+import styles from './graph.module.scss';
 import Movement from './moveFunction';
 import { updateReport } from '../../store/userDashboard/actions';
 
@@ -22,7 +26,7 @@ const defaultOptions = {
   },
   tooltips: {
     callbacks: {
-      label: function (tooltipItem) {
+      label(tooltipItem) {
         return tooltipItem.yLabel;
       }
     }
@@ -45,13 +49,12 @@ const Graph = (props) => {
   } = props;
 
   const paneRef = createRef();
-  const ghostpaneRef = createRef();
   const dimension = dimensions[0];
   const fact = facts[0];
   const data = {
     labels: items.map((item) => item[dimension]),
     datasets: [{
-      data: items.map(item => item[fact]),
+      data: items.map((item) => item[fact]),
       backgroundColor: items.map(() => getRandomColor())
     }],
     legend: {
@@ -62,7 +65,7 @@ const Graph = (props) => {
     }
   };
 
-  const [defaultStyles, setStyles] = useState({
+  const [defaultStyles] = useState({
     width: startWidth,
     left: startLeftPosition,
     top: startTopPosition,
@@ -74,7 +77,7 @@ const Graph = (props) => {
 
   useEffect(() => {
     const pane = paneRef.current;
-    const move = new Movement(pane, ghostpaneRef.current, viewPortRef.current, onUpdate);
+    const move = new Movement(pane, viewPortRef.current, onUpdate);
     if (disableMoveAndScale) {
       return move.removeEventListeners();
     }
@@ -85,20 +88,16 @@ const Graph = (props) => {
   const GraphToBuild = graphTypes[type];
 
   return (
-    <>
-      <div className={classNames(styles.pane, className)} ref={paneRef} style={defaultStyles}>
-        {
-          !disableMoveAndScale && (
-            <div className={styles.title}>
-              <img src="/public/images/dashboard/move.svg" className={styles.hint}/>
-            </div>
-          )
-        }
-        <GraphToBuild data={data} options={defaultOptions}/>
-      </div>
-      <div className={styles.ghostpane} ref={ghostpaneRef}>
-      </div>
-    </>
+    <div className={classNames(styles.pane, className)} ref={paneRef} style={defaultStyles}>
+      {
+        !disableMoveAndScale && (
+          <div className={styles.title}>
+            <img src="/public/images/dashboard/move.svg" className={styles.hint} alt="move" />
+          </div>
+        )
+      }
+      <GraphToBuild data={data} options={defaultOptions} />
+    </div>
   );
 };
 
@@ -107,7 +106,15 @@ Graph.propTypes = {
   disableMoveAndScale: PropTypes.bool,
   startLeftPosition: PropTypes.number,
   startTopPosition: PropTypes.number,
-  startWidth: PropTypes.number
+  startWidth: PropTypes.number,
+  items: PropTypes.arrayOf(PropTypes.shape()),
+  facts: PropTypes.arrayOf(PropTypes.shape()),
+  dimensions: PropTypes.arrayOf(PropTypes.shape()),
+  viewPortRef: PropTypes.shape(),
+  updateReport: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
+  className: PropTypes.string
+
 };
 
 Graph.defaultProps = {
@@ -116,15 +123,16 @@ Graph.defaultProps = {
   startTopPosition: 0,
   startWidth: 300,
   facts: [],
-  dimensions: []
+  dimensions: [],
+  items: [],
+  viewPortRef: {},
+  className: ''
 };
 
-const mapDispatchToProps = (disatch) => {
-  return {
-    updateReport: (id, data) => {
-      disatch(updateReport(id, data));
-    }
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  updateReport: (id, data) => {
+    dispatch(updateReport(id, data));
+  }
+});
 
 export default connect(null, mapDispatchToProps)(Graph);
