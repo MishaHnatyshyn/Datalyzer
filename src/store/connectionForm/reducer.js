@@ -113,7 +113,7 @@ export default function connectionFormsReducer(state = initialState, action) {
         username: state.connectionForEditing.username,
         password: state.connectionForEditing.password,
         nameConnection: state.connectionForEditing.name,
-        nameDB: state.connectionForEditing.name,
+        nameDB: state.connectionForEditing.db_name,
         error: false,
         isLoading: false,
       };
