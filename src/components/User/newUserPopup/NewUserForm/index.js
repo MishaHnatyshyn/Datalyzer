@@ -56,20 +56,11 @@ const NewUserForm = ({
     () => [errorMessage === PASS_EQUAL_ERROR_MESSAGE ? styles.visible : styles.hidden],
     [isError],
   );
-  const editFormStyle = useMemo(
-    () => [editForm ? styles.notDisplay : styles.display],
-    [editForm],
-  );
-  const addFormStyle = useMemo(
-    () => [editForm ? styles.display : styles.notDisplay],
-    [editForm],
-  );
   const alertClasses = useMemo(() => [isError ? styles.visible : styles.hidden], [isError]);
   return (
     <div className={styles.maxWidth}>
       <Caption classes={styles.newUserCaption}>
-        <p className={editFormStyle}> Add new user </p>
-        <p className={addFormStyle}> Edit user </p>
+        <p>{editForm ? 'Edit user' : 'Add new user'}</p>
       </Caption>
       <form>
         <div className={styles.inputFields}>
@@ -83,34 +74,36 @@ const NewUserForm = ({
             onChange={changeUsername}
             value={formUsername}
           />
-          <div className={editFormStyle}>
-            <label className={styles.label} htmlFor="formPassword">
+          {editForm ? '' : (
+            <div>
+              <label className={styles.label} htmlFor="formPassword">
               PASSWORD
-              <AlertMessage classes={alertClassesPassLen}>
-                <img src="/images/report.png" alt="error message" />
-              </AlertMessage>
-            </label>
-            <Input
-              id="formPassword"
-              type="password"
-              name="password"
-              onChange={changePassword}
-              value={formPassword}
-            />
-            <label className={styles.label} htmlFor="formPasswordRepeat">
+                <AlertMessage classes={alertClassesPassLen}>
+                  <img src="/images/report.png" alt="error message" />
+                </AlertMessage>
+              </label>
+              <Input
+                id="formPassword"
+                type="password"
+                name="password"
+                onChange={changePassword}
+                value={formPassword}
+              />
+              <label className={styles.label} htmlFor="formPasswordRepeat">
               REPEAT PASSWORD
-              <AlertMessage classes={alertClassesPassRepeat}>
-                <img src="/images/report.png" alt="error message" />
-              </AlertMessage>
-            </label>
-            <Input
-              id="formPasswordRepeat"
-              type="password"
-              name="formPasswordRepeat"
-              onChange={changePasswordRepeat}
-              value={formPasswordRepeat}
-            />
-          </div>
+                <AlertMessage classes={alertClassesPassRepeat}>
+                  <img src="/images/report.png" alt="error message" />
+                </AlertMessage>
+              </label>
+              <Input
+                id="formPasswordRepeat"
+                type="password"
+                name="formPasswordRepeat"
+                onChange={changePasswordRepeat}
+                value={formPasswordRepeat}
+              />
+            </div>
+          )}
           <label className={styles.label} htmlFor="formUserType">
             USER TYPE
           </label>

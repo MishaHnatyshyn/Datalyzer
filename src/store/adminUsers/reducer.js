@@ -167,11 +167,9 @@ export default function adminUsersReducer(state = initialState, action) {
       return {
         ...state,
         users: state.users.map(
-          (user) => {
-            return user.id === action.payload.id ? { ...user, ...action.payload } : user;
-          }
+          (user) => user.id === action.payload.id ? { ...user, ...action.payload } : user
         ),
-      }
+      };
     default:
       return state;
   }
