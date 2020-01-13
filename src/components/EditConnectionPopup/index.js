@@ -27,7 +27,7 @@ const EditConnection = ({
       popupClassName={styles.newUserPopup}
       okButtonType="submit"
       okButton
-      body={<NewConnectionForm />}
+      body={<NewConnectionForm editForm />}
     />
   );
 };
