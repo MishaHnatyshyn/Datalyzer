@@ -10,7 +10,12 @@ import {
   FORM_PASSWORD_REPEAT_INPUT_VALUE,
   PASSWORD_LENGTH_ERROR,
   PASSWORD_EQUAL_ERROR,
-  EMPTY_FIELDS_ERROR, ONCLOSE_ACTION,
+  EMPTY_FIELDS_ERROR,
+  ONCLOSE_ACTION,
+  NEW_USERNAME_INPUT_VALUE,
+  NEW_USERTYPE_INPUT_VALUE,
+  NEW_DESCRIPTION_INPUT_VALUE, USER_FOR_EDITING,
+  EDIT_SUCCESS,
 } from './types';
 import { EMPTY_FIELDS_ERROR_MESSAGE } from '../login/constants';
 import { PASS_LENGTH_ERROR_MESSAGE, PASS_EQUAL_ERROR_MESSAGE } from './constants';
@@ -27,6 +32,10 @@ const initialState = {
   formPasswordRepeat: '',
   formUserType: '',
   formDescription: '',
+  newUsername: '',
+  newUserType: '',
+  newDescription: '',
+  userForEditing: null,
 };
 
 export default function createUserReducer(state = initialState, action) {
@@ -109,6 +118,35 @@ export default function createUserReducer(state = initialState, action) {
         formUserType: '',
         formDescription: '',
         isError: false,
+        newUsername: '',
+        newUserType: '',
+        newDescription: '',
+        userForEditing: null,
+      };
+    case NEW_USERNAME_INPUT_VALUE:
+      return {
+        ...state, newUsername: action.payload, errorMessage: '', error: false
+      };
+    case NEW_USERTYPE_INPUT_VALUE:
+      return {
+        ...state, newUserType: action.payload, errorMessage: '', error: false
+      };
+    case NEW_DESCRIPTION_INPUT_VALUE:
+      return {
+        ...state, newDescription: action.payload, errorMessage: '', error: false
+      };
+    case USER_FOR_EDITING:
+      return {
+        ...state, userForEditing: action.payload, errorMessage: '', error: false
+      };
+    case EDIT_SUCCESS:
+      return {
+        ...state,
+        isCreatingInProgress: false,
+        isError: false,
+        newUsername: '',
+        newUserType: '',
+        newDescription: '',
       };
     default:
       return state;

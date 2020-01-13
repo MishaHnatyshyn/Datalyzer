@@ -7,6 +7,7 @@ import styles from './usersTable.module.scss';
 import { displayCustomPopup } from '../../../../store/popups/actions';
 import PopupTypes from '../../../../store/popups/popupTypes';
 import { setUserForDeleting } from '../../../../store/adminUsers/actions';
+import { setUserForEditing, showEditPopup } from '../../../../store/createUser/actions';
 
 const UsersTableCell = ({ content, className }) => (
   <td className={classNames(styles.usersCell, className)}>{content}</td>
@@ -25,10 +26,13 @@ const UsersTableEditButtonsComponent = ({ id, deleteUser, updateUser }) => {
   const onDelete = useCallback(() => {
     deleteUser(id);
   }, [id, deleteUser]);
+  const onUpdate = useCallback(() => {
+    updateUser(id);
+  }, [id, updateUser]);
 
   return (
     <div className={styles.usersCellButtons}>
-      <button onClick={updateUser}>
+      <button onClick={onUpdate}>
         <img src="/images/usersAdmin/edit-user@1X.png" alt="" />
       </button>
       <button onClick={onDelete}>
@@ -45,7 +49,10 @@ UsersTableEditButtonsComponent.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  updateUser: () => {},
+  updateUser: (id) => {
+    dispatch(setUserForEditing(id));
+    dispatch(showEditPopup());
+  },
   deleteUser: (id) => {
     dispatch(setUserForDeleting(id));
     dispatch(displayCustomPopup(PopupTypes.DELETE_USER));

@@ -13,7 +13,10 @@ import {
   CHANGE_SEARCH_INPUT,
   FETCH_COUNT_START,
   FETCH_COUNT_FAILURE,
-  FETCH_END, DELETE_USER, DELETE_USER_SUCCESS,
+  FETCH_END,
+  DELETE_USER,
+  DELETE_USER_SUCCESS,
+  EDIT_SUCCESS,
 } from './types';
 
 const initialState = {
@@ -159,6 +162,20 @@ export default function adminUsersReducer(state = initialState, action) {
           (user) => user.id !== state.userForDeleting,
         ),
         userForDeleting: null,
+      };
+    case EDIT_SUCCESS:
+      return {
+        ...state,
+        users: state.users.map(
+          (user) => {
+            if (user.id === action.payload.id) {
+              user.username = action.payload.username ? action.payload.username : user.username;
+              user.user_type_id = action.payload.user_type_id ? action.payload.user_type_id : user.user_type_id;
+              user.description = action.payload.description ? action.payload.description : user.description;
+            }
+            return user;
+          }
+        ),
       };
     default:
       return state;
