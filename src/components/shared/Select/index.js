@@ -32,8 +32,8 @@ const Select = ({
     if (disabled) {
       return;
     }
-    handleDropDown(!openedDropDown)
-  }, [openedDropDown, disabled])
+    handleDropDown(!openedDropDown);
+  }, [openedDropDown, disabled]);
   return (
     <div className={classnames(styles.container, classes, disabled ? styles.disabled : '')} title={disabledText}>
       <div className={styles.selectedValue} onClick={handleClickOnSelect}>
