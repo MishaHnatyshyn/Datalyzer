@@ -136,6 +136,7 @@ export default function createUserReducer(state = initialState, action) {
         isError: false,
         formUsername: state.userForEditing.username,
         formDescription: state.userForEditing.description,
+        formUserType: state.userForEditing.user_type_id.toString(),
       };
     default:
       return state;
