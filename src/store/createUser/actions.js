@@ -16,6 +16,7 @@ import {
   ONCLOSE_ACTION,
   USER_FOR_EDITING,
   EDIT_SUCCESS,
+  SHOW_EDIT,
 } from './types';
 import { post, put } from '../../utils/http';
 import { ADMIN_USERS_ENDPOINT } from '../../config';
@@ -46,7 +47,9 @@ export const changePasswordRepeatValue = createAction(
   (value) => value,
 );
 export const onClose = createAction(ONCLOSE_ACTION);
+export const showEdit = createAction(SHOW_EDIT);
 export const showEditPopup = () => async (dispatch) => {
+  dispatch(showEdit());
   dispatch(displayCustomPopup(PopupTypes.EDIT_USER));
 };
 export const setUserForEditing = createAction(USER_FOR_EDITING, (value) => value);
@@ -99,31 +102,21 @@ export const editUser = () => async (dispatch, getState) => {
       formUsername, formUserType, formDescription
     },
   } = getState();
-  const id = getUserForEditing(getState());
-  const newData = {};
-  if (formUsername) {
-    newData.username = formUsername;
-  }
-  if (formUserType) {
-    newData.user_type_id = Number(formUserType);
-  }
-  if (formDescription) {
-    newData.description = formDescription;
-  }
-  if (Object.keys(newData).length) {
-    try {
-      const data = await put(createUserEditRoute(id), {
-        data: newData,
-      });
-      dispatch(editUserSuccess(data));
-      dispatch(onCloseEdit());
-      dispatch(displayCustomPopup(PopupTypes.EDIT_USER_SUCCESS));
-    } catch (e) {
-      console.log(e);
-      dispatch(editUserFailure());
-      dispatch(displayCustomPopup(PopupTypes.EDIT_USER_FAILURE));
-    }
-  } else {
+  const user = getUserForEditing(getState());
+  try {
+    const data = await put(createUserEditRoute(user.id), {
+      data: {
+        username: formUsername,
+        user_type_id: Number(formUserType),
+        description: formDescription,
+      },
+    });
+    dispatch(editUserSuccess(data));
     dispatch(onCloseEdit());
+    dispatch(displayCustomPopup(PopupTypes.EDIT_USER_SUCCESS));
+  } catch (e) {
+    console.log(e);
+    dispatch(editUserFailure());
+    dispatch(displayCustomPopup(PopupTypes.EDIT_USER_FAILURE));
   }
 };

@@ -23,13 +23,21 @@ UsersTableCell.defaultProps = {
   className: '',
 };
 
-const UsersTableEditButtonsComponent = ({ id, deleteUser, updateUser }) => {
+const UsersTableEditButtonsComponent = ({ id, username, description, deleteUser, updateUser }) => {
   const onDelete = useCallback(() => {
     deleteUser(id);
   }, [id, deleteUser]);
   const onUpdate = useCallback(() => {
-    updateUser(id);
-  }, [id, updateUser]);
+    updateUser({
+      id,
+      username,
+      description,
+    });
+  }, [{
+    id,
+    username,
+    description,
+  }, updateUser]);
 
   return (
     <div className={styles.usersCellButtons}>
@@ -45,13 +53,15 @@ const UsersTableEditButtonsComponent = ({ id, deleteUser, updateUser }) => {
 
 UsersTableEditButtonsComponent.propTypes = {
   id: PropTypes.number.isRequired,
+  username: PropTypes.number.isRequired,
+  description: PropTypes.number.isRequired,
   deleteUser: PropTypes.func.isRequired,
   updateUser: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  updateUser: (id) => {
-    dispatch(setUserForEditing(id));
+  updateUser: (user) => {
+    dispatch(setUserForEditing(user));
     dispatch(showEditPopup());
   },
   deleteUser: (id) => {
@@ -102,7 +112,7 @@ const UsersTableRow = ({
 
       {!selectUser && (
         <UsersTableCell
-          content={<UsersTableEditButtons id={id} />}
+          content={<UsersTableEditButtons id={id} username={username} description={description} />}
           className={styles.usersCellEdit}
         />
       )}
