@@ -121,7 +121,8 @@ export const editConnectionAction = () => async (dispatch, getState) => {
       dispatch(displayCustomPopup(PopupTypes.EDIT_CONNECTION_SUCCESS));
     } catch (e) {
       console.log(e);
-      // dispatch(editConnectionFailure());
+      dispatch(editConnectionFailure());
+      dispatch(onCloseEdit());
       dispatch(displayCustomPopup(PopupTypes.EDIT_CONNECTION_FAILURE));
     }
   } else {
