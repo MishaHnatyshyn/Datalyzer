@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { preventDefaultHandler } from '../../utils';
 import BasePopup from '../shared/BasePopup';
 import styles from '../User/newUserPopup/newUserPopup.module.scss';
-import EditUserForm from './EditUserForm';
+import NewUserForm from '../User/newUserPopup/NewUserForm';
 import { editUser, onCloseEdit } from '../../store/createUser/actions';
 
 const EditUserPopup = ({
@@ -22,7 +22,7 @@ const EditUserPopup = ({
       popupClassName={styles.newUserPopup}
       okButtonType="submit"
       okButton
-      body={<EditUserForm />}
+      body={<NewUserForm editForm />}
     />
   );
 };

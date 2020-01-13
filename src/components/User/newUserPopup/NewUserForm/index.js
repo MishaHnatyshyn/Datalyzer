@@ -46,6 +46,7 @@ const NewUserForm = ({
   changeUserDescription,
   errorMessage,
   isError,
+  editForm,
 }) => {
   const alertClassesPassLen = useMemo(
     () => [errorMessage === PASS_LENGTH_ERROR_MESSAGE ? styles.visible : styles.hidden],
@@ -54,6 +55,10 @@ const NewUserForm = ({
   const alertClassesPassRepeat = useMemo(
     () => [errorMessage === PASS_EQUAL_ERROR_MESSAGE ? styles.visible : styles.hidden],
     [isError],
+  );
+  const editFormStyle = useMemo(
+    () => [editForm ? styles.notDisplay : styles.display],
+    [editForm],
   );
   const alertClasses = useMemo(() => [isError ? styles.visible : styles.hidden], [isError]);
   return (
@@ -71,32 +76,34 @@ const NewUserForm = ({
             onChange={changeUsername}
             value={formUsername}
           />
-          <label className={styles.label} htmlFor="formPassword">
-            PASSWORD
-            <AlertMessage classes={alertClassesPassLen}>
-              <img src="/images/report.png" alt="error message" />
-            </AlertMessage>
-          </label>
-          <Input
-            id="formPassword"
-            type="password"
-            name="password"
-            onChange={changePassword}
-            value={formPassword}
-          />
-          <label className={styles.label} htmlFor="formPasswordRepeat">
-            REPEAT PASSWORD
-            <AlertMessage classes={alertClassesPassRepeat}>
-              <img src="/images/report.png" alt="error message" />
-            </AlertMessage>
-          </label>
-          <Input
-            id="formPasswordRepeat"
-            type="password"
-            name="formPasswordRepeat"
-            onChange={changePasswordRepeat}
-            value={formPasswordRepeat}
-          />
+          <div className={editFormStyle}>
+            <label className={styles.label} htmlFor="formPassword">
+              PASSWORD
+              <AlertMessage classes={alertClassesPassLen}>
+                <img src="/images/report.png" alt="error message" />
+              </AlertMessage>
+            </label>
+            <Input
+              id="formPassword"
+              type="password"
+              name="password"
+              onChange={changePassword}
+              value={formPassword}
+            />
+            <label className={styles.label} htmlFor="formPasswordRepeat">
+              REPEAT PASSWORD
+              <AlertMessage classes={alertClassesPassRepeat}>
+                <img src="/images/report.png" alt="error message" />
+              </AlertMessage>
+            </label>
+            <Input
+              id="formPasswordRepeat"
+              type="password"
+              name="formPasswordRepeat"
+              onChange={changePasswordRepeat}
+              value={formPasswordRepeat}
+            />
+          </div>
           <label className={styles.label} htmlFor="formUserType">
             USER TYPE
           </label>
@@ -128,6 +135,7 @@ NewUserForm.defaultProps = {
   formDescription: '',
   changeUserDescription: () => {},
   errorMessage: '',
+  editForm: false,
 };
 
 NewUserForm.propTypes = {
@@ -143,6 +151,7 @@ NewUserForm.propTypes = {
   changePasswordRepeat: PropTypes.func.isRequired,
   changeUserType: PropTypes.func.isRequired,
   changeUserDescription: PropTypes.func,
+  editForm: PropTypes.bool,
 };
 const mapStateToProps = (state) => ({
   formUsername: getUsername(state),

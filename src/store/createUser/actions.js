@@ -15,9 +15,6 @@ import {
   CREATE_SUCCESS,
   ONCLOSE_ACTION,
   USER_FOR_EDITING,
-  NEW_USERNAME_INPUT_VALUE,
-  NEW_USERTYPE_INPUT_VALUE,
-  NEW_DESCRIPTION_INPUT_VALUE,
   EDIT_SUCCESS,
 } from './types';
 import { post, put } from '../../utils/http';
@@ -55,15 +52,7 @@ export const showEditPopup = () => async (dispatch) => {
 export const setUserForEditing = createAction(USER_FOR_EDITING, (value) => value);
 export const editUserFailure = createAction(CREATE_FAILURE);
 export const editUserSuccess = createAction(EDIT_SUCCESS, (user) => user);
-export const changeNewUsernameValue = createAction(NEW_USERNAME_INPUT_VALUE, (value) => value);
-export const changeNewUserTypeValue = createAction(
-  NEW_USERTYPE_INPUT_VALUE,
-  (object) => object.target.value
-);
-export const changeNewDescriptionValue = createAction(
-  NEW_DESCRIPTION_INPUT_VALUE,
-  (value) => value
-);
+
 export const onCloseAction = () => async (dispatch) => {
   dispatch(push('/admin/users'));
   dispatch(onClose());
@@ -107,19 +96,19 @@ export const newUser = () => async (dispatch, getState) => {
 export const editUser = () => async (dispatch, getState) => {
   const {
     createUser: {
-      newUsername, newUserType, newDescription
+      formUsername, formUserType, formDescription
     },
   } = getState();
   const id = getUserForEditing(getState());
   const newData = {};
-  if (newUsername) {
-    newData.username = newUsername;
+  if (formUsername) {
+    newData.username = formUsername;
   }
-  if (newUserType) {
-    newData.user_type_id = Number(newUserType);
+  if (formUserType) {
+    newData.user_type_id = Number(formUserType);
   }
-  if (newDescription) {
-    newData.description = newDescription;
+  if (formDescription) {
+    newData.description = formDescription;
   }
   if (Object.keys(newData).length) {
     try {
