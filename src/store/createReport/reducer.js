@@ -66,7 +66,7 @@ export default function createReportReducer(state = initialState, action) {
     case FETCH_REPORT_DATA_ERROR:
       return { ...state, reportDataLoading: false };
     case FETCH_REPORT_DATA_START:
-      return { ...state, reportDataLoading: true };
+      return { ...state, reportData: [], reportDataLoading: true };
     case FETCH_REPORT_DATA_SUCCESS:
       return { ...state, reportData: action.payload, reportDataLoading: false };
     case SELECT_DASHBOARD:
