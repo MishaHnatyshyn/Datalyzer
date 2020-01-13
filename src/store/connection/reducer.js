@@ -14,6 +14,7 @@ import {
   DELETE_CONNECTION_SUCCESS,
   CREATE_SUCCESS,
 } from './types';
+import { EDIT_SUCCESS } from '../connectionForm/types';
 
 const initialState = {
   connections: [],
@@ -130,6 +131,13 @@ export default function connectionsReducer(state = initialState, action) {
           (connection) => connection.id !== state.connectionForDeleting,
         ),
         connectionForDeleting: null,
+      };
+    case EDIT_SUCCESS:
+      return {
+        ...state,
+        connections: state.connections.map(
+          (connection) => connection.id === action.payload.id ? { ...connection, ...action.payload } : connection
+        ),
       };
     default:
       return state;

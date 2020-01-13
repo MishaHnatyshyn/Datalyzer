@@ -7,6 +7,7 @@ import AdminCardDataItemPassword from '../shared/AdminCardDataItemPassword';
 import { setConnectionForDeleting } from '../../store/connection/actions';
 import { displayCustomPopup } from '../../store/popups/actions';
 import PopupTypes from '../../store/popups/popupTypes';
+import { setConnectionForEditing, showEditPopup } from '../../store/connectionForm/actions';
 
 const DatabaseDataCard = ({
   db_name,
@@ -22,12 +23,31 @@ const DatabaseDataCard = ({
   const onDelete = useCallback(() => {
     deleteConnection(id);
   }, [id, deleteConnection]);
+  const onUpdate = useCallback(() => {
+    updateConnection({
+      db_name,
+      name,
+      username,
+      password,
+      host,
+      port,
+      id
+    });
+  }, [{
+    db_name,
+    name,
+    username,
+    password,
+    host,
+    port,
+    id
+  }, updateConnection]);
   return (
     <DataCard
       caption={name}
       secondIcon="/images/controls.png"
       thirdIcon="/images/cross.png"
-      onSecondButtonClick={updateConnection}
+      onSecondButtonClick={onUpdate}
       onThirdButtonClick={onDelete}
     >
       <AdminCardDataItem name="DB name" value={db_name} />
@@ -52,7 +72,10 @@ DatabaseDataCard.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  updateConnection: () => {},
+  updateConnection: (connection) => {
+    dispatch(setConnectionForEditing(connection));
+    dispatch(showEditPopup());
+  },
   deleteConnection: (id) => {
     dispatch(setConnectionForDeleting(id));
     dispatch(displayCustomPopup(PopupTypes.DELETE_CONNECTION));

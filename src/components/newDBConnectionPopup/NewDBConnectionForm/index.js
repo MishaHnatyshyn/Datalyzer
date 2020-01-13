@@ -47,6 +47,7 @@ const NewConnectionForm = ({
   changePort,
   changeNameConnection,
   changeNameDB,
+  editForm,
 }) => {
   const alertClasses = useMemo(() => [
     styles.error,
@@ -54,7 +55,7 @@ const NewConnectionForm = ({
   ], [isError]);
   return (
     <div>
-      <Caption classes={styles.newUserCaption}>Add new connection</Caption>
+      <Caption classes={styles.newUserCaption}>{editForm ? 'Edit connection' : 'Add new connection'}</Caption>
       <form>
         <div className={styles.inputFields}>
           <label className={styles.label} htmlFor="hostField">HOST</label>
@@ -69,8 +70,16 @@ const NewConnectionForm = ({
           <Input id="usernameField" type="text" name="Username" onChange={changeUsername} value={username} />
           <label className={styles.label} htmlFor="passwordField">PASSWORD</label>
           <Input id="passwordField" type="password" name="password" onChange={changePassword} value={password} />
-          <label className={styles.label} htmlFor="typeField">TYPE</label>
-          <Select options={options} classes={styles.select} value={type} onChange={changeType} />
+          { !editForm && (
+            <div>
+              <label className={styles.label} htmlFor="typeField">TYPE</label>
+              <Select
+                options={options}
+                classes={styles.select}
+                value={type}
+                onChange={changeType}
+              />
+            </div>)}
         </div>
         <AlertMessage message={errorMessage} classes={alertClasses}>
           <img src="/images/report.png" alt="error message" />
@@ -82,6 +91,7 @@ const NewConnectionForm = ({
 
 NewConnectionForm.defaultProps = {
   errorMessage: '',
+  editForm: false,
 };
 
 NewConnectionForm.propTypes = {
@@ -101,6 +111,7 @@ NewConnectionForm.propTypes = {
   changePort: PropTypes.func.isRequired,
   changeNameDB: PropTypes.func.isRequired,
   changeNameConnection: PropTypes.func.isRequired,
+  editForm: PropTypes.bool
 };
 const mapStateToProps = (state) => ({
   username: getUsername(state),

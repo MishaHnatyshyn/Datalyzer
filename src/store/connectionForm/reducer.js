@@ -11,6 +11,9 @@ import {
   CREATE_FAILURE,
   CREATE_SUCCESS,
   ONCLOSE_ACTION,
+  CONNECTION_FOR_EDITING,
+  EDIT_SUCCESS,
+  SHOW_EDIT,
 } from './types';
 import { EMPTY_FIELDS_ERROR_MESSAGE } from '../login/constants';
 
@@ -24,6 +27,7 @@ const initialState = {
   type: '',
   nameConnection: '',
   nameDB: '',
+  connectionForEditing: null,
 };
 
 export default function connectionFormsReducer(state = initialState, action) {
@@ -84,6 +88,32 @@ export default function connectionFormsReducer(state = initialState, action) {
         type: '',
         nameConnection: '',
         nameDB: '',
+        error: false,
+        isLoading: false,
+      };
+    case CONNECTION_FOR_EDITING:
+      return { ...state, connectionForEditing: action.payload, error: false };
+    case EDIT_SUCCESS:
+      return {
+        ...state,
+        host: '',
+        port: '',
+        username: '',
+        password: '',
+        nameConnection: '',
+        nameDB: '',
+        error: false,
+        isLoading: false,
+      };
+    case SHOW_EDIT:
+      return {
+        ...state,
+        host: state.connectionForEditing.host,
+        port: state.connectionForEditing.port,
+        username: state.connectionForEditing.username,
+        password: state.connectionForEditing.password,
+        nameConnection: state.connectionForEditing.name,
+        nameDB: state.connectionForEditing.db_name,
         error: false,
         isLoading: false,
       };

@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch) => ({
 const AdminDatabasesPageHeader = (props) => (
   <AdminPageHeader
     {...props}
-    buttonText="Create model"
+    buttonText="New connection"
     pageName="Total connections"
     placeholder="search by name..."
     link="/admin/databases/create"
