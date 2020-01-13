@@ -74,7 +74,7 @@ const NewUserForm = ({
             onChange={changeUsername}
             value={formUsername}
           />
-          {editForm ? '' : (
+          {!editForm && (
             <div>
               <label className={styles.label} htmlFor="formPassword">
               PASSWORD
