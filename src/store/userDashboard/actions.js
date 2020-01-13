@@ -17,8 +17,12 @@ export const getUserDashboard = (id) => async (dispatch) => {
       ...(await get(`${USER_REPORTS_ENDPOINT}/${report.id}`))
     }));
 
-    const reportsData = await Promise.all(reports);
-    dispatch(setReports(reportsData));
+    try {
+      const reportsData = await Promise.all(reports);
+      dispatch(setReports(reportsData));
+    } catch (e) {
+      dispatch(setReports([]));
+    }
   } catch (e) {
     console.log(e);
   }
