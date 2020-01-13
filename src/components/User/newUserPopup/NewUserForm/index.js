@@ -60,10 +60,17 @@ const NewUserForm = ({
     () => [editForm ? styles.notDisplay : styles.display],
     [editForm],
   );
+  const addFormStyle = useMemo(
+    () => [editForm ? styles.display : styles.notDisplay],
+    [editForm],
+  );
   const alertClasses = useMemo(() => [isError ? styles.visible : styles.hidden], [isError]);
   return (
     <div className={styles.maxWidth}>
-      <Caption classes={styles.newUserCaption}> Add new user </Caption>
+      <Caption classes={styles.newUserCaption}>
+        <p className={editFormStyle}> Add new user </p>
+        <p className={addFormStyle}> Edit user </p>
+      </Caption>
       <form>
         <div className={styles.inputFields}>
           <label className={styles.label} htmlFor="formUsername">
