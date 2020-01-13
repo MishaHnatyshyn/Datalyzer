@@ -23,13 +23,23 @@ UsersTableCell.defaultProps = {
   className: '',
 };
 
-const UsersTableEditButtonsComponent = ({ id, deleteUser, updateUser }) => {
+const UsersTableEditButtonsComponent = ({ id, username, description, deleteUser, updateUser, user_type_id }) => {
   const onDelete = useCallback(() => {
     deleteUser(id);
   }, [id, deleteUser]);
   const onUpdate = useCallback(() => {
-    updateUser(id);
-  }, [id, updateUser]);
+    updateUser({
+      id,
+      username,
+      description,
+      user_type_id,
+    });
+  }, [{
+    id,
+    username,
+    description,
+    user_type_id,
+  }, updateUser]);
 
   return (
     <div className={styles.usersCellButtons}>
@@ -45,13 +55,16 @@ const UsersTableEditButtonsComponent = ({ id, deleteUser, updateUser }) => {
 
 UsersTableEditButtonsComponent.propTypes = {
   id: PropTypes.number.isRequired,
+  username: PropTypes.number.isRequired,
+  description: PropTypes.number.isRequired,
   deleteUser: PropTypes.func.isRequired,
   updateUser: PropTypes.func.isRequired,
+  user_type_id: PropTypes.number.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  updateUser: (id) => {
-    dispatch(setUserForEditing(id));
+  updateUser: (user) => {
+    dispatch(setUserForEditing(user));
     dispatch(showEditPopup());
   },
   deleteUser: (id) => {
@@ -63,7 +76,7 @@ const mapDispatchToProps = (dispatch) => ({
 const UsersTableEditButtons = connect(null, mapDispatchToProps)(UsersTableEditButtonsComponent);
 
 const UsersTableRow = ({
-  id, username, description, created_at: createdAt, selectUser, toggleUser, include
+  id, username, description, user_type_id, created_at: createdAt, selectUser, toggleUser, include
 }) => {
   const handleClick = useCallback(() => {
     toggleUser(id);
@@ -102,7 +115,12 @@ const UsersTableRow = ({
 
       {!selectUser && (
         <UsersTableCell
-          content={<UsersTableEditButtons id={id} />}
+          content={(<UsersTableEditButtons
+            id={id}
+            username={username}
+            description={description}
+            user_type_id={user_type_id}
+          />)}
           className={styles.usersCellEdit}
         />
       )}
@@ -114,6 +132,7 @@ UsersTableRow.propTypes = {
   id: PropTypes.number.isRequired,
   username: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  user_type_id: PropTypes.number.isRequired,
   created_at: PropTypes.string.isRequired,
   selectUser: PropTypes.bool.isRequired,
   toggleUser: PropTypes.func.isRequired,

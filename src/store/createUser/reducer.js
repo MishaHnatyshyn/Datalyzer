@@ -14,6 +14,7 @@ import {
   ONCLOSE_ACTION,
   USER_FOR_EDITING,
   EDIT_SUCCESS,
+  SHOW_EDIT,
 } from './types';
 import { EMPTY_FIELDS_ERROR_MESSAGE } from '../login/constants';
 import { PASS_LENGTH_ERROR_MESSAGE, PASS_EQUAL_ERROR_MESSAGE } from './constants';
@@ -113,9 +114,6 @@ export default function createUserReducer(state = initialState, action) {
         formUserType: '',
         formDescription: '',
         isError: false,
-        newUsername: '',
-        newUserType: '',
-        newDescription: '',
         userForEditing: null,
       };
     case USER_FOR_EDITING:
@@ -127,9 +125,18 @@ export default function createUserReducer(state = initialState, action) {
         ...state,
         isCreatingInProgress: false,
         isError: false,
-        newUsername: '',
-        newUserType: '',
-        newDescription: '',
+        formUsername: '',
+        formUserType: '',
+        formDescription: '',
+      };
+    case SHOW_EDIT:
+      return {
+        ...state,
+        isCreatingInProgress: false,
+        isError: false,
+        formUsername: state.userForEditing.username,
+        formDescription: state.userForEditing.description,
+        formUserType: state.userForEditing.user_type_id.toString(),
       };
     default:
       return state;
