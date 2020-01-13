@@ -37,7 +37,9 @@ const NewReportButtonsContainer = ({
   );
   return (
     <div className={classnames(styles.buttonsContainer, classes)}>
-      <CancelButton onClick={goToFirstStep}> Cancel </CancelButton>
+      <div className={styles.buttonPosition}>
+        <CancelButton onClick={goToFirstStep}> Cancel </CancelButton>
+      </div>
       <NextButton
         disableNextButton={disableButton}
         setNextStep={step === 1 ? goToSecondStep : createNewReport}

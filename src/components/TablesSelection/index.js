@@ -87,7 +87,7 @@ const TablesSelection = ({
             {modelItems.map((table) => (
               <DraggableTableCard
                 displayName={table.name}
-                data={[{ dataKey: 'table_name', value: table.tableName }]}
+                data={[{ dataKey: 'table_name', value: table.name }]}
                 onDelete={removeItem(table.name)}
               />
             ))}

@@ -83,10 +83,11 @@ export default function createModelReducer(state = initialState, action) {
         selectedTable: {
           originalData: action.payload,
           name: action.payload.tableName,
-          columns: action.payload.columns.map((originalName) => ({
-            originalName,
-            givenName: originalName,
-            type: 'fact',
+          columns: action.payload.columns.map((column) => ({
+            originalName: column.name,
+            givenName: column.name,
+            type: 'dimension',
+            isNumeric: column.isNumeric,
             include: true,
           })),
           alreadyAdded: false,

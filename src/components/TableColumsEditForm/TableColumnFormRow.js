@@ -8,7 +8,10 @@ import Checkbox from '../Checkbox';
 
 const options = ['fact', 'dimension'];
 
+const disabledText = "Can't select non numeric fields as fact";
+
 const TableColumnFormRow = ({
+  isNumeric,
   name,
   type,
   onNameChange,
@@ -28,7 +31,14 @@ const TableColumnFormRow = ({
       />
     </div>
     <div className={classnames(styles.tableCell)}>
-      <Select options={options} value={type} name={inputName} onChange={onTypeChange} />
+      <Select
+        options={options}
+        value={type}
+        name={inputName}
+        onChange={onTypeChange}
+        disabled={!isNumeric}
+        disabledText={disabledText}
+      />
     </div>
     <div className={classnames(styles.tableCell, styles.thirdColumn)}>
       <Checkbox include={include} onIncludeChange={onIncludeChange} name={inputName} />
@@ -42,6 +52,7 @@ TableColumnFormRow.propTypes = {
   onNameChange: PropTypes.func.isRequired,
   onTypeChange: PropTypes.func.isRequired,
   include: PropTypes.bool.isRequired,
+  isNumeric: PropTypes.bool.isRequired,
   onIncludeChange: PropTypes.func.isRequired,
   inputName: PropTypes.string.isRequired,
   options: PropTypes.string.isRequired,

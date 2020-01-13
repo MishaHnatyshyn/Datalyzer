@@ -1,5 +1,6 @@
 // URLs
-export const API_URL = 'https://datalyzer-api.herokuapp.com';
+// export const API_URL = 'https://datalyzer-api.herokuapp.com';
+export const API_URL = 'http://localhost:8080';
 
 // Endpoints
 export const LOGIN_ENDPOINT = '/auth/login';
