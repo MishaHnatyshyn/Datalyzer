@@ -7,6 +7,7 @@ import AdminCardDataItemPassword from '../shared/AdminCardDataItemPassword';
 import { setConnectionForDeleting } from '../../store/connection/actions';
 import { displayCustomPopup } from '../../store/popups/actions';
 import PopupTypes from '../../store/popups/popupTypes';
+import { setConnectionForEditing } from '../../store/connectionForm/actions';
 
 const DatabaseDataCard = ({
   db_name,
@@ -23,8 +24,8 @@ const DatabaseDataCard = ({
     deleteConnection(id);
   }, [id, deleteConnection]);
   const onUpdate = useCallback(() => {
-    deleteConnection(id);
-  }, [id, deleteConnection]);
+    updateConnection(id);
+  }, [id, updateConnection]);
   return (
     <DataCard
       caption={name}

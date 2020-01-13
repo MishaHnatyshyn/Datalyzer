@@ -15,9 +15,15 @@ import {
   EMPTY_FIELDS_ERROR,
   APPEND_CONNECTIONS,
   ONCLOSE_ACTION,
+  CONNECTION_FOR_EDITING,
+  EDIT_SUCCESS,
 } from './types';
-import { post } from '../../utils/http';
+import { post, put } from '../../utils/http';
 import { ADMIN_CONNECTIONS_CREATE_ENDPOINT } from '../../config';
+import { createConnectionEditRoute } from '../../utils/routeCreators';
+import { closePopup, displayCustomPopup } from '../popups/actions';
+import PopupTypes from '../popups/popupTypes';
+import { getConnectionForEditing } from './selectors';
 
 export const appendConnections = createAction(APPEND_CONNECTIONS, (connections) => connections);
 export const createConnectionFailure = createAction(CREATE_FAILURE);
@@ -38,8 +44,16 @@ export const changePasswordValue = createAction(PASSWORD_VALUE, (connection) => 
 export const changeTypeValue = createAction(TYPE_VALUE, (connection) => connection.target.value);
 export const onClose = createAction(ONCLOSE_ACTION);
 
+export const setConnectionForEditing = createAction(CONNECTION_FOR_EDITING, (value) => value);
+export const editConnectionFailure = createAction(CREATE_FAILURE);
+export const editConnectionSuccess = createAction(EDIT_SUCCESS, (connection) => connection);
+
 export const onCloseAction = () => async (dispatch) => {
   dispatch(push('/admin/databases'));
+  dispatch(onClose());
+};
+export const onCloseEdit = () => async (dispatch) => {
+  dispatch(closePopup());
   dispatch(onClose());
 };
 export const newConnectionAction = () => async (dispatch, getState) => {
@@ -69,5 +83,48 @@ export const newConnectionAction = () => async (dispatch, getState) => {
   } catch (e) {
     console.log(e);
     dispatch(createConnectionFailure());
+  }
+};
+export const editConnectionAction = () => async (dispatch, getState) => {
+  const {
+    connectionForms: {
+      host, port, nameDB, username: name, password, nameConnection
+    },
+  } = getState();
+  const id = getConnectionForEditing(getState());
+  const newData = {};
+  if (host) {
+    newData.host = host;
+  }
+  if (port) {
+    newData.port = port;
+  }
+  if (nameDB) {
+    newData.databaseName = nameDB;
+  }
+  if (name) {
+    newData.username = name;
+  }
+  if (password) {
+    newData.password = password;
+  }
+  if (nameConnection) {
+    newData.name = nameConnection;
+  }
+  if (Object.keys(newData).length) {
+    try {
+      const data = await put(createConnectionEditRoute(id), {
+        data: newData,
+      });
+      dispatch(editConnectionSuccess(data));
+      dispatch(onCloseEdit());
+      dispatch(displayCustomPopup(PopupTypes.EDIT_CONNECTION_SUCCESS));
+    } catch (e) {
+      console.log(e);
+      // dispatch(editConnectionFailure());
+      dispatch(displayCustomPopup(PopupTypes.EDIT_CONNECTION_FAILURE));
+    }
+  } else {
+    dispatch(onCloseEdit());
   }
 };

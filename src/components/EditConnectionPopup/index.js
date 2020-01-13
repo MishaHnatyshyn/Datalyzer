@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { preventDefaultHandler } from '../../utils';
 import NewConnectionForm from '../newDBConnectionPopup/NewDBConnectionForm';
-import { newConnectionAction, onCloseAction } from '../../store/connectionForm/actions';
+import {
+  editConnectionAction,
+  onCloseEdit
+} from '../../store/connectionForm/actions';
 import styles from '../User/newUserPopup/newUserPopup.module.scss';
 import BasePopup from '../shared/BasePopup';
 
@@ -40,8 +43,8 @@ EditConnection.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onClose: () => { dispatch(onCloseAction()); },
-  submitForm: () => { dispatch(newConnectionAction()); },
+  onClose: () => { dispatch(onCloseEdit()); },
+  submitForm: () => { dispatch(editConnectionAction()); },
 });
 
 export default connect(null, mapDispatchToProps)(EditConnection);

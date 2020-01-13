@@ -34,7 +34,12 @@
   visibility: hidden;
   height: 2em;
 }
-
+.notDisplay {
+  display: none;
+}
+.display {
+  display: unset;
+}
 .select {
   margin: 10px 0;
   & > div{
@@ -42,8 +47,6 @@
     font: $text-regular;
   }
 }
-
-
 
 .maxWidth {
   width: 90%;

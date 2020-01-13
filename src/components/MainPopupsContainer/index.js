@@ -35,6 +35,11 @@ import {
   EDIT_CONNECTION_SUCCESS_MESSAGE
 } from '../../store/connectionForm/constants';
 import EditConnection from '../EditConnectionPopup';
+import {
+  EDIT_USER_FAILURE_MESSAGE,
+  EDIT_USER_SUCCESS_MESSAGE
+} from '../../store/createUser/constants';
+import EditUserPopup from '../EditUserPopup';
 
 const MainPopupsContainer = ({ closePopup, text, currentPopup }) => {
   switch (currentPopup) {
@@ -94,6 +99,14 @@ const MainPopupsContainer = ({ closePopup, text, currentPopup }) => {
       return <DeleteDashboardConfirmPopup />;
     case PopupTypes.DELETE_SUCCESS:
       return <DeleteDashboardSuccessPopup />;
+    case PopupTypes.EDIT_USER:
+      return <EditUserPopup />;
+    case PopupTypes.EDIT_USER_FAILURE:
+      return <ErrorPopup onClose={closePopup} text={EDIT_USER_FAILURE_MESSAGE} isVisible />;
+    case PopupTypes.EDIT_USER_SUCCESS:
+      return (
+        <InformationPopup onClose={closePopup} text={EDIT_USER_SUCCESS_MESSAGE} isVisible />
+      );
     default:
       return null;
   }

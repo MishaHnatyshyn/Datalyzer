@@ -14,9 +14,15 @@ import {
   EMPTY_FIELDS_ERROR,
   CREATE_SUCCESS,
   ONCLOSE_ACTION,
+  USER_FOR_EDITING,
+  EDIT_SUCCESS,
 } from './types';
-import { post } from '../../utils/http';
+import { post, put } from '../../utils/http';
 import { ADMIN_USERS_ENDPOINT } from '../../config';
+import { displayCustomPopup, closePopup } from '../popups/actions';
+import PopupTypes from '../popups/popupTypes';
+import { createUserEditRoute } from '../../utils/routeCreators';
+import { getUserForEditing } from './selectors';
 
 export const emptyFieldsError = createAction(EMPTY_FIELDS_ERROR);
 export const createUserFailure = createAction(CREATE_FAILURE);
@@ -40,9 +46,19 @@ export const changePasswordRepeatValue = createAction(
   (value) => value,
 );
 export const onClose = createAction(ONCLOSE_ACTION);
+export const showEditPopup = () => async (dispatch) => {
+  dispatch(displayCustomPopup(PopupTypes.EDIT_USER));
+};
+export const setUserForEditing = createAction(USER_FOR_EDITING, (value) => value);
+export const editUserFailure = createAction(CREATE_FAILURE);
+export const editUserSuccess = createAction(EDIT_SUCCESS, (user) => user);
 
 export const onCloseAction = () => async (dispatch) => {
   dispatch(push('/admin/users'));
+  dispatch(onClose());
+};
+export const onCloseEdit = () => async (dispatch) => {
+  dispatch(closePopup());
   dispatch(onClose());
 };
 export const newUser = () => async (dispatch, getState) => {
@@ -75,5 +91,39 @@ export const newUser = () => async (dispatch, getState) => {
   } catch (e) {
     console.log(e);
     dispatch(createUserFailure());
+  }
+};
+export const editUser = () => async (dispatch, getState) => {
+  const {
+    createUser: {
+      formUsername, formUserType, formDescription
+    },
+  } = getState();
+  const id = getUserForEditing(getState());
+  const newData = {};
+  if (formUsername) {
+    newData.username = formUsername;
+  }
+  if (formUserType) {
+    newData.user_type_id = Number(formUserType);
+  }
+  if (formDescription) {
+    newData.description = formDescription;
+  }
+  if (Object.keys(newData).length) {
+    try {
+      const data = await put(createUserEditRoute(id), {
+        data: newData,
+      });
+      dispatch(editUserSuccess(data));
+      dispatch(onCloseEdit());
+      dispatch(displayCustomPopup(PopupTypes.EDIT_USER_SUCCESS));
+    } catch (e) {
+      console.log(e);
+      dispatch(editUserFailure());
+      dispatch(displayCustomPopup(PopupTypes.EDIT_USER_FAILURE));
+    }
+  } else {
+    dispatch(onCloseEdit());
   }
 };

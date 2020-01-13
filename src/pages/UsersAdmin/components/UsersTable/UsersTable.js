@@ -11,6 +11,8 @@ import {
 import UsersTableRow from './UsersTableRow';
 import styles from './usersTable.module.scss';
 import { moveToNextPage, moveToPrevPage } from '../../../../store/adminUsers/actions';
+import { toggleUserWithAccess } from '../../../../store/createModel/actions';
+import { getUsersWithAccess } from '../../../../store/createModel/selectors';
 
 const UsersTableHeaderCell = ({ content, className }) => (
   <th className={classNames(styles.usersCell, styles.usersHeaderCell, className)}>{content}</th>
@@ -57,6 +59,10 @@ const UsersTable = ({
   moveToNextPage,
   currentPage,
   itemsPerPage,
+  classes,
+  selectUser,
+  toggleUser,
+  usersWithAccess,
 }) => {
   const usersList = useMemo(
     () => users.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage),
@@ -64,7 +70,7 @@ const UsersTable = ({
   );
 
   return (
-    <div className={styles.users}>
+    <div className={classNames(styles.users, classes)}>
       <div className={styles.tableWrapper}>
         <table className={styles.usersTable}>
           <tbody>
@@ -73,10 +79,20 @@ const UsersTable = ({
               <UsersTableHeaderCell content="Username" className={styles.usersCellUsername} />
               <UsersTableHeaderCell content="Description" />
               <UsersTableHeaderCell content="Created" className={styles.usersCellEdit} />
-              <UsersTableHeaderCell content="Edit" className={styles.usersCellEdit} />
+              {!selectUser && (
+                <UsersTableHeaderCell content="Edit" className={styles.usersCellEdit} />
+              )}
+              {selectUser && (
+                <UsersTableHeaderCell content="Add access" className={styles.usersCellEdit} />
+              )}
             </tr>
             {usersList.map((user) => (
-              <UsersTableRow {...user} />
+              <UsersTableRow
+                {...user}
+                selectUser={selectUser}
+                toggleUser={toggleUser}
+                include={usersWithAccess.includes(user.id)}
+              />
             ))}
           </tbody>
         </table>
@@ -101,24 +117,32 @@ const UsersTable = ({
 };
 
 UsersTable.propTypes = {
-  users: PropTypes.arrayOf(PropTypes.shape({
-    created_at: PropTypes.string.isRequired,
-    created_by_id: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    updated_at: PropTypes.string.isRequired,
-    user_type_id: PropTypes.number.isRequired,
-    username: PropTypes.string.isRequired,
-  })),
+  users: PropTypes.arrayOf(
+    PropTypes.shape({
+      created_at: PropTypes.string.isRequired,
+      created_by_id: PropTypes.number.isRequired,
+      description: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
+      updated_at: PropTypes.string.isRequired,
+      user_type_id: PropTypes.number.isRequired,
+      username: PropTypes.string.isRequired,
+    })
+  ),
   hasNextPage: PropTypes.bool.isRequired,
   moveToPrevPage: PropTypes.func.isRequired,
   moveToNextPage: PropTypes.func.isRequired,
   itemsPerPage: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
+  classes: PropTypes.string,
+  selectUser: PropTypes.bool,
+  toggleUser: PropTypes.func.isRequired,
+  usersWithAccess: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 UsersTable.defaultProps = {
   users: [],
+  classes: '',
+  selectUser: false,
 };
 
 const mapStateToProps = (state) => ({
@@ -126,6 +150,7 @@ const mapStateToProps = (state) => ({
   currentPage: getCurrentPage(state),
   hasNextPage: hasNextPage(state),
   itemsPerPage: getItemsPerPage(state),
+  usersWithAccess: getUsersWithAccess(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -134,6 +159,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   moveToPrevPage: () => {
     dispatch(moveToPrevPage());
+  },
+  toggleUser: (index) => {
+    dispatch(toggleUserWithAccess(index));
   },
 });
 

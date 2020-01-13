@@ -13,3 +13,4 @@ export const getNameConnection = compose(prop('nameConnection'), root);
 export const getHost = compose(prop('host'), root);
 export const getVisible = compose(prop('isVisible'), root);
 export const getErrorMessage = compose(prop('errorMessage'), root);
+export const getConnectionForEditing = compose(prop('connectionForEditing'), root);
