@@ -17,6 +17,9 @@ import {
   FETCH_CONNECTION_RELATIONS_SUCCESS,
   CHANGE_MODEL_NAME,
   RESET_CREATE_MODEL_STATE,
+  TOGGLE_USER_WITH_ACCESS,
+  SELECT_ALL_USERS_WITH_ACCESS,
+  DESELECT_ALL_USERS_WITH_ACCESS,
 } from './types';
 
 const initialState = {
@@ -27,6 +30,7 @@ const initialState = {
   modelItems: [],
   tables: [],
   relations: [],
+  usersWithAccess: [],
 };
 
 export default function createModelReducer(state = initialState, action) {
@@ -135,13 +139,11 @@ export default function createModelReducer(state = initialState, action) {
         ...state,
         selectedTable: {
           ...state.selectedTable,
-          columns: state.selectedTable.columns.map((
-            column
-          ) => (
-            column.originalName === action.payload.target
+          columns: state.selectedTable.columns.map(
+            (column) => (column.originalName === action.payload.target
               ? { ...column, givenName: action.payload.value }
-              : column
-          ),),
+              : column),
+          ),
         },
       };
     case CHANGE_COLUMN_TYPE:
@@ -150,11 +152,9 @@ export default function createModelReducer(state = initialState, action) {
         selectedTable: {
           ...state.selectedTable,
           columns: state.selectedTable.columns.map(
-            (column) => (
-              column.originalName === action.payload.target
-                ? { ...column, type: action.payload.value }
-                : column
-            ),
+            (column) => (column.originalName === action.payload.target
+              ? { ...column, type: action.payload.value }
+              : column),
           ),
         },
       };
@@ -164,11 +164,9 @@ export default function createModelReducer(state = initialState, action) {
         selectedTable: {
           ...state.selectedTable,
           columns: state.selectedTable.columns.map(
-            (column) => (
-              column.originalName === action.payload.target
-                ? { ...column, include: action.payload.value }
-                : column
-            ),
+            (column) => (column.originalName === action.payload.target
+              ? { ...column, include: action.payload.value }
+              : column),
           ),
         },
       };
@@ -180,9 +178,25 @@ export default function createModelReducer(state = initialState, action) {
           name: action.payload,
         },
       };
-    case RESET_CREATE_MODEL_STATE: {
+    case RESET_CREATE_MODEL_STATE:
       return initialState;
-    }
+    case TOGGLE_USER_WITH_ACCESS:
+      return {
+        ...state,
+        usersWithAccess: state.usersWithAccess.includes(action.payload)
+          ? state.usersWithAccess.filter((user) => user !== action.payload)
+          : [...state.usersWithAccess, action.payload],
+      };
+    case SELECT_ALL_USERS_WITH_ACCESS:
+      return {
+        ...state,
+        usersWithAccess: [],
+      };
+    case DESELECT_ALL_USERS_WITH_ACCESS:
+      return {
+        ...state,
+        usersWithAccess: [],
+      };
     default:
       return state;
   }

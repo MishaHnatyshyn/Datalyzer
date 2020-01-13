@@ -25,6 +25,9 @@ import {
   CREATE_MODEL_SUCCESS,
   CHANGE_MODEL_NAME,
   RESET_CREATE_MODEL_STATE,
+  TOGGLE_USER_WITH_ACCESS,
+  DESELECT_ALL_USERS_WITH_ACCESS,
+  SELECT_ALL_USERS_WITH_ACCESS,
 } from './types';
 import {
   getDataForCreatingModel,
@@ -54,6 +57,9 @@ export const editModelItem = createAction(EDIT_MODEL_ITEM, (table) => table);
 export const cancelAddingTable = createAction(CANCEL_ADDING_TABLE_IN_MODEL);
 export const cancelEditingModelItem = createAction(CANCEL_EDITING_MODEL_ITEM);
 export const addTableInModel = createAction(ADD_TABLE_IN_MODEL);
+export const toggleUserWithAccess = createAction(TOGGLE_USER_WITH_ACCESS, (index) => (index));
+export const selectAllUsersWithAccess = createAction(SELECT_ALL_USERS_WITH_ACCESS);
+export const deselectAllUserWithAccess = createAction(DESELECT_ALL_USERS_WITH_ACCESS);
 export const changeColumnName = createAction(CHANGE_COLUMN_NAME, (target, value) => ({
   target,
   value,
