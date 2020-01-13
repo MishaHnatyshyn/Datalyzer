@@ -30,6 +30,11 @@ import {
 } from '../../store/user/constants';
 import DeleteDashboardConfirmPopup from '../DeleteDashboardPopup/ConfirmPopup';
 import DeleteDashboardSuccessPopup from '../DeleteDashboardPopup/DeleteDashboardSuccess';
+import {
+  EDIT_CONNECTION_FAILURE_MESSAGE,
+  EDIT_CONNECTION_SUCCESS_MESSAGE
+} from '../../store/connectionForm/constants';
+import EditConnection from '../EditConnectionPopup';
 
 const MainPopupsContainer = ({ closePopup, text, currentPopup }) => {
   switch (currentPopup) {
@@ -76,6 +81,14 @@ const MainPopupsContainer = ({ closePopup, text, currentPopup }) => {
     case PopupTypes.RENAME_MODEL_SUCCESS:
       return (
         <InformationPopup onClose={closePopup} text={RENAME_MODEL_SUCCESS_MESSAGE} isVisible />
+      );
+    case PopupTypes.EDIT_CONNECTION:
+      return <EditConnection />;
+    case PopupTypes.EDIT_CONNECTION_FAILURE:
+      return <ErrorPopup onClose={closePopup} text={EDIT_CONNECTION_FAILURE_MESSAGE} isVisible />;
+    case PopupTypes.EDIT_CONNECTION_SUCCESS:
+      return (
+        <InformationPopup onClose={closePopup} text={EDIT_CONNECTION_SUCCESS_MESSAGE} isVisible />
       );
     case PopupTypes.DELETE_DASHBOARD:
       return <DeleteDashboardConfirmPopup />;

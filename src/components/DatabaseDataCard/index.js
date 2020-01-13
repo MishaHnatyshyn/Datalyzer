@@ -22,12 +22,15 @@ const DatabaseDataCard = ({
   const onDelete = useCallback(() => {
     deleteConnection(id);
   }, [id, deleteConnection]);
+  const onUpdate = useCallback(() => {
+    deleteConnection(id);
+  }, [id, deleteConnection]);
   return (
     <DataCard
       caption={name}
       secondIcon="/images/controls.png"
       thirdIcon="/images/cross.png"
-      onSecondButtonClick={updateConnection}
+      onSecondButtonClick={onUpdate}
       onThirdButtonClick={onDelete}
     >
       <AdminCardDataItem name="DB name" value={db_name} />
@@ -52,7 +55,10 @@ DatabaseDataCard.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  updateConnection: () => {},
+  updateConnection: (id) => {
+    dispatch(setConnectionForEditing(id));
+    dispatch(displayCustomPopup(PopupTypes.EDIT_CONNECTION));
+  },
   deleteConnection: (id) => {
     dispatch(setConnectionForDeleting(id));
     dispatch(displayCustomPopup(PopupTypes.DELETE_CONNECTION));
