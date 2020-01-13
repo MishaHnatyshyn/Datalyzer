@@ -43,8 +43,12 @@ const UsersDashboard = ({ getDashboard, reports }) => {
   const viewPortRef = createRef();
 
   useEffect(() => {
+    if (!id) {
+      return;
+    }
+
     getDashboard(id);
-  }, []);
+  }, [id]);
 
   return (
     <div className={styles.layout}>
