@@ -26,7 +26,7 @@ const initialState = {
   },
   currentPage: 1,
   search: '',
-  itemsPerPage: 8,
+  itemsPerPage: 6,
   lastLoadedPage: 1,
   error: false,
   isLoading: false,

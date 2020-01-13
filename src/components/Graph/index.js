@@ -23,13 +23,6 @@ const graphTypes = {
 const defaultOptions = {
   legend: {
     display: false
-  },
-  tooltips: {
-    callbacks: {
-      label(tooltipItem) {
-        return tooltipItem.yLabel;
-      }
-    }
   }
 };
 
@@ -52,18 +45,18 @@ const Graph = (props) => {
   const dimension = dimensions[0];
   const fact = facts[0];
   const data = {
-    labels: items.map((item) => item[dimension]),
+    labels: [],
     datasets: [{
-      data: items.map((item) => item[fact]),
-      backgroundColor: items.map(() => getRandomColor())
-    }],
-    legend: {
-      display: false
-    },
-    tooltips: {
-      enabled: false
-    }
+      data: [],
+      backgroundColor: []
+    }]
   };
+
+  items.forEach((item) => {
+    data.labels.push(item[dimension]);
+    data.datasets[0].data.push(item[fact]);
+    data.datasets[0].backgroundColor.push(getRandomColor());
+  });
 
   const [defaultStyles] = useState({
     width: startWidth,
@@ -88,7 +81,7 @@ const Graph = (props) => {
   const GraphToBuild = graphTypes[type];
 
   return (
-    <div className={classNames(styles.pane, className)} ref={paneRef} style={defaultStyles}>
+    <div className={classNames(className, styles.pane)} ref={paneRef} style={defaultStyles}>
       {
         !disableMoveAndScale && (
           <div className={styles.title}>

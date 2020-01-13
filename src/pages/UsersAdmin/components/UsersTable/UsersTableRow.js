@@ -8,6 +8,7 @@ import { displayCustomPopup } from '../../../../store/popups/actions';
 import PopupTypes from '../../../../store/popups/popupTypes';
 import { setUserForDeleting } from '../../../../store/adminUsers/actions';
 import { setUserForEditing, showEditPopup } from '../../../../store/createUser/actions';
+import Checkbox from '../../../../components/Checkbox';
 
 const UsersTableCell = ({ content, className }) => (
   <td className={classNames(styles.usersCell, className)}>{content}</td>
@@ -62,8 +63,12 @@ const mapDispatchToProps = (dispatch) => ({
 const UsersTableEditButtons = connect(null, mapDispatchToProps)(UsersTableEditButtonsComponent);
 
 const UsersTableRow = ({
-  id, username, description, created_at: createdAt
+  id, username, description, created_at: createdAt, selectUser, toggleUser, include
 }) => {
+  const handleClick = useCallback(() => {
+    toggleUser(id);
+  }, [id]);
+
   const parsedTime = useMemo(() => {
     const date = DateTime.fromISO(createdAt);
     return (
@@ -82,10 +87,25 @@ const UsersTableRow = ({
       <UsersTableCell content={username} />
       <UsersTableCell content={description} />
       <UsersTableCell content={parsedTime} />
-      <UsersTableCell
-        content={<UsersTableEditButtons id={id} />}
-        className={styles.usersCellEdit}
-      />
+
+      {selectUser && (
+        <UsersTableCell
+          content={(
+            <Checkbox
+              classes={styles.checkmark}
+              include={include}
+              onIncludeChange={handleClick}
+            />
+          )}
+        />
+      )}
+
+      {!selectUser && (
+        <UsersTableCell
+          content={<UsersTableEditButtons id={id} />}
+          className={styles.usersCellEdit}
+        />
+      )}
     </tr>
   );
 };
@@ -95,6 +115,9 @@ UsersTableRow.propTypes = {
   username: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   created_at: PropTypes.string.isRequired,
+  selectUser: PropTypes.bool.isRequired,
+  toggleUser: PropTypes.func.isRequired,
+  include: PropTypes.bool.isRequired
 };
 
 export default UsersTableRow;
