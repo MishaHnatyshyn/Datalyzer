@@ -19,6 +19,7 @@ import {
   DELETE_USER_START,
   DELETE_USER_ERROR,
   DELETE_USER_SUCCESS,
+  EDIT_SUCCESS,
 } from './types';
 import {
   getItemsPerPage, getPaging, getUserForDeleting, getUsersCountData, getUsersSearchPayload
@@ -42,6 +43,7 @@ export const setTotalUsers = createAction(SET_TOTAL_USERS, (count) => count);
 export const createUserFailure = createAction(CREATE_FAILURE);
 export const createUserStart = createAction(CREATE_START);
 export const createUserSuccess = createAction(CREATE_SUCCESS, (user) => user);
+export const editUserSuccess = createAction(EDIT_SUCCESS, (user) => user);
 export const setUsers = createAction(SET_USERS, (users) => users);
 export const appendUsers = createAction(APPEND_USERS, (users) => users);
 export const changeSearchInput = createAction(CHANGE_SEARCH_INPUT, (value) => value);

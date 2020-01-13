@@ -12,3 +12,5 @@ export const getVisible = compose(prop('isVisible'), root);
 
 export const isError = compose(prop('error'), root);
 export const isLoading = compose(prop('isLoading'), root);
+
+export const getUserForEditing = compose(prop('userForEditing'), root);

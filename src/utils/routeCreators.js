@@ -10,4 +10,5 @@ export const createConnectionDeleteRoute = (id) => `/connections/${id}`;
 export const createModelDeleteRoute = (id) => `/models/${id}`;
 export const createUserDeleteRoute = (id) => `/users/${id}`;
 export const createModelRenameRoute = (id) => `/models/${id}`;
+export const createUserEditRoute = (id) => `/users/${id}`;
 export const createDashboardDeleteRoute = (id) => `/dashboards/${id}`;
