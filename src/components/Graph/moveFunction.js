@@ -8,6 +8,7 @@ class Movement {
 
     const FULLSCREEN_MARGINS = -10;
     const MARGINS = 4;
+    const CORNER_MARGINS = 15;
 
     let clicked = null;
     let onRightEdge,
@@ -121,8 +122,8 @@ class Movement {
 
       onTopEdge = y < MARGINS;
       onLeftEdge = x < MARGINS;
-      onRightEdge = x >= b.width - MARGINS;
-      onBottomEdge = y >= b.height - MARGINS;
+      onRightEdge = x >= b.width - CORNER_MARGINS;
+      onBottomEdge = y >= b.height - CORNER_MARGINS;
 
       rightScreenEdge = window.offsetWidth - MARGINS;
       bottomScreenEdge = window.offsetHeight - MARGINS;

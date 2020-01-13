@@ -28,7 +28,8 @@ const NewChartContainer = ({
         disableMoveAndScale
         startLeftPosition={0}
         startTopPosition={0}
-        startWidth="80%"
+        className={styles.graph}
+        startWidth="100%"
         items={data}
         facts={[fact.originalName]}
         dimensions={[dimension.originalName]}
