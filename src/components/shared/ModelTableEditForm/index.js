@@ -64,6 +64,7 @@ const ModelTableEditForm = ({
               onNameChange={changeColumnName}
               onIncludeChange={changeColumnInclude}
               onTypeChange={changeColumnType}
+              isNumeric={column.isNumeric}
             />
           ))}
         </Scrollbars>

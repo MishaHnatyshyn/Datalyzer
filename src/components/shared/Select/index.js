@@ -4,17 +4,20 @@ import classnames from 'classnames';
 import styles from './select.module.scss';
 
 const Select = ({
-  options, value, name, onChange, classes
+  options, value, name, onChange, classes, disabled, disabledText
 }) => {
   const [openedDropDown, handleDropDown] = useState(false);
   const handleClick = useCallback(
     (option, event) => {
+      if (disabled) {
+        return;
+      }
       event.target.name = name;
       event.target.value = option.value || option;
       onChange(event);
       handleDropDown(false);
     },
-    [onChange],
+    [onChange, disabled],
   );
   const selectedValue = useMemo(() => {
     if (options[0] && options[0].name) {
@@ -25,9 +28,15 @@ const Select = ({
     }
     return value;
   }, [value]);
+  const handleClickOnSelect = useCallback(() => {
+    if (disabled) {
+      return;
+    }
+    handleDropDown(!openedDropDown);
+  }, [openedDropDown, disabled]);
   return (
-    <div className={classnames(styles.container, classes)}>
-      <div className={styles.selectedValue} onClick={() => handleDropDown(!openedDropDown)}>
+    <div className={classnames(styles.container, classes, disabled ? styles.disabled : '')} title={disabledText}>
+      <div className={styles.selectedValue} onClick={handleClickOnSelect}>
         <p>{selectedValue}</p>
         <img src="/images/next.png" alt="arrow down" className={styles.arrow} />
       </div>
@@ -46,6 +55,8 @@ const Select = ({
 
 Select.defaultProps = {
   classes: '',
+  disabledText: '',
+  disabled: false,
 };
 
 Select.propTypes = {
@@ -60,6 +71,8 @@ Select.propTypes = {
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   classes: PropTypes.string,
+  disabledText: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 export default Select;
