@@ -13,6 +13,7 @@ import {
   ONCLOSE_ACTION,
   CONNECTION_FOR_EDITING,
   EDIT_SUCCESS,
+  SHOW_EDIT,
 } from './types';
 import { EMPTY_FIELDS_ERROR_MESSAGE } from '../login/constants';
 
@@ -101,6 +102,18 @@ export default function connectionFormsReducer(state = initialState, action) {
         password: '',
         nameConnection: '',
         nameDB: '',
+        error: false,
+        isLoading: false,
+      };
+    case SHOW_EDIT:
+      return {
+        ...state,
+        host: state.connectionForEditing.host,
+        port: state.connectionForEditing.port,
+        username: state.connectionForEditing.username,
+        password: state.connectionForEditing.password,
+        nameConnection: state.connectionForEditing.name,
+        nameDB: state.connectionForEditing.name,
         error: false,
         isLoading: false,
       };

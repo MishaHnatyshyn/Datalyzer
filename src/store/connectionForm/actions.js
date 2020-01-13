@@ -17,6 +17,7 @@ import {
   ONCLOSE_ACTION,
   CONNECTION_FOR_EDITING,
   EDIT_SUCCESS,
+  SHOW_EDIT,
 } from './types';
 import { post, put } from '../../utils/http';
 import { ADMIN_CONNECTIONS_CREATE_ENDPOINT } from '../../config';
@@ -47,6 +48,7 @@ export const onClose = createAction(ONCLOSE_ACTION);
 export const setConnectionForEditing = createAction(CONNECTION_FOR_EDITING, (value) => value);
 export const editConnectionFailure = createAction(CREATE_FAILURE);
 export const editConnectionSuccess = createAction(EDIT_SUCCESS, (connection) => connection);
+export const showEdit = createAction(SHOW_EDIT);
 
 export const onCloseAction = () => async (dispatch) => {
   dispatch(push('/admin/databases'));
@@ -55,6 +57,10 @@ export const onCloseAction = () => async (dispatch) => {
 export const onCloseEdit = () => async (dispatch) => {
   dispatch(closePopup());
   dispatch(onClose());
+};
+export const showEditPopup = () => async (dispatch) => {
+  dispatch(displayCustomPopup(PopupTypes.EDIT_CONNECTION));
+  dispatch(showEdit());
 };
 export const newConnectionAction = () => async (dispatch, getState) => {
   const {
@@ -91,41 +97,28 @@ export const editConnectionAction = () => async (dispatch, getState) => {
       host, port, nameDB, username: name, password, nameConnection
     },
   } = getState();
-  const id = getConnectionForEditing(getState());
-  const newData = {};
-  if (host) {
-    newData.host = host;
+  if (!name || !password || !host || !port || !nameDB || !nameConnection) {
+    return dispatch(emptyFieldsError());
   }
-  if (port) {
-    newData.port = port;
-  }
-  if (nameDB) {
-    newData.databaseName = nameDB;
-  }
-  if (name) {
-    newData.username = name;
-  }
-  if (password) {
-    newData.password = password;
-  }
-  if (nameConnection) {
-    newData.name = nameConnection;
-  }
-  if (Object.keys(newData).length) {
-    try {
-      const data = await put(createConnectionEditRoute(id), {
-        data: newData,
-      });
-      dispatch(editConnectionSuccess(data));
-      dispatch(onCloseEdit());
-      dispatch(displayCustomPopup(PopupTypes.EDIT_CONNECTION_SUCCESS));
-    } catch (e) {
-      console.log(e);
-      dispatch(editConnectionFailure());
-      dispatch(onCloseEdit());
-      dispatch(displayCustomPopup(PopupTypes.EDIT_CONNECTION_FAILURE));
-    }
-  } else {
+  const connection = getConnectionForEditing(getState());
+  try {
+    const data = await put(createConnectionEditRoute(connection.id), {
+      data: {
+        host,
+        port,
+        name: nameConnection,
+        databaseName: nameDB,
+        username: name,
+        password,
+      },
+    });
+    dispatch(editConnectionSuccess(data));
     dispatch(onCloseEdit());
+    dispatch(displayCustomPopup(PopupTypes.EDIT_CONNECTION_SUCCESS));
+  } catch (e) {
+    console.log(e);
+    dispatch(editConnectionFailure());
+    dispatch(onCloseEdit());
+    dispatch(displayCustomPopup(PopupTypes.EDIT_CONNECTION_FAILURE));
   }
 };

@@ -7,7 +7,7 @@ import AdminCardDataItemPassword from '../shared/AdminCardDataItemPassword';
 import { setConnectionForDeleting } from '../../store/connection/actions';
 import { displayCustomPopup } from '../../store/popups/actions';
 import PopupTypes from '../../store/popups/popupTypes';
-import { setConnectionForEditing } from '../../store/connectionForm/actions';
+import { setConnectionForEditing, showEditPopup } from '../../store/connectionForm/actions';
 
 const DatabaseDataCard = ({
   db_name,
@@ -24,8 +24,24 @@ const DatabaseDataCard = ({
     deleteConnection(id);
   }, [id, deleteConnection]);
   const onUpdate = useCallback(() => {
-    updateConnection(id);
-  }, [id, updateConnection]);
+    updateConnection({
+      db_name,
+      name,
+      username,
+      password,
+      host,
+      port,
+      id
+    });
+  }, [{
+    db_name,
+    name,
+    username,
+    password,
+    host,
+    port,
+    id
+  }, updateConnection]);
   return (
     <DataCard
       caption={name}
@@ -56,9 +72,9 @@ DatabaseDataCard.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  updateConnection: (id) => {
-    dispatch(setConnectionForEditing(id));
-    dispatch(displayCustomPopup(PopupTypes.EDIT_CONNECTION));
+  updateConnection: (connection) => {
+    dispatch(setConnectionForEditing(connection));
+    dispatch(showEditPopup());
   },
   deleteConnection: (id) => {
     dispatch(setConnectionForDeleting(id));
